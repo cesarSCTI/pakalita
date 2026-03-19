@@ -1,0 +1,490 @@
+{% comment %}
+  Section: Collection Grid
+  Muestra hasta 4 colecciones en un grid tipo editorial con hover effect
+{% endcomment %}
+
+<section
+  class="collection-grid-section"
+  id="collection-grid-{{ section.id }}"
+  style="
+    --label-bg: {{ section.settings.label_bg_color }};
+    --label-text: {{ section.settings.label_text_color }};
+    --label-opacity: {{ section.settings.label_bg_opacity | divided_by: 100.0 }};
+    --gap: {{ section.settings.gap }}px;
+    --border-radius: {{ section.settings.border_radius }}px;
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --section-bg: {{ section.settings.section_bg_color }};
+  "
+>
+  <div class="collection-grid__inner page-width">
+
+    {% if section.settings.section_title != blank %}
+      <h2 class="collection-grid__heading">{{ section.settings.section_title }}</h2>
+    {% endif %}
+
+    <div class="collection-grid__wrapper">
+      {% for block in section.blocks %}
+        {% assign collection = collections[block.settings.collection] %}
+
+        {%- if block.settings.custom_image != blank -%}
+          {% assign block_image = block.settings.custom_image %}
+        {%- elsif collection != blank and collection.featured_image != blank -%}
+          {% assign block_image = collection.featured_image %}
+        {%- else -%}
+          {% assign block_image = nil %}
+        {%- endif -%}
+
+        {%- assign label = block.settings.custom_label -%}
+        {%- if label == blank and collection != blank -%}
+          {%- assign label = collection.title -%}
+        {%- endif -%}
+
+        {%- assign link_url = block.settings.custom_url -%}
+        {%- if link_url == blank and collection != blank -%}
+          {%- assign link_url = collection.url -%}
+        {%- endif -%}
+
+        <div
+          class="collection-grid__item{% if block.settings.featured %} collection-grid__item--featured{% endif %}"
+          {{ block.shopify_attributes }}
+          style="
+            --item-label-position: {{ block.settings.label_position }};
+            --item-label-align: {% if block.settings.label_position == 'left' %}flex-start{% elsif block.settings.label_position == 'right' %}flex-end{% else %}center{% endif %};
+          "
+        >
+          <a
+            href="{{ link_url | default: '#' }}"
+            class="collection-grid__link"
+            {% if link_url == blank %}aria-disabled="true"{% endif %}
+          >
+            <div class="collection-grid__image-wrap">
+              {% if block_image != nil %}
+                {{
+                  block_image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '400, 600, 800, 900',
+                    sizes: '(max-width: 600px) 100vw, (max-width: 900px) 50vw, 25vw',
+                    class: 'collection-grid__image',
+                    alt: label
+                }}
+              {% else %}
+                <div class="collection-grid__placeholder">
+                  {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {% endif %}
+
+              <div class="collection-grid__overlay"></div>
+
+              {% if label != blank %}
+                <div class="collection-grid__label">
+                  <span class="collection-grid__label-text">
+                    {{ label }}
+                    {% if block.settings.show_arrow %}
+                      <svg class="collection-grid__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M5 10h10M11 6l4 4-4 4"/>
+                      </svg>
+                    {% endif %}
+                  </span>
+                </div>
+              {% endif %}
+            </div>
+          </a>
+        </div>
+
+      {% else %}
+        {%- comment %} Placeholder para el editor cuando no hay bloques {%- endcomment %}
+        {% for i in (1..4) %}
+          <div class="collection-grid__item">
+            <div class="collection-grid__link">
+              <div class="collection-grid__image-wrap">
+                <div class="collection-grid__placeholder">
+                  {{ 'collection-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+                <div class="collection-grid__overlay"></div>
+                <div class="collection-grid__label">
+                  <span class="collection-grid__label-text">Colección {{ i }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+.collection-grid-section {
+  background-color: var(--section-bg);
+  padding-top: var(--section-padding-top);
+  padding-bottom: var(--section-padding-bottom);
+}
+
+.collection-grid__heading {
+  text-align: center;
+  margin: 0 0 2rem;
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: inherit;
+}
+
+.collection-grid__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  align-items: stretch;
+}
+
+.collection-grid__item {
+  flex: 1 1 calc(25% - var(--gap) * 0.75);
+  min-width: 160px;
+}
+
+/* Item destacado ocupa el doble de ancho */
+.collection-grid__item--featured {
+  flex: 2 1 calc(50% - var(--gap) * 0.75);
+  min-width: 300px;
+}
+
+.collection-grid__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+/* ---- Imagen wrap: contiene imagen + overlay + label ---- */
+.collection-grid__image-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  height: 100%;
+  min-height: 260px;
+  background: #e8e4dd;
+}
+
+.collection-grid__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.collection-grid__placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8e4dd;
+}
+
+.collection-grid__placeholder .placeholder-svg {
+  width: 60%;
+  height: 60%;
+  opacity: 0.35;
+}
+
+/* ---- Overlay oscuro base (siempre visible, sutil) ---- */
+.collection-grid__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0) 55%
+  );
+  transition: opacity 0.4s ease;
+  border-radius: var(--border-radius);
+  pointer-events: none;
+}
+
+/* ---- Label ---- */
+.collection-grid__label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: var(--item-label-align, flex-start);
+  padding: 1rem 1.1rem;
+  pointer-events: none;
+}
+
+.collection-grid__label-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.45em 0.9em;
+  border-radius: 6px;
+
+  /* Color de fondo con opacidad personalizable */
+  background-color: color-mix(
+    in srgb,
+    var(--label-bg) calc(var(--label-opacity) * 100%),
+    transparent
+  );
+
+  color: var(--label-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+
+  /* El label empieza invisible y se desliza hacia arriba en hover */
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Fallback para browsers sin color-mix (Safari <15.4) */
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+  .collection-grid__label-text {
+    background-color: var(--label-bg);
+  }
+}
+
+.collection-grid__arrow {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+/* ---- Hover ---- */
+.collection-grid__link:hover .collection-grid__image,
+.collection-grid__link:focus-visible .collection-grid__image {
+  transform: scale(1.05);
+}
+
+.collection-grid__link:hover .collection-grid__overlay,
+.collection-grid__link:focus-visible .collection-grid__overlay {
+  opacity: 1.3; /* sube levemente el overlay */
+}
+
+.collection-grid__link:hover .collection-grid__label-text,
+.collection-grid__link:focus-visible .collection-grid__label-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.collection-grid__link:hover .collection-grid__arrow,
+.collection-grid__link:focus-visible .collection-grid__arrow {
+  transform: translateX(3px);
+}
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+
+/* 2 columnas en tablet */
+@media screen and (max-width: 900px) {
+  .collection-grid__item {
+    flex: 1 1 calc(50% - var(--gap) * 0.5);
+    min-width: 140px;
+  }
+  .collection-grid__item--featured {
+    flex: 1 1 100%;
+  }
+}
+
+/* 2 columnas en móvil grande / 1 columna en móvil chico */
+@media screen and (max-width: 600px) {
+  .collection-grid__wrapper {
+    flex-direction: column;
+  }
+  .collection-grid__item,
+  .collection-grid__item--featured {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .collection-grid__image-wrap {
+    min-height: 220px;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .collection-grid__image,
+  .collection-grid__label-text,
+  .collection-grid__arrow {
+    transition: none;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "V2 Collection Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Título de la sección",
+    },
+    {
+      "type": "header",
+      "content": "Estilo del label"
+    },
+    {
+      "type": "color",
+      "id": "label_bg_color",
+      "label": "Color de fondo del label",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "label_bg_opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad del fondo del label",
+      "default": 90
+    },
+    {
+      "type": "color",
+      "id": "label_text_color",
+      "label": "Color del texto del label",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Color de fondo de la sección",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 4,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre recuadros",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez de las esquinas",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Espaciado de sección"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_item",
+      "name": "Colección",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Colección"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Imagen personalizada",
+          "info": "Si se selecciona, reemplaza la imagen de la colección."
+        },
+        {
+          "type": "text",
+          "id": "custom_label",
+          "label": "Etiqueta personalizada",
+          "info": "Si está vacío, se usa el nombre de la colección."
+        },
+        {
+          "type": "url",
+          "id": "custom_url",
+          "label": "URL personalizada",
+          "info": "Opcional. Por defecto enlaza a la colección."
+        },
+        {
+          "type": "select",
+          "id": "label_position",
+          "label": "Posición del label",
+          "options": [
+            { "value": "left",   "label": "Izquierda" },
+            { "value": "center", "label": "Centro" },
+            { "value": "right",  "label": "Derecha" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_arrow",
+          "label": "Mostrar flecha en el label",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Recuadro destacado (doble ancho)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Collection Grid",
+      "blocks": [
+        { "type": "collection_item" },
+        { "type": "collection_item" },
+        { "type": "collection_item" },
+        { "type": "collection_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

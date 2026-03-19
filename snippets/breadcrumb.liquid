@@ -1,0 +1,216 @@
+{%- comment -%}
+Documentation - http://docs.shopify.com/support/your-website/navigation/creating-a-breadcrumb-navigation
+{%- endcomment -%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style>
+  .tt-breadcrumb *{
+    font-size:12px !important;
+  }
+</style>
+{%- unless template == 'index' -%}
+<div class="tt-breadcrumb">
+  <div class="container{% if settings.breadcrumbs_fullwidth %}-fluid{% endif %}">
+    <ul>
+      <li><a href="{{ routes.root_url }}">Home</a></li>
+      {%- if template contains 'product' -%}
+      {%- if collection -%}            
+        {%- if collection.handle -%}
+          {%- capture url -%}/collections/{{ collection.handle }}{%- endcapture -%}
+          
+           <li>{{ collection.title | link_to: url }}</li>
+          <!---Producto --->
+          <script>
+            /*
+          $(document).ready(function(){
+            var urlCompleta = window.location.href; // Esto obtiene la URL completa de la página
+            // Supongamos que quieres quitar "/collections" de la URL
+            var dominio = window.location.protocol +"//"+ window.location.hostname;
+            var parteARemover = dominio;
+            var urlActual = urlCompleta.replace(parteARemover, "");
+            var coleccionActual = window.location.pathname.split('/')
+            var coleccion = coleccionActual[coleccionActual.length - 1];
+            var elementos=[]
+            var elementosPadre = []
+            var aux = []
+            
+            $(".dropdown-menu").prev("a").each(function() {
+                var url = $(this).attr("href");
+                var ultimoSegmento = url.substring(url.lastIndexOf('/') + 1);
+                elementosPadre.push(ultimoSegmento);
+            });
+            ////////
+            $(".dropdown-menu").each(function() {
+              var elementoPadre = $(this).prev("a");
+              var url = elementoPadre.attr("href");
+              var ultimoSegmento = url.substring(url.lastIndexOf('/') + 1);
+          
+              var hijos = [];
+              $(this).find("ul li a span").each(function() {
+                  var textoHijo = $(this).text().toLowerCase();
+                  hijos.push(textoHijo);
+              });
+          
+              var objetoPadre = {
+                  "padre": ultimoSegmento,
+                  "hijos": hijos
+              };
+              elementos.push(objetoPadre);
+          })
+            console.log(elementos)
+            console.log(elementosPadre)
+          
+            const url = window.location.href;
+
+            // Obtener el texto después de "collections"
+            const collectionIndex = url.indexOf("collections");
+            if (collectionIndex !== -1) {
+                const afterCollection = url.substring(collectionIndex + "collections".length + 1); // +1 to consider the following "/"
+                console.log(afterCollection);
+            
+                const urlParts = afterCollection.split("/");
+                console.log(urlParts);
+              
+                //Mostrar el breadcrum
+                elementos.forEach(function(elemento) {
+                  console.log(elemento)
+                  if(elemento.padre == urlParts[0]){
+                    $("#breadcrumbs").append(`<div> > <a href="/collections/${elemento.padre}">${elemento.padre.replace(/-/g, " ")} </a> </div>`);
+                    return
+                  }
+                  elemento.hijos.forEach(function(hijo) {
+                      if(hijo == urlParts[0]){
+                        $("#breadcrumbs").append(`<div> > <a href="/collections/${elemento.padre}">${elemento.padre.replace(/-/g, " ")} </a> > <a href="/collections/${hijo}">${ hijo.replace(/-/g, " ")}</a></div>`)
+                        return
+                      }
+                  })
+              })
+              
+              }
+            });**/
+          </script>
+          <!--Fin Producto -->
+      
+        {%- endif -%}
+      {%- endif -%}
+
+      <li><span>{{ product.title }}</span></li>
+
+      {%- elsif template contains 'collection' and collection.handle -%}
+      <div id="breadcrumbs"></div>
+      {%- if current_tags -%}
+      {%- capture url -%}/collections/{{ collection.handle }}{%- endcapture -%}
+      <li>{{ collection.title | link_to: url }}</li>
+      {%- else -%}
+      {% comment %}<li>{{ collection.title | capitalize }}</li>{% endcomment %}
+         <script>
+          $(document).ready(function(){
+            var urlCompleta = window.location.href; // Esto obtiene la URL completa de la página
+
+            // Supongamos que quieres quitar "/collections" de la URL
+            var dominio = window.location.protocol +"//"+ window.location.hostname;
+            var parteARemover = dominio;
+            var urlActual = urlCompleta.replace(parteARemover, "");
+
+            var coleccionActual = window.location.pathname.split('/')
+            var coleccion = coleccionActual[coleccionActual.length - 1];
+            var elementos=[]
+            var elementosPadre = []
+            var aux = []
+            $(".dropdown-menu").prev("a").each(function() {
+                var url = $(this).attr("href");
+                var ultimoSegmento = url.substring(url.lastIndexOf('/') + 1);
+                elementosPadre.push(ultimoSegmento);
+            });
+            ////////
+            $(".dropdown-menu").each(function() {
+              var elementoPadre = $(this).prev("a");
+              var url = elementoPadre.attr("href");
+              var ultimoSegmento = url.substring(url.lastIndexOf('/') + 1);
+          
+              var hijos = [];
+              $(this).find("ul li a span").each(function() {
+                  var textoHijo = $(this).text().toLowerCase();
+                  hijos.push(textoHijo);
+              });
+          
+              var objetoPadre = {
+                  "padre": ultimoSegmento,
+                  "hijos": hijos
+              };
+          
+              elementos.push(objetoPadre);
+          });
+            ////////
+            console.log(elementos)
+            console.log(elementosPadre)
+            
+            var eleHijos = []
+            $(".tt-desctop-menu .dropdown a[href='" + urlActual + "']").closest(".dropdown").find("li a span").each(function() {
+                var texto = $(this).text().toLowerCase();
+                eleHijos.push(texto);
+            });
+
+            //validar el breadcrumb
+            let indice = eleHijos.indexOf(coleccion)
+            var mostrar = eleHijos[indice]
+            
+            if(elementosPadre.includes(coleccion)){ //mostrar coleccion padre con submenu
+              let indice = elementosPadre.indexOf(coleccion)
+              var padre = elementosPadre[indice]
+              $("#breadcrumbs").append(`<div> > <a href="/collections/${padre}">${padre.replace(/-/g, " ")}</a> </div>`)
+              console.log(coleccion)
+            }
+            else if (eleHijos.includes(coleccion)) {//mostrando item de sumbenu
+              /*
+              console.log(mostrar)
+              let indice = elementosPadre.indexOf(coleccion)
+              var padre = elementosPadre[indice]
+*/
+              elementos.forEach(function(elemento) {
+                  elemento.hijos.forEach(function(hijo) {
+                      console.log(hijo);
+                      if(hijo == coleccion){
+                        $("#breadcrumbs").append(`<div> > <a href="/collections/${elemento.padre}">${elemento.padre.replace(/-/g, " ")} </a> > <a href="/collections/${hijo}">${ hijo.replace(/-/g, " ")}</a></div>`)
+                      }
+                  });
+              });
+            }
+            else{ // no contiene submenu
+              $("#breadcrumbs").append(`<div> > <a href="/collections/${coleccion}">${ coleccion.replace(/-/g, " ")}</a></div>`)
+            }
+
+          });
+        </script>
+        {% comment %}
+        {% for item in product.collections %}
+         <div class="{{ cn }}-item">
+              <a class="{{ cn }}-item-link" href="{{ item.url }}">
+                  {{ item.title }}
+              </a>
+              |
+          </div>
+        {% endfor %}
+        {% endcomment %}
+      {%- endif -%}
+      
+
+        
+  
+      {%- elsif template == 'article' -%}
+      <li><a href="{{ blog.url }}">{{ blog.title }}</a></li>
+      <li>{{ article.title }}</li>
+      {%- elsif template contains 'customers' and template != "customers/account" -%}
+      {%- assign account = 'customer.account.title_main' | t -%}
+      <li>{{ account | capitalize | link_to: "/account" }}</li>
+      <li>{{ page_title }}</li>
+
+      {%- elsif template contains 'page' -%}
+      <li>{{ page.title }}</li>
+
+      {%- else -%}
+      <li>{{ page_title }}</li>
+      {%- endif -%}
+    </ul>
+  </div>
+</div>
+{%- endunless -%}
