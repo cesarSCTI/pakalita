@@ -1,0 +1,590 @@
+{% comment %}
+  Section: Hero Banner
+  - Imagen de fondo con overlay personalizable
+  - Posición del contenido en 9 puntos (flex)
+  - Título normal + cursiva, subtítulo, CTA
+  - Responsive
+{% endcomment %}
+
+{%- liquid
+  assign content_x = section.settings.content_x
+  assign content_y = section.settings.content_y
+
+  case content_x
+    when 'left'
+      assign justify = 'flex-start'
+      assign text_align = 'left'
+    when 'center'
+      assign justify = 'center'
+      assign text_align = 'center'
+    when 'right'
+      assign justify = 'flex-end'
+      assign text_align = 'right'
+  endcase
+
+  case content_y
+    when 'top'
+      assign align = 'flex-start'
+    when 'middle'
+      assign align = 'center'
+    when 'bottom'
+      assign align = 'flex-end'
+  endcase
+-%}
+
+<section
+  class="hero-banner"
+  id="hero-banner-{{ section.id }}"
+  style="
+    --hb-height: {{ section.settings.banner_height }}px;
+    --hb-height-mobile: {{ section.settings.banner_height_mobile }}px;
+    --hb-overlay-color: {{ section.settings.overlay_color }};
+    --hb-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --hb-content-justify: {{ justify }};
+    --hb-content-align: {{ align }};
+    --hb-text-align: {{ text_align }};
+    --hb-content-max-width: {{ section.settings.content_max_width }}px;
+    --hb-content-padding: {{ section.settings.content_padding }}px;
+    --hb-title-color: {{ section.settings.title_color }};
+    --hb-title-size: {{ section.settings.title_size }}px;
+    --hb-subtitle-color: {{ section.settings.subtitle_color }};
+    --hb-subtitle-size: {{ section.settings.subtitle_size }}px;
+    --hb-btn-bg: {{ section.settings.btn_bg }};
+    --hb-btn-text: {{ section.settings.btn_text_color }};
+    --hb-btn-radius: {{ section.settings.btn_radius }}px;
+    --hb-btn-border: {{ section.settings.btn_border_color }};
+    --hb-radius: {{ section.settings.banner_radius }}px;
+  "
+>
+
+  {%- comment %} Imagen de fondo {%- endcomment %}
+  <div class="hero-banner__media">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 2000
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '600, 900, 1200, 1600, 2000',
+          sizes: '100vw',
+          class: 'hero-banner__image',
+          alt: section.settings.image.alt | default: shop.name
+      }}
+    {%- else -%}
+      <div class="hero-banner__placeholder">
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment %} Overlay {%- endcomment %}
+  <div class="hero-banner__overlay" aria-hidden="true"></div>
+
+  {%- comment %} Contenido {%- endcomment %}
+  <div class="hero-banner__content-wrap">
+    <div class="hero-banner__content">
+
+      {%- if section.settings.pretitle != blank -%}
+        <p class="hero-banner__pretitle">{{ section.settings.pretitle }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.title_normal != blank or section.settings.title_italic != blank -%}
+        <h2 class="hero-banner__title">
+          {%- if section.settings.title_normal != blank -%}
+            <span class="hero-banner__title--normal">{{ section.settings.title_normal }}</span>
+          {%- endif -%}
+          {%- if section.settings.title_italic != blank -%}
+            <em class="hero-banner__title--italic">{{ section.settings.title_italic }}</em>
+          {%- endif -%}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.subtitle != blank -%}
+        <p class="hero-banner__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.btn_label != blank -%}
+        <div class="hero-banner__cta-wrap">
+          <a
+            href="{{ section.settings.btn_url | default: '#' }}"
+            class="hero-banner__cta"
+            {% if section.settings.btn_url == blank %}aria-disabled="true"{% endif %}
+          >
+            {{ section.settings.btn_label }}
+          </a>
+
+          {%- if section.settings.btn2_label != blank -%}
+            <a
+              href="{{ section.settings.btn2_url | default: '#' }}"
+              class="hero-banner__cta hero-banner__cta--ghost"
+            >
+              {{ section.settings.btn2_label }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+
+</section>
+
+{% stylesheet %}
+
+/* =====================================================
+   BANNER BASE
+   ===================================================== */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: var(--hb-height);
+  border-radius: var(--hb-radius);
+  overflow: hidden;
+  display: flex; 
+max-width: var(--container-v2);
+  margin: auto;
+  padding: 0px var(--padding-container);
+}
+
+/* =====================================================
+   IMAGEN
+   ===================================================== */
+.hero-banner__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-banner__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-banner__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #c9b8a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-banner__placeholder .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+/* =====================================================
+   OVERLAY
+   Color + opacidad controlados por CSS variables
+   ===================================================== */
+.hero-banner__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: var(--hb-overlay-color);
+  opacity: var(--hb-overlay-opacity);
+  pointer-events: none;
+}
+
+/* =====================================================
+   CONTENT WRAP — flex para posicionar en 9 puntos
+   justify-content → eje X (left / center / right)
+   align-items     → eje Y (top / middle / bottom)
+   ===================================================== */
+.hero-banner__content-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: var(--hb-content-justify);
+  align-items: var(--hb-content-align);
+  padding: var(--hb-content-padding);
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   CONTENT — bloque de texto
+   ===================================================== */
+.hero-banner__content {
+  display: flex;
+  flex-direction: column;
+  align-items: {% if section.settings.content_x == 'left' %}flex-start{% elsif section.settings.content_x == 'right' %}flex-end{% else %}center{% endif %};
+  gap: 0.75rem;
+  max-width: var(--hb-content-max-width);
+  text-align: var(--hb-text-align);
+}
+
+/* =====================================================
+   PRETITLE
+   ===================================================== */
+.hero-banner__pretitle {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--hb-title-color);
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* =====================================================
+   TÍTULO
+   ===================================================== */
+.hero-banner__title {
+  margin: 0;
+  font-size: var(--hb-title-size);
+  line-height: 1.18;
+  font-weight: 400;
+  color: var(--hb-title-color);
+}
+
+.hero-banner__title--normal {
+  display: block;
+  font-style: normal;
+}
+
+.hero-banner__title--italic {
+  display: block;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* =====================================================
+   SUBTÍTULO
+   ===================================================== */
+.hero-banner__subtitle {
+  margin: 0;
+  font-size: var(--hb-subtitle-size);
+  line-height: 1.6;
+  color: var(--hb-subtitle-color);
+  max-width: 42ch;
+}
+
+/* =====================================================
+   CTAs — flex row con wrap
+   ===================================================== */
+.hero-banner__cta-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: {% if section.settings.content_x == 'left' %}flex-start{% elsif section.settings.content_x == 'right' %}flex-end{% else %}center{% endif %};
+  margin-top: 0.25rem;
+}
+
+.hero-banner__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6em 1.6em;
+  background: var(--hb-btn-bg);
+  color: var(--hb-btn-text);
+  border: 1px solid var(--hb-btn-border);
+  border-radius: var(--hb-btn-radius);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hero-banner__cta:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.hero-banner__cta--ghost {
+  background: transparent;
+  color: var(--hb-title-color);
+  border-color: var(--hb-title-color);
+}
+
+.hero-banner__cta--ghost:hover {
+  background: rgba(255,255,255,0.1);
+  opacity: 1;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media screen and (max-width: 768px) {
+  .hero-banner {
+    height: var(--hb-height-mobile);
+    border-radius: calc(var(--hb-radius) * 0.6);
+  }
+
+  .hero-banner__title {
+    font-size: calc(var(--hb-title-size) * 0.72);
+  }
+
+  .hero-banner__subtitle {
+    font-size: calc(var(--hb-subtitle-size) * 0.92);
+  }
+
+  /* En móvil siempre va a bottom-left para legibilidad */
+  .hero-banner__content-wrap {
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: calc(var(--hb-content-padding) * 0.75);
+  }
+
+  .hero-banner__content {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-banner__cta-wrap {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-banner__cta { transition: none; }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "V2 Hero Banner",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Imagen"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen de fondo"
+    },
+    {
+      "type": "range",
+      "id": "banner_height",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "label": "Altura del banner (desktop)",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "banner_height_mobile",
+      "min": 200,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "label": "Altura del banner (móvil)",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "banner_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez de esquinas",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Color del overlay",
+      "default": "#2A1108"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad del overlay",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Posición del contenido"
+    },
+    {
+      "type": "select",
+      "id": "content_x",
+      "label": "Posición horizontal",
+      "options": [
+        { "value": "left",   "label": "← Izquierda" },
+        { "value": "center", "label": "↔ Centro" },
+        { "value": "right",  "label": "→ Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_y",
+      "label": "Posición vertical",
+      "options": [
+        { "value": "top",    "label": "↑ Arriba" },
+        { "value": "middle", "label": "↕ Medio" },
+        { "value": "bottom", "label": "↓ Abajo" }
+      ],
+      "default": "middle"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding interior del contenido",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 200,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho máximo del bloque de texto",
+      "default": 480
+    },
+    {
+      "type": "header",
+      "content": "Textos"
+    },
+    {
+      "type": "text",
+      "id": "pretitle",
+      "label": "Pretítulo (opcional)",
+    },
+    {
+      "type": "text",
+      "id": "title_normal",
+      "label": "Título — línea normal",
+      "default": "Cuando un proyecto busca identidad,"
+    },
+    {
+      "type": "text",
+      "id": "title_italic",
+      "label": "Título — línea en cursiva",
+      "default": "lo artesanal importa"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 18,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 38
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Piezas hechas a mano para marcas y espacios auténticos"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del subtítulo",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Color del subtítulo",
+      "default": "#F0EBE3"
+    },
+    {
+      "type": "header",
+      "content": "Botón principal"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Texto del botón",
+      "default": "Explorar colaboraciones"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "URL del botón"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Fondo del botón",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Texto del botón",
+      "default": "#2A1108"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "label": "Borde del botón",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "btn_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez del botón",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Botón secundario (opcional)"
+    },
+    {
+      "type": "text",
+      "id": "btn2_label",
+      "label": "Texto del botón secundario",
+    },
+    {
+      "type": "url",
+      "id": "btn2_url",
+      "label": "URL del botón secundario"
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Hero Banner"
+    }
+  ]
+}
+{% endschema %}

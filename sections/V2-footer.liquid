@@ -1,0 +1,627 @@
+{% comment %}
+  Section: Footer
+  - Logo + tagline izquierda | Newsletter derecha
+  - Barra inferior: legal izq | copyright centro | legal der
+  - Flexbox responsive
+{% endcomment %}
+
+<footer
+  class="site-footer"
+  id="site-footer-{{ section.id }}"
+  style="
+    --ft-bg: {{ section.settings.bg_color }};
+    --ft-text: {{ section.settings.text_color }};
+    --ft-muted: {{ section.settings.muted_color }};
+    --ft-input-bg: {{ section.settings.input_bg }};
+    --ft-input-text: {{ section.settings.input_text }};
+    --ft-btn-bg: {{ section.settings.btn_bg }};
+    --ft-btn-icon: {{ section.settings.btn_icon_color }};
+    --ft-divider: {{ section.settings.divider_color }};
+    --ft-radius: {{ section.settings.footer_radius }}px;
+    --ft-padding-top: {{ section.settings.padding_top }}px;
+    --ft-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --ft-logo-width: {{ section.settings.logo_width }}px;
+    --ft-title-size: {{ section.settings.title_size }}px;
+    margin:15px !important;
+  "
+  role="contentinfo"
+>
+  <div class="site-footer__inner page-width">
+
+    {%- comment %} ── FILA SUPERIOR ── {%- endcomment %}
+    <div class="site-footer__top">
+
+      {%- comment %} Columna izquierda: logo + tagline {%- endcomment %}
+      <div class="site-footer__brand">
+        {%- if section.settings.logo != blank -%}
+          <a href="{{ routes.root_url }}" class="site-footer__logo-link" aria-label="{{ shop.name }}">
+            {{
+              section.settings.logo
+              | image_url: width: 400
+              | image_tag:
+                loading: 'lazy',
+                widths: '120, 200, 300, 400',
+                class: 'site-footer__logo',
+                alt: shop.name
+            }}
+          </a>
+        {%- else -%}
+          <a href="{{ routes.root_url }}" class="site-footer__logo-link site-footer__logo-text" aria-label="{{ shop.name }}">
+            {{ shop.name | upcase }}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.tagline != blank -%}
+          <p class="site-footer__tagline">{{ section.settings.tagline }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment %} Columna derecha: newsletter {%- endcomment %}
+      <div class="site-footer__newsletter">
+        {%- if section.settings.newsletter_title != blank -%}
+          <h2 class="site-footer__newsletter-title">
+            {%- assign nl_parts = section.settings.newsletter_title | split: '||' -%}
+            {%- if nl_parts.size > 1 -%}
+              <span class="site-footer__nl-normal">{{ nl_parts[0] }}</span>
+              <em class="site-footer__nl-italic">{{ nl_parts[1] }}</em>
+            {%- else -%}
+              {{ section.settings.newsletter_title }}
+            {%- endif -%}
+          </h2>
+        {%- endif -%}
+
+        {%- form 'customer', id: 'footer-newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="site-footer__form">
+            <input
+              type="email"
+              name="contact[email]"
+              id="footer-email-{{ section.id }}"
+              class="site-footer__input"
+              placeholder="{{ section.settings.input_placeholder | default: 'Ingresa tu email' }}"
+              required
+              autocomplete="email"
+              aria-label="{{ section.settings.input_placeholder | default: 'Ingresa tu email' }}"
+            >
+            <button type="submit" class="site-footer__submit" aria-label="Suscribirse">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+          {%- if form.posted_successfully? -%}
+            <p class="site-footer__success">{{ section.settings.success_msg | default: '¡Gracias por suscribirte!' }}</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+
+    </div>
+
+    {%- comment %} ── DIVISOR ── {%- endcomment %}
+    <div class="site-footer__divider" aria-hidden="true"></div>
+
+    {%- comment %} ── FILA INFERIOR ── {%- endcomment %}
+    <div class="site-footer__bottom">
+
+      {%- comment %} Enlace legal izquierdo {%- endcomment %}
+      <div class="site-footer__legal site-footer__legal--left">
+        {%- if section.settings.link1_label != blank -%}
+          <a href="{{ section.settings.link1_url | default: '#' }}" class="site-footer__legal-link">
+            {{ section.settings.link1_label }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.link2_label != blank -%}
+          <a href="{{ section.settings.link2_url | default: '#' }}" class="site-footer__legal-link">
+            {{ section.settings.link2_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- comment %} Copyright centro {%- endcomment %}
+      <p class="site-footer__copyright">
+        {%- assign copyright_text = section.settings.copyright_text -%}
+        {%- if copyright_text != blank -%}
+          {{ copyright_text | replace: '[year]', 'now' | date: '%Y' }}
+        {%- else -%}
+          {{ shop.name }} &copy; {{ 'now' | date: '%Y' }}
+        {%- endif -%}
+      </p>
+
+      {%- comment %} Enlace legal derecho {%- endcomment %}
+      <div class="site-footer__legal site-footer__legal--right">
+        {%- if section.settings.link3_label != blank -%}
+          <a href="{{ section.settings.link3_url | default: '#' }}" class="site-footer__legal-link">
+            {{ section.settings.link3_label }}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.link4_label != blank -%}
+          <a href="{{ section.settings.link4_url | default: '#' }}" class="site-footer__legal-link">
+            {{ section.settings.link4_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+  </div>
+</footer>
+
+{% stylesheet %}
+
+/* =====================================================
+   FOOTER BASE
+   ===================================================== */
+
+.site-footer__inner.page-width{
+    max-width: var(--container-v2);
+    margin: auto;
+    padding: 0 var(--padding-container);
+}
+
+.site-footer {
+  background: var(--ft-bg);
+  border-radius: var(--ft-radius);
+  padding-top: var(--ft-padding-top);
+  padding-bottom: var(--ft-padding-bottom);
+  color: var(--ft-text);
+}
+
+/* =====================================================
+   FILA SUPERIOR — flex row: brand | newsletter
+   ===================================================== */
+.site-footer__top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+/* =====================================================
+   BRAND (logo + tagline)
+   ===================================================== */
+.site-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.site-footer__logo-link {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--ft-text);
+}
+
+.site-footer__logo {
+  display: block;
+  width: var(--ft-logo-width);
+  height: auto;
+  object-fit: contain;
+}
+
+.site-footer__logo-text {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ft-text);
+}
+
+.site-footer__tagline {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ft-muted);
+  opacity: 0.7;
+}
+
+/* =====================================================
+   NEWSLETTER
+   ===================================================== */
+.site-footer__newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 460px;
+  width: 100%;
+}
+
+.site-footer__newsletter-title {
+  margin: 0;
+  font-size: var(--ft-title-size);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--ft-text);
+}
+
+.site-footer__nl-normal {
+  display: block;
+  font-style: normal;
+}
+
+.site-footer__nl-italic {
+  display: block;
+  font-style: italic;
+}
+
+/* ---- Form: input + botón en flex row ---- */
+.site-footer__form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-footer__input {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding: 0 1.25rem;
+  background: var(--ft-input-bg);
+  color: var(--ft-input-text);
+  border: none;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.site-footer__input::placeholder {
+  color: var(--ft-input-text);
+  opacity: 0.5;
+}
+
+.site-footer__input:focus {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.35);
+}
+
+.site-footer__submit {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ft-btn-bg);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ft-btn-icon);
+  padding: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.site-footer__submit:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+
+.site-footer__submit svg {
+  width: 18px;
+  height: 18px;
+}
+
+.site-footer__success {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ft-text);
+  opacity: 0.8;
+}
+
+/* =====================================================
+   DIVISOR
+   ===================================================== */
+.site-footer__divider {
+  height: 1px;
+  background: var(--ft-divider);
+  opacity: 0.15;
+  margin: 1.75rem 0 1.25rem;
+}
+
+/* =====================================================
+   FILA INFERIOR — flex row: legal-left | copyright | legal-right
+   ===================================================== */
+.site-footer__bottom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.site-footer__legal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.25rem;
+  flex: 1;
+}
+
+.site-footer__legal--left {
+  justify-content: flex-start;
+}
+
+.site-footer__legal--right {
+  justify-content: flex-end;
+}
+
+.site-footer__legal-link {
+  text-decoration: none;
+  color: var(--ft-text);
+  font-size: 0.8rem;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.site-footer__legal-link:hover {
+  opacity: 1;
+}
+
+.site-footer__copyright {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ft-text);
+  opacity: 0.75;
+  white-space: nowrap;
+  text-align: center;
+  flex: 1;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media screen and (max-width: 768px) {
+  .site-footer__top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .site-footer__newsletter {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .site-footer__bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .site-footer__legal {
+    justify-content: center;
+    flex: unset;
+  }
+
+  .site-footer__legal--left,
+  .site-footer__legal--right {
+    justify-content: center;
+  }
+
+  .site-footer__copyright {
+    order: -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__submit,
+  .site-footer__legal-link { transition: none; }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "section",
+  "class": "footer-section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo y marca"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 60,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "label": "Ancho del logo",
+      "default": 120
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline debajo del logo",
+      "default": "MOVIENDO RAÍCES"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Título del newsletter",
+      "info": "Usa || para separar la línea normal de la cursiva. Ej: 'Suscríbete para recibir||ofertas especiales'",
+      "default": "Suscríbete para recibir||ofertas especiales"
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "label": "Placeholder del campo de email",
+      "default": "Ingresa tu email"
+    },
+    {
+      "type": "text",
+      "id": "success_msg",
+      "label": "Mensaje de éxito",
+      "default": "¡Gracias por suscribirte!"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño del título del newsletter",
+      "default": 26
+    },
+    {
+      "type": "header",
+      "content": "Links legales inferiores"
+    },
+    {
+      "type": "text",
+      "id": "link1_label",
+      "label": "Link izquierdo 1 — texto",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "url",
+      "id": "link1_url",
+      "label": "Link izquierdo 1 — URL"
+    },
+    {
+      "type": "text",
+      "id": "link2_label",
+      "label": "Link izquierdo 2 — texto",
+    },
+    {
+      "type": "url",
+      "id": "link2_url",
+      "label": "Link izquierdo 2 — URL"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Texto de copyright",
+      "info": "Usa [year] para el año actual automático",
+      "default": "Pakalita © [year]"
+    },
+    {
+      "type": "text",
+      "id": "link3_label",
+      "label": "Link derecho 1 — texto",
+      "default": "Term of service"
+    },
+    {
+      "type": "url",
+      "id": "link3_url",
+      "label": "Link derecho 1 — URL"
+    },
+    {
+      "type": "text",
+      "id": "link4_label",
+      "label": "Link derecho 2 — texto",
+    },
+    {
+      "type": "url",
+      "id": "link4_url",
+      "label": "Link derecho 2 — URL"
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#B06060"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Color del tagline",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color del divisor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "input_bg",
+      "label": "Fondo del campo de email",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "input_text",
+      "label": "Color del texto del input",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Fondo del botón",
+      "default": "#D4845A"
+    },
+    {
+      "type": "color",
+      "id": "btn_icon_color",
+      "label": "Color del ícono del botón",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "footer_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez superior del footer",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 24,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 28
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
+}
+{% endschema %}

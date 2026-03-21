@@ -1,0 +1,467 @@
+{% comment %}
+  Section: Features Bar
+  - Cada columna es un bloque con ícono SVG, título y texto
+  - Flexbox responsive
+  - Íconos: seleccionables desde el editor
+{% endcomment %}
+
+<section
+  class="features-bar"
+  id="features-bar-{{ section.id }}"
+  style="
+    --fb-bg: {{ section.settings.bg_color }};
+    --fb-title-color: {{ section.settings.title_color }};
+    --fb-text-color: {{ section.settings.text_color }};
+    --fb-icon-color: {{ section.settings.icon_color }};
+    --fb-icon-size: {{ section.settings.icon_size }}px;
+    --fb-title-size: {{ section.settings.title_size }}px;
+    --fb-text-size: {{ section.settings.text_size }}px;
+    --fb-padding-top: {{ section.settings.padding_top }}px;
+    --fb-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --fb-gap: {{ section.settings.col_gap }}px;
+    --fb-radius: {{ section.settings.section_radius }}px;
+    --fb-divider-color: {{ section.settings.divider_color }};
+    --fb-item-align: {% if section.settings.item_align == 'center' %}center{% else %}flex-start{% endif %};
+    --fb-text-align: {{ section.settings.item_align }};
+  "
+>
+  <div class="features-bar__inner{% unless section.settings.full_width %} page-width{% endunless %}">
+    <div class="features-bar__grid">
+
+      {%- for block in section.blocks -%}
+        {%- assign icon = block.settings.icon -%}
+
+        <div
+          class="features-bar__item"
+          {{ block.shopify_attributes }}
+        >
+          {%- comment %} Ícono SVG {%- endcomment %}
+          {%- if icon != 'none' -%}
+            <div class="features-bar__icon" aria-hidden="true">
+              {%- case icon -%}
+                {%- when 'diamond' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/><path d="M6 3l4 6"/><path d="M18 3l-4 6"/></svg>
+                {%- when 'lock' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                {%- when 'truck' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                {%- when 'star' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                {%- when 'heart' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                {%- when 'leaf' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.11L2 21h10c6 0 10-4 10-10V3c-4 2-7 3-5 5z"/><path d="M9.5 14.5L3.82 19.11"/></svg>
+                {%- when 'globe' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                {%- when 'gift' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                {%- when 'shield' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                {%- when 'check' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                {%- when 'recycle' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5 8.5 1.5 3.5 6.5 3.5"/><path d="M1.5 3.5C5 1.5 10 1 13 3l4 4"/><polyline points="22.5 15.5 22.5 20.5 17.5 20.5"/><path d="M22.5 20.5c-3.5 2-8.5 2.5-11.5.5l-4-4"/><polyline points="7 13.5 2 10.5 5 5.5"/><polyline points="17 10.5 22 13.5 19 18.5"/></svg>
+                {%- when 'phone' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.37 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.16 6.13l1.27-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                {%- when 'tag' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                {%- when 'hand' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v0"/><path d="M14 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v0"/><path d="M10 10.5V8a2 2 0 0 0-2-2 2 2 0 0 0-2 2v9"/><path d="M18 8a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+              {%- endcase -%}
+            </div>
+          {%- endif -%}
+
+          {%- comment %} Texto {%- endcomment %}
+          <div class="features-bar__text">
+            {%- if block.settings.title != blank -%}
+              <p class="features-bar__title">{{ block.settings.title }}</p>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="features-bar__desc">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+
+        </div>
+
+        {%- comment %} Divisor vertical entre ítems (excepto el último) {%- endcomment %}
+        {%- unless forloop.last -%}
+          {%- if section.settings.show_dividers -%}
+            <div class="features-bar__sep" aria-hidden="true"></div>
+          {%- endif -%}
+        {%- endunless -%}
+
+      {%- else -%}
+        {%- comment %} Placeholder {%- endcomment %}
+        {%- assign placeholder_items = 'diamond,lock,truck' | split: ',' -%}
+        {%- assign placeholder_titles = 'Métodos de pago,Seguridad,Envíos' | split: ',' -%}
+        {%- assign placeholder_texts = 'Available certificates of authenticity,Certified marketplace since 2017,Free, fast, and reliable worldwide' | split: ',' -%}
+        {%- for i in (0..2) -%}
+          <div class="features-bar__item">
+            <div class="features-bar__icon" aria-hidden="true">
+              {%- case placeholder_items[i] -%}
+                {%- when 'diamond' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/><path d="M6 3l4 6"/><path d="M18 3l-4 6"/></svg>
+                {%- when 'lock' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                {%- when 'truck' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              {%- endcase -%}
+            </div>
+            <div class="features-bar__text">
+              <p class="features-bar__title">{{ placeholder_titles[i] }}</p>
+              <p class="features-bar__desc">{{ placeholder_texts[i] }}</p>
+            </div>
+          </div>
+          {%- unless forloop.last -%}
+            <div class="features-bar__sep" aria-hidden="true"></div>
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endfor -%}
+
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+
+/* =====================================================
+   SECTION
+   ===================================================== */
+.features-bar {
+  background: var(--fb-bg);
+  border-radius: var(--fb-radius);
+  padding-top: var(--fb-padding-top);
+  padding-bottom: var(--fb-padding-bottom);
+}
+
+/* =====================================================
+   GRID — flex row, wrap en móvil
+   ===================================================== */
+.features-bar__grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fb-gap);
+  max-width: var(--container-v2);
+  margin: auto;
+}
+
+/* =====================================================
+   ÍTEM — flex row: icono + texto
+   ===================================================== */
+.features-bar__item {
+  flex: 1 1 0;
+  min-width: 160px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.85rem;
+  justify-content: var(--fb-item-align);
+  text-align: var(--fb-text-align);
+}
+
+/* =====================================================
+   ÍCONO
+   ===================================================== */
+.features-bar__icon {
+  flex-shrink: 0;
+  width: var(--fb-icon-size);
+  height: var(--fb-icon-size);
+  color: var(--fb-icon-color);
+  display: flex;
+  align-items: flex-start;
+  margin-top: 2px;
+}
+
+.features-bar__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* =====================================================
+   TEXTO
+   ===================================================== */
+.features-bar__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.features-bar__title {
+  margin: 0;
+  font-size: var(--fb-title-size);
+  font-weight: 600;
+  color: var(--fb-title-color);
+  line-height: 1.3;
+}
+
+.features-bar__desc {
+  margin: 0;
+  font-size: var(--fb-text-size);
+  color: var(--fb-text-color);
+  line-height: 1.55;
+  opacity: 0.85;
+  font-family: "Poppins", sans-serif;
+}
+
+/* =====================================================
+   DIVISOR VERTICAL
+   ===================================================== */
+.features-bar__sep {
+  flex-shrink: 0;
+  width: 1px;
+  align-self: stretch;
+  background: var(--fb-divider-color);
+  opacity: 0.2;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+/* 2 columnas en tablet */
+@media screen and (max-width: 860px) {
+  .features-bar__item {
+    flex: 1 1 calc(50% - var(--fb-gap));
+    min-width: 200px;
+  }
+
+  .features-bar__sep {
+    display: none;
+  }
+}
+
+/* 1 columna en móvil */
+@media screen and (max-width: 520px) {
+  .features-bar__item {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "V2 Features Bar",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Sección"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#C07070"
+    },
+    {
+      "type": "range",
+      "id": "section_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez de esquinas",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo (sin page-width)",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "col_gap",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre columnas",
+      "default": 32
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dividers",
+      "label": "Mostrar divisores entre columnas",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color del divisor",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "select",
+      "id": "item_align",
+      "label": "Alineación del contenido",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Colores del texto"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto descriptivo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Tamaños de texto"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del texto",
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Ícono"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Color del ícono",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 18,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño del ícono",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Columna",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícono",
+          "options": [
+            { "value": "none",    "label": "Sin ícono" },
+            { "value": "diamond", "label": "Diamante" },
+            { "value": "lock",    "label": "Candado" },
+            { "value": "truck",   "label": "Camión / Envío" },
+            { "value": "star",    "label": "Estrella" },
+            { "value": "heart",   "label": "Corazón" },
+            { "value": "leaf",    "label": "Hoja / Ecológico" },
+            { "value": "globe",   "label": "Globo / Mundial" },
+            { "value": "gift",    "label": "Regalo" },
+            { "value": "shield",  "label": "Escudo / Garantía" },
+            { "value": "check",   "label": "Check / Verificado" },
+            { "value": "recycle", "label": "Reciclaje" },
+            { "value": "phone",   "label": "Teléfono / Soporte" },
+            { "value": "tag",     "label": "Etiqueta / Precio" },
+            { "value": "hand",    "label": "Hecho a mano" }
+          ],
+          "default": "diamond"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Métodos de pago"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Descripción",
+          "default": "Available certificates of authenticity"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Features Bar",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "diamond",
+            "title": "Métodos de pago",
+            "text": "Available certificates of authenticity"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "lock",
+            "title": "Seguridad",
+            "text": "Certified marketplace since 2017"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "title": "Envíos",
+            "text": "Free, fast, and reliable worldwide"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

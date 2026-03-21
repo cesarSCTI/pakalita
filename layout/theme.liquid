@@ -2,6 +2,13 @@
 <!--[if IE 9]> <html class="ie9 no-js{% if settings.use_rtl %} rtlstyle{% endif %}" lang="{{ request.locale.iso_code }}"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html{% if settings.use_boxed %} id="tt-boxed"{% endif %} class="no-js{% if settings.use_rtl %} rtlstyle{% endif %}" lang="{{ request.locale.iso_code }}"> <!--<![endif]-->
 <head>
+{{ 'root.css' | asset_url | stylesheet_tag }}
+<!-- poppins -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YQBVJ3QY3N"></script>
 <script>
@@ -21,11 +28,7 @@
   <meta name="author" content="{{ "general.meta.author" | t }}">
   <link rel="canonical" href="{{ canonical_url }}">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">  {%- if settings.favicon != blank and settings.use_favicon -%}
+{%- if settings.favicon != blank and settings.use_favicon -%}
   	<link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
   {%- endif -%}
 
@@ -111,6 +114,8 @@
       {% if request.design_mode %} data-supportcode="{{ settings.supportcode }}"{% endif %}>
   {%- if settings.show_helper -%}{%- section "show-helper" -%}{%- endif -%}
   {%- if settings.show_preloader -%}{%- include "main-loader" -%}{%- endif -%}
+  {% section 'V2-header' %}
+  {% comment  %}
 
   {%- if settings.header_design == "header_type_1" -%}
   {%- capture var_header -%}{%- section "header-template" -%}{%- endcapture -%}
@@ -135,30 +140,36 @@
   {{ var_header }}
   {%- endif -%}
   {%- endif -%}
+  {% endcomment %}
   
   {% if settings.show_breadcrumbs %}{%- include "breadcrumb" -%}{% endif %}
   <div id="tt-pageContent"{% if settings.show_unavailable_variants %} class="show_unavailable_variants"{% endif %}>
     {{ content_for_layout }}
   </div>
+    {% section 'V2-footer' %}
 
-  {%- assign blockinuse = '' -%}
-  {%- for i in (1..5) -%}
-  {%- assign footer_position = 'footer_position_' | append: i -%}{%- assign csection = settings[footer_position] -%}
-  {%- if csection != 'none' -%}
-  {%- unless blockinuse contains csection -%}{%- assign blockinuse = blockinuse | append: csection | append: '%%' -%}
-  {%- case csection -%}
-  {%- when "footer-section-subscribe" -%}{%- section "footer-section-subscribe" -%}
-  {%- when "footer-section-blurbs" -%}{%- section "footer-section-blurbs" -%}
-  {%- when "footer-section-text_plus_image_vertical" -%}{%- section "footer-section-text_plus_image_vertical" -%}
-  {%- when "footer-section-iconbanners" -%}{%- section "footer-section-iconbanners" -%}
-  {%- else -%}{%- section "footer-template" -%}
-  {%- endcase -%}
-  {%- endunless -%}{%- endif -%}
-  {%- endfor -%}
+  {% comment %}
+    {%- assign blockinuse = '' -%}
+    {%- for i in (1..5) -%}
+    {%- assign footer_position = 'footer_position_' | append: i -%}{%- assign csection = settings[footer_position] -%}
+    {%- if csection != 'none' -%}
+    {%- unless blockinuse contains csection -%}{%- assign blockinuse = blockinuse | append: csection | append: '%%' -%}
+    {%- case csection -%}
+    {%- when "footer-section-subscribe" -%}{%- section "footer-section-subscribe" -%}
+    {%- when "footer-section-blurbs" -%}{%- section "footer-section-blurbs" -%}
+    {%- when "footer-section-text_plus_image_vertical" -%}{%- section "footer-section-text_plus_image_vertical" -%}
+    {%- when "footer-section-iconbanners" -%}{%- section "footer-section-iconbanners" -%}
+    {%- else -%}{%- section "footer-template" -%}
+    {%- endcase -%}
+    {%- endunless -%}{%- endif -%}
+    {%- endfor -%}
+  
+    {%- if settings.show_footer_instagram_section -%}
+    {%- section "footer-section-instagram" -%}
+    {%- endif -%}
+    
+  {% endcomment %}
 
-  {%- if settings.show_footer_instagram_section -%}
-  {%- section "footer-section-instagram" -%}
-  {%- endif -%}
   {%- if settings.show_back_to_top_button -%}<a href="#" class="tt-back-to-top">{{ 'general.general.to_top_button' | t }}</a>{% endif %}
   {%- if settings.product_item_show_quickview -%}
   {%- if content_for_layout contains 'data-target="#ModalquickView"' or content_for_layout contains "index_sectiontabs" or template contains "product" -%}{%- include "modal-quickview" -%}

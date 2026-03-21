@@ -1,0 +1,986 @@
+{% comment %}
+  Section: Hero Slider
+  - Cada slide es un bloque
+  - Posición de texto configurable por slide (9 puntos)
+  - Performance: LCP optimizado, eager/lazy, preload, no JS externo
+  - CSS transform-based, sin librerías
+{% endcomment %}
+
+{%- liquid
+  assign total_blocks = section.blocks.size
+  assign autoplay = section.settings.autoplay
+  assign autoplay_speed = section.settings.autoplay_speed | times: 1000
+-%}
+
+{%- comment %} Preload de la primera imagen para LCP {%- endcomment %}
+{%- if section.blocks.size > 0 -%}
+  {%- assign first_block = section.blocks[0] -%}
+  {%- if first_block.settings.image != blank -%}
+    <link
+      rel="preload"
+      as="image"
+      href="{{ first_block.settings.image | image_url: width: 1600 }}"
+      imagesrcset="
+        {{ first_block.settings.image | image_url: width: 600 }} 600w,
+        {{ first_block.settings.image | image_url: width: 900 }} 900w,
+        {{ first_block.settings.image | image_url: width: 1200 }} 1200w,
+        {{ first_block.settings.image | image_url: width: 1600 }} 1600w
+      "
+      imagesizes="100vw"
+      fetchpriority="high"
+    >
+  {%- endif -%}
+{%- endif -%}
+
+<section
+  class="hero-slider"
+  id="hero-slider-{{ section.id }}"
+  aria-roledescription="carrusel"
+  aria-label="Slider principal"
+  style="
+    --hs-height: {{ section.settings.slider_height }}px;
+    --hs-height-mobile: {{ section.settings.slider_height_mobile }}px;
+    --hs-radius: 0 0 {{ section.settings.slider_radius }}px;
+    --hs-dot-active: {{ section.settings.dot_active_color }};
+    --hs-dot-inactive: {{ section.settings.dot_inactive_color }};
+    --hs-arrow-bg: {{ section.settings.arrow_bg }};
+    --hs-arrow-color: {{ section.settings.arrow_color }};
+    --hs-transition: {{ section.settings.transition_speed }}ms;
+  "
+  data-autoplay="{{ autoplay }}"
+  data-autoplay-speed="{{ autoplay_speed }}"
+  data-total="{{ total_blocks }}"
+>
+
+  {%- comment %} ── TRACK ── {%- endcomment %}
+  <div class="hero-slider__track" id="hs-track-{{ section.id }}" aria-live="polite">
+    {%- for block in section.blocks -%}
+
+      {%- liquid
+        assign bx = block.settings.content_x
+        assign by = block.settings.content_y
+        case bx
+          when 'left'
+            assign justify = 'flex-start'
+            assign text_align = 'left'
+            assign items_align = 'flex-start'
+          when 'center'
+            assign justify = 'center'
+            assign text_align = 'center'
+            assign items_align = 'center'
+          when 'right'
+            assign justify = 'flex-end'
+            assign text_align = 'right'
+            assign items_align = 'flex-end'
+        endcase
+        case by
+          when 'top'
+            assign align_items = 'flex-start'
+          when 'middle'
+            assign align_items = 'center'
+          when 'bottom'
+            assign align_items = 'flex-end'
+        endcase
+      -%}
+
+      <div
+        class="hero-slider__slide{% if forloop.first %} is-active{% endif %}"
+        id="hs-slide-{{ section.id }}-{{ forloop.index0 }}"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="{{ forloop.index }} de {{ total_blocks }}"
+        aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+        {{ block.shopify_attributes }}
+        style="
+          --slide-justify: {{ justify }};
+          --slide-align: {{ align_items }};
+          --slide-text-align: {{ text_align }};
+          --slide-items-align: {{ items_align }};
+          --slide-overlay: {{ block.settings.overlay_color }};
+          --slide-overlay-opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};
+          --slide-title-color: {{ block.settings.title_color }};
+          --slide-subtitle-color: {{ block.settings.subtitle_color }};
+          --slide-content-padding: {{ block.settings.content_padding }}px;
+          --slide-content-max-width: {{ block.settings.content_max_width }}px;
+          --slide-title-size: {{ block.settings.title_size }}px;
+          --slide-subtitle-size: {{ block.settings.subtitle_size }}px;
+          --slide-btn-bg: {{ block.settings.btn_bg }};
+          --slide-btn-text: {{ block.settings.btn_text_color }};
+          --slide-btn-radius: {{ block.settings.btn_radius }}px;
+          --slide-btn-border: {{ block.settings.btn_border_color }};
+        "
+      >
+
+        {%- comment %} Imagen {%- endcomment %}
+        <div class="hero-slider__media">
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 2000
+              | image_tag:
+                loading: forloop.first | ternary: 'eager', 'lazy',
+                fetchpriority: forloop.first | ternary: 'high', 'low',
+                widths: '600, 900, 1200, 1600, 2000',
+                sizes: '100vw',
+                class: 'hero-slider__image',
+                alt: block.settings.image.alt | default: shop.name
+            }}
+          {%- else -%}
+            <div class="hero-slider__placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- comment %} Overlay {%- endcomment %}
+        <div class="hero-slider__overlay" aria-hidden="true"></div>
+
+        {%- comment %} Contenido {%- endcomment %}
+        <div class="hero-slider__content-wrap">
+          <div class="hero-slider__content">
+
+            {%- if block.settings.pretitle != blank -%}
+              <p class="hero-slider__pretitle">{{ block.settings.pretitle }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.title_normal != blank or block.settings.title_italic != blank -%}
+              <h2 class="hero-slider__title">
+                {%- if block.settings.title_normal != blank -%}
+                  <span class="hero-slider__title--normal">{{ block.settings.title_normal }}</span>
+                {%- endif -%}
+                {%- if block.settings.title_italic != blank -%}
+                  <em class="hero-slider__title--italic">{{ block.settings.title_italic }}</em>
+                {%- endif -%}
+              </h2>
+            {%- endif -%}
+
+            {%- if block.settings.subtitle != blank -%}
+              <p class="hero-slider__subtitle">{{ block.settings.subtitle }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.btn_label != blank -%}
+              <div class="hero-slider__cta-wrap">
+                <a
+                  href="{{ block.settings.btn_url | default: '#' }}"
+                  class="hero-slider__cta"
+                >
+                  {{ block.settings.btn_label }}
+                </a>
+                {%- if block.settings.btn2_label != blank -%}
+                  <a
+                    href="{{ block.settings.btn2_url | default: '#' }}"
+                    class="hero-slider__cta hero-slider__cta--ghost"
+                  >
+                    {{ block.settings.btn2_label }}
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+          </div>
+        </div>
+
+      </div>
+    {%- else -%}
+      {%- comment %} Placeholder vacío {%- endcomment %}
+      <div class="hero-slider__slide is-active">
+        <div class="hero-slider__media">
+          <div class="hero-slider__placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        </div>
+        <div class="hero-slider__overlay" aria-hidden="true" style="--slide-overlay:#2A1108;--slide-overlay-opacity:0.3;"></div>
+        <div class="hero-slider__content-wrap" style="--slide-justify:flex-end;--slide-align:center;--slide-items-align:flex-end;--slide-text-align:right;">
+          <div class="hero-slider__content" style="--slide-content-padding:48px;--slide-content-max-width:520px;--slide-title-color:#fff;--slide-subtitle-color:#f0ebe3;--slide-title-size:40px;--slide-subtitle-size:16px;">
+            <h2 class="hero-slider__title">
+              <span class="hero-slider__title--normal">Descubre el arte mexicano</span>
+              <em class="hero-slider__title--italic">hecho a mano con Pakalita</em>
+            </h2>
+            <div class="hero-slider__cta-wrap">
+              <a href="#" class="hero-slider__cta" style="--slide-btn-bg:#fff;--slide-btn-text:#2A1108;--slide-btn-radius:24px;--slide-btn-border:#fff;">Ver colección</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- comment %} ── FLECHAS (solo si hay más de 1 slide) ── {%- endcomment %}
+  {%- if total_blocks > 1 -%}
+    <button
+      class="hero-slider__arrow hero-slider__arrow--prev"
+      aria-label="Slide anterior"
+      type="button"
+      data-hs-prev="{{ section.id }}"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button
+      class="hero-slider__arrow hero-slider__arrow--next"
+      aria-label="Siguiente slide"
+      type="button"
+      data-hs-next="{{ section.id }}"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  {%- endif -%}
+
+  {%- comment %} ── DOTS ── {%- endcomment %}
+  {%- if total_blocks > 1 -%}
+    <div class="hero-slider__dots" role="tablist" aria-label="Seleccionar diapositiva">
+      {%- for block in section.blocks -%}
+        <button
+          class="hero-slider__dot{% if forloop.first %} is-active{% endif %}"
+          role="tab"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-controls="hs-slide-{{ section.id }}-{{ forloop.index0 }}"
+          aria-label="Ir a slide {{ forloop.index }}"
+          type="button"
+          data-hs-dot="{{ forloop.index0 }}"
+          data-hs-section="{{ section.id }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+</section>
+
+{% stylesheet %}
+
+/* =====================================================
+   SLIDER BASE
+   ===================================================== */
+   .hero-slider__media img {
+    width: 100%;
+    height:100%;
+    object-fit: cover;
+}
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: var(--hs-height);
+  border-radius: var(--hs-radius);
+  overflow: hidden;
+  contain: layout style; /* performance: limita el reflow */
+}
+
+/* =====================================================
+   TRACK — Flex, todas las slides en fila
+   Movimiento con translateX en cada slide individual
+   (fade entre slides, no scroll)
+   ===================================================== */
+.hero-slider__track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* =====================================================
+   SLIDE — apiladas con position absolute
+   Transición fade: opacity + transform sutil
+   ===================================================== */
+.hero-slider__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--hs-transition, 600ms) ease;
+  pointer-events: none;
+  will-change: opacity; /* performance GPU hint */
+}
+
+.hero-slider__slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+/* =====================================================
+   IMAGEN
+   ===================================================== */
+.hero-slider__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slider__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* No transition en la imagen — solo en el slide */
+}
+
+.hero-slider__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #c9b8a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-slider__placeholder .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+/* =====================================================
+   OVERLAY
+   ===================================================== */
+.hero-slider__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--slide-overlay, #000);
+  opacity: var(--slide-overlay-opacity, 0.3);
+  pointer-events: none;
+}
+
+/* =====================================================
+   CONTENT WRAP — flex para posicionar en 9 puntos
+   ===================================================== */
+.hero-slider__content-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: var(--slide-justify, flex-end);
+  align-items: var(--slide-align, center);
+  padding: var(--slide-content-padding, 48px);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.hero-slider__content {
+  display: flex;
+  flex-direction: column;
+  align-items: var(--slide-items-align, flex-end);
+  gap: 0.85rem;
+  max-width: var(--slide-content-max-width, 520px);
+  text-align: var(--slide-text-align, right);
+  pointer-events: auto;
+}
+
+/* =====================================================
+   PRETITLE
+   ===================================================== */
+.hero-slider__pretitle {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--slide-title-color, #fff);
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* =====================================================
+   TÍTULO
+   ===================================================== */
+.hero-slider__title {
+  margin: 0;
+  font-size: var(--slide-title-size, 40px);
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--slide-title-color, #fff);
+}
+
+.hero-slider__title--normal {
+  display: block;
+  font-style: normal;
+}
+
+.hero-slider__title--italic {
+  display: block;
+  font-style: italic;
+}
+
+/* =====================================================
+   SUBTÍTULO
+   ===================================================== */
+.hero-slider__subtitle {
+  margin: 0;
+  font-size: var(--slide-subtitle-size, 16px);
+  line-height: 1.6;
+  color: var(--slide-subtitle-color, #f0ebe3);
+  max-width: 42ch;
+}
+
+/* =====================================================
+   CTAs
+   ===================================================== */
+.hero-slider__cta-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: var(--slide-items-align, flex-end);
+  margin-top: 0.25rem;
+}
+
+.hero-slider__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6em 1.6em;
+  background: var(--slide-btn-bg, #fff);
+  color: var(--slide-btn-text, #111);
+  border: 1px solid var(--slide-btn-border, #fff);
+  border-radius: var(--slide-btn-radius, 24px);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.hero-slider__cta:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.hero-slider__cta--ghost {
+  background: transparent;
+  color: var(--slide-title-color, #fff);
+  border-color: var(--slide-title-color, #fff);
+}
+
+/* =====================================================
+   FLECHAS
+   ===================================================== */
+.hero-slider__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--hs-arrow-bg, rgba(255,255,255,0.15));
+  border: 1px solid rgba(255,255,255,0.25);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hs-arrow-color, #fff);
+  padding: 0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.hero-slider__arrow svg { width: 18px; height: 18px; }
+
+.hero-slider__arrow--prev { left: 16px; }
+.hero-slider__arrow--next { right: 16px; }
+
+.hero-slider__arrow:hover {
+  background: var(--hs-arrow-bg, rgba(255,255,255,0.28));
+  transform: translateY(-50%) scale(1.07);
+}
+
+/* =====================================================
+   DOTS
+   ===================================================== */
+.hero-slider__dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.hero-slider__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--hs-dot-inactive, rgba(255,255,255,0.45));
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease, width 0.25s ease;
+  flex-shrink: 0;
+}
+
+.hero-slider__dot.is-active {
+  background: var(--hs-dot-active, #fff);
+  transform: scale(1.35);
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media screen and (max-width: 768px) {
+  .hero-slider {
+    height: var(--hs-height-mobile);
+    border-radius: calc(var(--hs-radius) * 0.6);
+  }
+
+  .hero-slider__title {
+    font-size: calc(var(--slide-title-size, 40px) * 0.68);
+  }
+
+  .hero-slider__subtitle {
+    font-size: calc(var(--slide-subtitle-size, 16px) * 0.9);
+  }
+
+  .hero-slider__content-wrap {
+    /* En móvil siempre esquina inferior-derecha para máxima legibilidad */
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 24px;
+  }
+
+  .hero-slider__content {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .hero-slider__cta-wrap {
+    justify-content: flex-end;
+  }
+
+  .hero-slider__arrow {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-slider__arrow--prev { left: 8px; }
+  .hero-slider__arrow--next { right: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slider__slide { transition: none; }
+  .hero-slider__cta   { transition: none; }
+  .hero-slider__arrow { transition: none; }
+}
+
+{% endstylesheet %}
+
+<script>
+(function () {
+  const sid     = '{{ section.id }}';
+  const slider  = document.getElementById('hero-slider-' + sid);
+  if (!slider) return;
+
+  const track   = document.getElementById('hs-track-' + sid);
+  const slides  = Array.from(track ? track.querySelectorAll('.hero-slider__slide') : []);
+  const dots    = Array.from(slider.querySelectorAll('[data-hs-dot]'));
+  const btnPrev = slider.querySelector('[data-hs-prev]');
+  const btnNext = slider.querySelector('[data-hs-next]');
+
+  const total        = slides.length;
+  let   current      = 0;
+  let   autoplayTimer = null;
+  const autoplay     = slider.dataset.autoplay === 'true';
+  const autoplayMs   = parseInt(slider.dataset.autoplaySpeed) || 5000;
+
+  if (total <= 1) return; /* Sin lógica si hay 1 sola slide */
+
+  /* ─── Ir a slide ─── */
+  function goTo(index, direction) {
+    if (index === current) return;
+    const prev = current;
+    current = (index + total) % total;
+
+    slides[prev].classList.remove('is-active');
+    slides[prev].setAttribute('aria-hidden', 'true');
+    slides[current].classList.add('is-active');
+    slides[current].setAttribute('aria-hidden', 'false');
+
+    dots.forEach((d, i) => {
+      d.classList.toggle('is-active', i === current);
+      d.setAttribute('aria-selected', String(i === current));
+    });
+  }
+
+  /* ─── Autoplay ─── */
+  function startAutoplay() {
+    if (!autoplay) return;
+    stopAutoplay();
+    autoplayTimer = setInterval(() => goTo(current + 1), autoplayMs);
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplayTimer);
+  }
+
+  /* ─── Botones ─── */
+  if (btnPrev) btnPrev.addEventListener('click', () => { goTo(current - 1); startAutoplay(); });
+  if (btnNext) btnNext.addEventListener('click', () => { goTo(current + 1); startAutoplay(); });
+
+  /* ─── Dots ─── */
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      goTo(parseInt(dot.dataset.hsDot));
+      startAutoplay();
+    });
+  });
+
+  /* ─── Swipe táctil ─── */
+  let touchStartX = 0;
+  let touchStartY = 0;
+  slider.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  slider.addEventListener('touchend', e => {
+    const dx = touchStartX - e.changedTouches[0].clientX;
+    const dy = Math.abs(touchStartY - e.changedTouches[0].clientY);
+    if (Math.abs(dx) > 40 && dy < 60) {
+      goTo(dx > 0 ? current + 1 : current - 1);
+      startAutoplay();
+    }
+  }, { passive: true });
+
+  /* ─── Pausa al hover ─── */
+  if (autoplay) {
+    slider.addEventListener('mouseenter', stopAutoplay);
+    slider.addEventListener('mouseleave', startAutoplay);
+    slider.addEventListener('focusin',    stopAutoplay);
+    slider.addEventListener('focusout',   startAutoplay);
+  }
+
+  /* ─── Keyboard ─── */
+  slider.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { goTo(current - 1); startAutoplay(); }
+    if (e.key === 'ArrowRight') { goTo(current + 1); startAutoplay(); }
+  });
+
+  /* ─── Intersection observer: pausa fuera del viewport ─── */
+  if ('IntersectionObserver' in window && autoplay) {
+    new IntersectionObserver(entries => {
+      entries[0].isIntersecting ? startAutoplay() : stopAutoplay();
+    }, { threshold: 0.3 }).observe(slider);
+  } else {
+    startAutoplay();
+  }
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "V2 Hero Slider",
+  "tag": "section",
+  "class": "section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Dimensiones"
+    },
+    {
+      "type": "range",
+      "id": "slider_height",
+      "min": 300,
+      "max": 1000,
+      "step": 20,
+      "unit": "px",
+      "label": "Altura desktop",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "slider_height_mobile",
+      "min": 200,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "label": "Altura móvil",
+      "default": 420
+    },
+    {
+      "type": "range",
+      "id": "slider_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez de esquinas",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Activar autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Velocidad del autoplay",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "transition_speed",
+      "min": 200,
+      "max": 1200,
+      "step": 100,
+      "unit": "ms",
+      "label": "Velocidad de la transición",
+      "default": 600
+    },
+    {
+      "type": "header",
+      "content": "Flechas de navegación"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg",
+      "label": "Fondo de las flechas",
+      "default": "#00000040"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Color del ícono",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Dots"
+    },
+    {
+      "type": "color",
+      "id": "dot_active_color",
+      "label": "Color dot activo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "dot_inactive_color",
+      "label": "Color dot inactivo",
+      "default": "#FFFFFF80"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen del slide"
+        },
+        {
+          "type": "header",
+          "content": "Overlay"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Color del overlay",
+          "default": "#2A1108"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 90,
+          "step": 5,
+          "unit": "%",
+          "label": "Opacidad del overlay",
+          "default": 30
+        },
+        {
+          "type": "header",
+          "content": "Posición del contenido"
+        },
+        {
+          "type": "select",
+          "id": "content_x",
+          "label": "Posición horizontal",
+          "options": [
+            { "value": "left",   "label": "← Izquierda" },
+            { "value": "center", "label": "↔ Centro" },
+            { "value": "right",  "label": "→ Derecha" }
+          ],
+          "default": "right"
+        },
+        {
+          "type": "select",
+          "id": "content_y",
+          "label": "Posición vertical",
+          "options": [
+            { "value": "top",    "label": "↑ Arriba" },
+            { "value": "middle", "label": "↕ Medio" },
+            { "value": "bottom", "label": "↓ Abajo" }
+          ],
+          "default": "middle"
+        },
+        {
+          "type": "range",
+          "id": "content_padding",
+          "min": 16,
+          "max": 120,
+          "step": 4,
+          "unit": "px",
+          "label": "Padding del contenido",
+          "default": 60
+        },
+        {
+          "type": "range",
+          "id": "content_max_width",
+          "min": 200,
+          "max": 900,
+          "step": 20,
+          "unit": "px",
+          "label": "Ancho máximo del bloque de texto",
+          "default": 520
+        },
+        {
+          "type": "header",
+          "content": "Textos"
+        },
+        {
+          "type": "text",
+          "id": "pretitle",
+          "label": "Pretítulo (opcional)",
+        },
+        {
+          "type": "text",
+          "id": "title_normal",
+          "label": "Título — línea normal",
+          "default": "Descubre el arte mexicano"
+        },
+        {
+          "type": "text",
+          "id": "title_italic",
+          "label": "Título — línea en cursiva",
+          "default": "hecho a mano con Pakalita"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "min": 18,
+          "max": 80,
+          "step": 2,
+          "unit": "px",
+          "label": "Tamaño del título",
+          "default": 44
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color del título",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtítulo",
+        },
+        {
+          "type": "range",
+          "id": "subtitle_size",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Tamaño del subtítulo",
+          "default": 16
+        },
+        {
+          "type": "color",
+          "id": "subtitle_color",
+          "label": "Color del subtítulo",
+          "default": "#F0EBE3"
+        },
+        {
+          "type": "header",
+          "content": "Botón principal"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Texto del botón",
+          "default": "Ver colección"
+        },
+        {
+          "type": "url",
+          "id": "btn_url",
+          "label": "URL del botón"
+        },
+        {
+          "type": "color",
+          "id": "btn_bg",
+          "label": "Fondo del botón",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Color del texto",
+          "default": "#2A1108"
+        },
+        {
+          "type": "color",
+          "id": "btn_border_color",
+          "label": "Color del borde",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "range",
+          "id": "btn_radius",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Redondez del botón",
+          "default": 24
+        },
+        {
+          "type": "header",
+          "content": "Botón secundario (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "btn2_label",
+          "label": "Texto del botón secundario",
+        },
+        {
+          "type": "url",
+          "id": "btn2_url",
+          "label": "URL del botón secundario"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Hero Slider",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title_normal": "Descubre el arte mexicano",
+            "title_italic": "hecho a mano con Pakalita",
+            "btn_label": "Ver colección",
+            "content_x": "right",
+            "content_y": "middle"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,7 +1,7 @@
 {% comment %}
   Section: Featured Collection
-  Grid de productos desktop + carrusel en móvil
-  Con wishlist, add-to-cart hover, navegación y botón "Ver todos"
+  Carrusel con Flexbox — desktop y móvil
+  Sin grid. Transform-based carousel + dots + flechas
 {% endcomment %}
 
 {%- liquid
@@ -42,18 +42,8 @@
       <h2 class="featured-collection__heading">{{ section.settings.title }}</h2>
     {%- endif -%}
 
-    <div class="featured-collection__track-wrapper">
-
-      {%- comment %} Botones nav desktop {%- endcomment %}
-      <button
-        class="featured-collection__nav featured-collection__nav--prev"
-        aria-label="Anterior"
-        type="button"
-        data-carousel-prev="{{ section.id }}"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-
+    {%- comment %} Viewport: oculta el overflow del track {%- endcomment %}
+    <div class="featured-collection__viewport" id="fc-viewport-{{ section.id }}">
       <div
         class="featured-collection__track"
         id="fc-track-{{ section.id }}"
@@ -71,7 +61,7 @@
                       | image_tag:
                         loading: 'lazy',
                         widths: '400, 600, 800',
-                        sizes: '(max-width: 600px) 80vw, (max-width: 900px) 40vw, 25vw',
+                        sizes: '(max-width: 600px) 80vw, 30vw',
                         class: 'fc-card__image',
                         alt: product.title
                     }}
@@ -82,7 +72,7 @@
                         | image_tag:
                           loading: 'lazy',
                           widths: '400, 600, 800',
-                          sizes: '(max-width: 600px) 80vw, (max-width: 900px) 40vw, 25vw',
+                          sizes: '(max-width: 600px) 80vw, 30vw',
                           class: 'fc-card__image fc-card__image--hover',
                           alt: product.title
                       }}
@@ -94,38 +84,28 @@
                   {%- endif -%}
                 </a>
 
-                {%- comment %} Wishlist {%- endcomment %}
                 {%- if section.settings.show_wishlist -%}
-                  <button
-                    class="fc-card__wishlist"
-                    aria-label="Guardar {{ product.title }}"
-                    type="button"
-                    data-wishlist="{{ product.id }}"
-                  >
+                  <button class="fc-card__wishlist" aria-label="Guardar {{ product.title }}" type="button" data-wishlist="{{ product.id }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                   </button>
                 {%- endif -%}
 
-                {%- comment %} Badge sale/new {%- endcomment %}
                 {%- if product.compare_at_price > product.price -%}
                   <span class="fc-card__badge fc-card__badge--sale">
                     {{- 'products.product.on_sale' | t | default: 'Sale' -}}
                   </span>
                 {%- endif -%}
 
-                {%- comment %} Add to cart hover {%- endcomment %}
                 {%- if section.settings.show_add_to_cart -%}
                   {%- if product.variants.size == 1 and product.variants.first.available -%}
                     <form action="/cart/add" method="post" class="fc-card__add-form">
                       <input type="hidden" name="id" value="{{ product.variants.first.id }}">
                       <input type="hidden" name="quantity" value="1">
-                      <button type="submit" class="fc-card__add-btn">
-                        {{ add_to_cart_label }}
-                      </button>
+                      <button type="submit" class="fc-card__add-btn">{{ add_to_cart_label }}</button>
                     </form>
                   {%- else -%}
                     <a href="{{ product.url }}" class="fc-card__add-btn fc-card__add-btn--link">
-                      {{ 'products.product.choose_options' | t | default: 'Ver opciones' }}
+                      {{section.settings.add_to_cart_label_options}}
                     </a>
                   {%- endif -%}
                 {%- endif -%}
@@ -133,7 +113,7 @@
 
               <div class="fc-card__info">
                 <a href="{{ product.url }}" class="fc-card__title-link">
-                  <h3 class="fc-card__title">{{ product.title }}</h3>
+                  <h3 class="fc-card__title">{{ product.title |  truncate: 25}}</h3>
                 </a>
                 <div class="fc-card__price">
                   {%- if product.compare_at_price > product.price -%}
@@ -146,13 +126,10 @@
               </div>
             </div>
           {%- else -%}
-            {%- comment %} Placeholder cuando la colección está vacía {%- endcomment %}
             {%- for i in (1..columns_desktop) -%}
               <div class="featured-collection__card">
                 <div class="fc-card__image-wrap">
-                  <div class="fc-card__placeholder">
-                    {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
-                  </div>
+                  <div class="fc-card__placeholder">{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}</div>
                 </div>
                 <div class="fc-card__info">
                   <h3 class="fc-card__title">Producto 0{{ i }}</h3>
@@ -165,9 +142,7 @@
           {%- for i in (1..columns_desktop) -%}
             <div class="featured-collection__card">
               <div class="fc-card__image-wrap">
-                <div class="fc-card__placeholder">
-                  {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
-                </div>
+                <div class="fc-card__placeholder">{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}</div>
               </div>
               <div class="fc-card__info">
                 <h3 class="fc-card__title">Producto 0{{ i }}</h3>
@@ -177,9 +152,24 @@
           {%- endfor -%}
         {%- endif -%}
       </div>
+    </div>
+
+    {%- comment %} Controles: flechas + dots en la misma fila {%- endcomment %}
+    <div class="featured-collection__controls">
+      <button
+        class="featured-collection__arrow featured-collection__arrow--prev"
+        aria-label="Anterior"
+        type="button"
+        data-carousel-prev="{{ section.id }}"
+        disabled
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="featured-collection__dots" id="fc-dots-{{ section.id }}" aria-hidden="true"></div>
 
       <button
-        class="featured-collection__nav featured-collection__nav--next"
+        class="featured-collection__arrow featured-collection__arrow--next"
         aria-label="Siguiente"
         type="button"
         data-carousel-next="{{ section.id }}"
@@ -188,14 +178,9 @@
       </button>
     </div>
 
-    {%- comment %} Dots (solo móvil) {%- endcomment %}
-    <div class="featured-collection__dots" id="fc-dots-{{ section.id }}" aria-hidden="true"></div>
-
     {%- if show_view_all and collection != blank -%}
       <div class="featured-collection__footer">
-        <a href="{{ collection.url }}" class="featured-collection__view-all">
-          {{ view_all_label }}
-        </a>
+        <a href="{{ collection.url }}" class="featured-collection__view-all">{{ view_all_label }}</a>
       </div>
     {%- endif -%}
 
@@ -205,7 +190,7 @@
 {% stylesheet %}
 
 /* =====================================================
-   SECTION BASE
+   SECTION
    ===================================================== */
 .featured-collection-section {
   background: var(--fc-section-bg);
@@ -220,31 +205,44 @@
   font-weight: 400;
   letter-spacing: -0.01em;
   color: var(--fc-title-color);
-  margin: 0 0 2rem;
+  margin: 0 0 1.75rem;
 }
 
 /* =====================================================
-   TRACK WRAPPER (posición relativa para los nav btns)
+   VIEWPORT — recorta lo que sale del carrusel
    ===================================================== */
-.featured-collection__track-wrapper {
-  position: relative;
+.featured-collection__viewport {
+  overflow: hidden;
+  width: 100%;
+  padding: 0px var(--padding-container);
+  max-width:var(--container-v2);
+  margin: auto;
 }
 
 /* =====================================================
-   TRACK — DESKTOP: grid, MOBILE: scroll horizontal
+   TRACK — Flex puro, sin grid
+   El JS mueve con transform translateX
    ===================================================== */
 .featured-collection__track {
-  display: grid;
-  grid-template-columns: repeat(var(--fc-columns), 1fr);
+  display: flex;
+  flex-wrap: nowrap;
   gap: var(--fc-gap);
-  max-width:1300px;
-  margin:auto;
+  will-change: transform;
+  transition: transform 0.42s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /*
+  
+  */
 }
 
 /* =====================================================
    CARD
+   flex-basis = (viewport - gaps_entre_visibles) / columnas
    ===================================================== */
 .featured-collection__card {
+  flex: 0 0 calc(
+    (100% - (var(--fc-columns) - 1) * var(--fc-gap)) / var(--fc-columns)
+  );
+  min-width: 0;
   background: var(--fc-card-bg);
   border-radius: var(--fc-radius);
   overflow: hidden;
@@ -256,7 +254,9 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-/* ---- Imagen ---- */
+/* =====================================================
+   IMAGEN
+   ===================================================== */
 .fc-card__image-wrap {
   position: relative;
   overflow: hidden;
@@ -276,7 +276,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: opacity 0.4s ease, transform 0.5s ease;
+  transition: opacity 0.4s ease;
 }
 
 .fc-card__image--hover {
@@ -285,12 +285,8 @@
   opacity: 0;
 }
 
-.fc-card__image-link:hover .fc-card__image:not(.fc-card__image--hover) {
-  opacity: 0;
-}
-.fc-card__image-link:hover .fc-card__image--hover {
-  opacity: 1;
-}
+.fc-card__image-link:hover .fc-card__image:not(.fc-card__image--hover) { opacity: 0; }
+.fc-card__image-link:hover .fc-card__image--hover { opacity: 1; }
 
 .fc-card__placeholder {
   width: 100%;
@@ -300,13 +296,16 @@
   justify-content: center;
   background: #f0ece6;
 }
+
 .fc-card__placeholder .placeholder-svg {
   width: 55%;
   height: 55%;
   opacity: 0.3;
 }
 
-/* ---- Wishlist ---- */
+/* =====================================================
+   WISHLIST
+   ===================================================== */
 .fc-card__wishlist {
   position: absolute;
   top: 10px;
@@ -325,22 +324,14 @@
   z-index: 2;
   padding: 0;
 }
-.fc-card__wishlist:hover {
-  transform: scale(1.12);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.18);
-}
-.fc-card__wishlist.is-active svg {
-  fill: currentColor;
-  color: #c0392b;
-  stroke: #c0392b;
-}
-.fc-card__wishlist svg {
-  width: 16px;
-  height: 16px;
-  color: #333;
-}
 
-/* ---- Badges ---- */
+.fc-card__wishlist:hover { transform: scale(1.12); box-shadow: 0 3px 10px rgba(0,0,0,0.18); }
+.fc-card__wishlist.is-active svg { fill: #c0392b; color: #c0392b; stroke: #c0392b; }
+.fc-card__wishlist svg { width: 16px; height: 16px; color: #333; }
+
+/* =====================================================
+   BADGE
+   ===================================================== */
 .fc-card__badge {
   position: absolute;
   top: 10px;
@@ -354,16 +345,12 @@
   z-index: 2;
   line-height: 1.4;
 }
-.fc-card__badge--sale {
-  background: #c0392b;
-  color: #fff;
-}
-.fc-card__badge--new {
-  background: #2c3e50;
-  color: #fff;
-}
 
-/* ---- Add to cart (aparece en hover) ---- */
+.fc-card__badge--sale { background: #c0392b; color: #fff; }
+
+/* =====================================================
+   ADD TO CART
+   ===================================================== */
 .fc-card__add-form,
 .fc-card__add-btn--link {
   position: absolute;
@@ -375,12 +362,12 @@
 
 .fc-card__add-btn {
   display: block;
-  width: 100%;
+  width: 90%;
+  margin:auto;
   padding: 0.75rem 1rem;
   background: var(--fc-add-bg);
   color: var(--fc-add-text);
   border: none;
-  border-radius: 0 0 var(--fc-add-radius) var(--fc-add-radius);
   cursor: pointer;
   font-size: 0.75rem;
   font-weight: 600;
@@ -407,23 +394,26 @@
   line-height: 1;
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  border-radius: 0 0 var(--fc-add-radius) var(--fc-add-radius);
 }
 
 .fc-card__image-wrap:hover .fc-card__add-btn,
 .fc-card__image-wrap:hover .fc-card__add-btn--link {
-  transform: translateY(0);
+  transform: translateY(-20px);
 }
 
-/* ---- Info ---- */
+/* =====================================================
+   INFO
+   ===================================================== */
 .fc-card__info {
-  padding: 0.85rem 0.9rem 1rem;
+  padding: 20px;
+  border: solid 1px #ececec;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.fc-card__title-link {
-  text-decoration: none;
-  color: inherit;
-}
+.fc-card__title-link { text-decoration: none; color: inherit; }
 
 .fc-card__title {
   font-size: 0.9rem;
@@ -443,86 +433,75 @@
   align-items: baseline;
 }
 
-.fc-card__price--compare {
-  color: #999;
-  font-weight: 400;
-}
-
-.fc-card__price--sale {
-  color: #c0392b;
-  font-weight: 600;
-}
+.fc-card__price--compare { color: #999; font-weight: 400; }
+.fc-card__price--sale    { color: #c0392b; font-weight: 600; }
 
 /* =====================================================
-   NAV BUTTONS (flechas)
+   CONTROLES — flex row centrado
    ===================================================== */
-.featured-collection__nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-60%);
-  z-index: 10;
+.featured-collection__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.featured-collection__arrow {
+  flex-shrink: 0;
   width: 36px;
   height: 36px;
   border-radius: 50%;
   background: #fff;
   border: 1px solid #e0ddd8;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--fc-nav-color);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
   padding: 0;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
 }
 
-.featured-collection__nav svg {
-  width: 18px;
-  height: 18px;
+.featured-collection__arrow svg { width: 16px; height: 16px; }
+
+.featured-collection__arrow:hover:not(:disabled) {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+  transform: scale(1.07);
 }
 
-.featured-collection__nav--prev { left: -18px; }
-.featured-collection__nav--next { right: -18px; }
-
-.featured-collection__nav:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.16);
-  transform: translateY(-60%) scale(1.06);
-}
-
-.featured-collection__nav:disabled {
-  opacity: 0.35;
+.featured-collection__arrow:disabled {
+  opacity: 0.28;
   cursor: default;
-  transform: translateY(-60%);
 }
 
-/* =====================================================
-   DOTS (móvil)
-   ===================================================== */
+/* ---- Dots ---- */
 .featured-collection__dots {
-  display: none;
-  justify-content: center;
+  display: flex;
+  align-items: center;
   gap: 6px;
-  margin-top: 1rem;
 }
 
 .featured-collection__dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #ccc;
+  background: #d0cdc9;
   border: none;
   padding: 0;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
+  flex-shrink: 0;
 }
 
 .featured-collection__dot.is-active {
   background: var(--fc-nav-color);
-  transform: scale(1.3);
+  transform: scale(1.35);
 }
 
 /* =====================================================
-   FOOTER / Ver todos
+   VER TODOS
    ===================================================== */
 .featured-collection__footer {
   display: flex;
@@ -547,162 +526,125 @@
   opacity: 0.85;
   transform: translateY(-1px);
 }
-
-/* =====================================================
-   RESPONSIVE
-   ===================================================== */
-
-/* Tablet: 2 columnas */
-@media screen and (max-width: 900px) {
-  .featured-collection__track {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .featured-collection__nav {
-    display: none;
-  }
+h3.fc-card__title {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
 }
-
-/* Móvil: carrusel de scroll horizontal */
+/* =====================================================
+   MÓVIL — card más ancha
+   ===================================================== */
 @media screen and (max-width: 600px) {
-  .featured-collection__track-wrapper {
-    overflow: hidden;
-  }
-
-  .featured-collection__track {
-    display: flex;
-    flex-wrap: nowrap;
-    grid-template-columns: unset;
-    gap: var(--fc-gap);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    scroll-behavior: smooth;
-    padding-bottom: 4px;
-  }
-
-  .featured-collection__track::-webkit-scrollbar {
-    display: none;
-  }
-
   .featured-collection__card {
     flex: 0 0 78vw;
-    max-width: 320px;
-    scroll-snap-align: start;
-  }
-
-  .featured-collection__nav {
-    display: flex;
-  }
-
-  .featured-collection__nav--prev { left: 4px; }
-  .featured-collection__nav--next { right: 4px; }
-
-  .featured-collection__dots {
-    display: flex;
+    max-width: 300px;
   }
 }
 
-/* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
+  .featured-collection__track { transition: none; }
   .fc-card__add-btn,
   .fc-card__add-btn--link,
-  .fc-card__image,
-  .featured-collection__view-all,
-  .featured-collection__nav {
-    transition: none;
-  }
+  .fc-card__image { transition: none; }
 }
 
 {% endstylesheet %}
 
 <script>
 (function () {
-  const sid = '{{ section.id }}';
-  const track = document.getElementById('fc-track-' + sid);
-  const dotsContainer = document.getElementById('fc-dots-' + sid);
-  const btnPrev = document.querySelector('[data-carousel-prev="' + sid + '"]');
-  const btnNext = document.querySelector('[data-carousel-next="' + sid + '"]');
+  const sid      = '{{ section.id }}';
+  const viewport = document.getElementById('fc-viewport-' + sid);
+  const track    = document.getElementById('fc-track-' + sid);
+  const dotsWrap = document.getElementById('fc-dots-' + sid);
+  const btnPrev  = document.querySelector('[data-carousel-prev="' + sid + '"]');
+  const btnNext  = document.querySelector('[data-carousel-next="' + sid + '"]');
 
-  if (!track) return;
+  if (!track || !viewport) return;
 
   const cards = Array.from(track.children);
-  const isMobile = () => window.innerWidth <= 600;
+  let current = 0;
 
-  // ---- Wishlist toggle ----
+  /* ─── Cuántas cards son visibles según CSS variable ─── */
+  function visibleCount() {
+    const cols = parseInt(
+      getComputedStyle(track.closest('.featured-collection-section'))
+        .getPropertyValue('--fc-columns')
+    ) || 3;
+    return window.innerWidth <= 600 ? 1 : cols;
+  }
+
+  function totalPages() {
+    return Math.max(1, Math.ceil(cards.length / visibleCount()));
+  }
+
+  /* ─── Mover el track con transform ─── */
+  function goTo(page) {
+    const pages = totalPages();
+    page = Math.max(0, Math.min(page, pages - 1));
+    current = page;
+
+    const cols  = visibleCount();
+    const gap   = parseFloat(getComputedStyle(track).gap) || 0;
+    const cardW = cards[0] ? cards[0].offsetWidth : 0;
+    const offset = page * cols * (cardW + gap);
+
+    track.style.transform = 'translateX(-' + offset + 'px)';
+
+    if (btnPrev) btnPrev.disabled = current === 0;
+    if (btnNext) btnNext.disabled = current >= pages - 1;
+
+    dotsWrap.querySelectorAll('.featured-collection__dot')
+      .forEach((d, i) => d.classList.toggle('is-active', i === current));
+  }
+
+  /* ─── Construir dots ─── */
+  function buildDots() {
+    dotsWrap.innerHTML = '';
+    const pages = totalPages();
+    if (pages <= 1) return;
+    for (let i = 0; i < pages; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'featured-collection__dot' + (i === 0 ? ' is-active' : '');
+      dot.setAttribute('aria-label', 'Página ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    }
+  }
+
+  /* ─── Swipe táctil ─── */
+  let touchStartX = 0;
+  viewport.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', e => {
+    const delta = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(delta) > 40) goTo(delta > 0 ? current + 1 : current - 1);
+  }, { passive: true });
+
+  /* ─── Botones ─── */
+  if (btnPrev) btnPrev.addEventListener('click', () => goTo(current - 1));
+  if (btnNext) btnNext.addEventListener('click', () => goTo(current + 1));
+
+  /* ─── Wishlist ─── */
   document.querySelectorAll('[data-wishlist]').forEach(btn => {
     btn.addEventListener('click', () => btn.classList.toggle('is-active'));
   });
 
-  // ---- Dots (solo móvil) ----
-  function buildDots() {
-    dotsContainer.innerHTML = '';
-    if (!isMobile()) return;
-    cards.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'featured-collection__dot' + (i === 0 ? ' is-active' : '');
-      dot.setAttribute('aria-label', 'Ir al producto ' + (i + 1));
-      dot.addEventListener('click', () => scrollToCard(i));
-      dotsContainer.appendChild(dot);
-    });
-  }
-
-  function updateDots(index) {
-    const dots = dotsContainer.querySelectorAll('.featured-collection__dot');
-    dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
-  }
-
-  function scrollToCard(index) {
-    const card = cards[index];
-    if (!card) return;
-    track.scrollTo({ left: card.offsetLeft - parseInt(getComputedStyle(track).gap || 0), behavior: 'smooth' });
-  }
-
-  function getCurrentIndex() {
-    const gap = parseInt(getComputedStyle(track).gap) || 0;
-    return cards.findIndex((card, i) => {
-      const left = card.offsetLeft - gap;
-      return Math.abs(track.scrollLeft - left) < card.offsetWidth / 2;
-    });
-  }
-
-  // ---- Nav buttons ----
-  if (btnPrev) {
-    btnPrev.addEventListener('click', () => {
-      if (!isMobile()) return;
-      const idx = Math.max(0, getCurrentIndex() - 1);
-      scrollToCard(idx);
-    });
-  }
-
-  if (btnNext) {
-    btnNext.addEventListener('click', () => {
-      if (!isMobile()) return;
-      const idx = Math.min(cards.length - 1, getCurrentIndex() + 1);
-      scrollToCard(idx);
-    });
-  }
-
-  // ---- Scroll listener → actualiza dots y nav ----
-  let scrollTimer;
-  track.addEventListener('scroll', () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      const idx = getCurrentIndex();
-      if (idx >= 0) updateDots(idx);
-      if (btnPrev) btnPrev.disabled = idx <= 0;
-      if (btnNext) btnNext.disabled = idx >= cards.length - 1;
-    }, 60);
-  }, { passive: true });
-
-  // ---- Init ----
-  buildDots();
-  if (btnPrev) btnPrev.disabled = true;
-
-  window.addEventListener('resize', () => {
+  /* ─── Init / Resize ─── */
+  function init() {
+    current = 0;
+    track.style.transform = 'translateX(0)';
     buildDots();
-    if (btnPrev) btnPrev.disabled = getCurrentIndex() <= 0;
-    if (btnNext) btnNext.disabled = getCurrentIndex() >= cards.length - 1;
+    if (btnPrev) btnPrev.disabled = true;
+    if (btnNext) btnNext.disabled = totalPages() <= 1;
+  }
+
+  init();
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(init, 120);
   });
 
 })();
@@ -710,12 +652,10 @@
 
 {% schema %}
 {
-  "name": "V2 Featured Products",
+  "name": "V2 Featured Collection",
   "tag": "section",
   "class": "section",
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
+  "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
     {
       "type": "text",
@@ -735,7 +675,7 @@
       "max": 24,
       "step": 1,
       "label": "Número de productos a mostrar",
-      "default": 6
+      "default": 8
     },
     {
       "type": "range",
@@ -743,7 +683,7 @@
       "min": 2,
       "max": 5,
       "step": 1,
-      "label": "Columnas en desktop",
+      "label": "Cards visibles a la vez (desktop)",
       "default": 3
     },
     {
@@ -763,7 +703,7 @@
     {
       "type": "color",
       "id": "card_bg",
-      "label": "Color de fondo de la tarjeta",
+      "label": "Fondo de la tarjeta",
       "default": "#FFFFFF"
     },
     {
@@ -779,7 +719,7 @@
     {
       "type": "color",
       "id": "product_title_color",
-      "label": "Color del título del producto",
+      "label": "Color del título",
       "default": "#111111"
     },
     {
@@ -801,7 +741,7 @@
     {
       "type": "checkbox",
       "id": "show_add_to_cart",
-      "label": "Mostrar botón 'Agregar al carrito'",
+      "label": "Mostrar 'Agregar al carrito'",
       "default": true
     },
     {
@@ -811,15 +751,21 @@
       "default": "AGREGAR AL CARRITO"
     },
     {
+      "type": "text",
+      "id": "add_to_cart_label_options",
+      "label": "Texto del botón con opciones en producto",
+      "default": "VER TODAS LAS OPCIONES"
+    },
+    {
       "type": "color",
       "id": "add_bg_color",
-      "label": "Color de fondo del botón",
+      "label": "Fondo del botón",
       "default": "#FFFFFF"
     },
     {
       "type": "color",
       "id": "add_text_color",
-      "label": "Color del texto del botón",
+      "label": "Texto del botón",
       "default": "#111111"
     },
     {
@@ -834,12 +780,12 @@
     },
     {
       "type": "header",
-      "content": "Navegación del carrusel"
+      "content": "Navegación"
     },
     {
       "type": "color",
       "id": "nav_color",
-      "label": "Color de las flechas y dots",
+      "label": "Color de flechas y dots",
       "default": "#333333"
     },
     {
@@ -849,7 +795,7 @@
     {
       "type": "checkbox",
       "id": "show_view_all",
-      "label": "Mostrar botón 'Ver todos'",
+      "label": "Mostrar 'Ver todos'",
       "default": true
     },
     {
@@ -861,13 +807,13 @@
     {
       "type": "color",
       "id": "btn_bg_color",
-      "label": "Color de fondo del botón",
+      "label": "Fondo del botón",
       "default": "#A0522D"
     },
     {
       "type": "color",
       "id": "btn_text_color",
-      "label": "Color del texto",
+      "label": "Texto del botón",
       "default": "#FFFFFF"
     },
     {
@@ -887,7 +833,7 @@
     {
       "type": "color",
       "id": "section_bg",
-      "label": "Color de fondo de la sección",
+      "label": "Fondo de la sección",
       "default": "#FFFFFF"
     },
     {
@@ -918,9 +864,7 @@
     }
   ],
   "presets": [
-    {
-      "name": "V2 Featured Products"
-    }
+    { "name": "V2 Featured Collection" }
   ]
 }
 {% endschema %}

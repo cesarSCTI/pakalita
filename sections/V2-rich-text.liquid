@@ -1,0 +1,413 @@
+{% comment %}
+  Section: Rich Text Split
+  Dos columnas: título editorial izquierda + párrafo derecha
+  Flexbox responsive
+{% endcomment %}
+
+<section
+  class="rich-text-split"
+  id="rich-text-split-{{ section.id }}"
+  style="
+    --rts-bg: {{ section.settings.bg_color }};
+    --rts-title-color: {{ section.settings.title_color }};
+    --rts-title-italic-color: {{ section.settings.title_italic_color }};
+    --rts-body-color: {{ section.settings.body_color }};
+    --rts-divider-color: {{ section.settings.divider_color }};
+    --rts-title-size: {{ section.settings.title_size }}px;
+    --rts-body-size: {{ section.settings.body_size }}px;
+    --rts-padding-top: {{ section.settings.padding_top }}px;
+    --rts-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --rts-col-gap: {{ section.settings.col_gap }}px;
+  "
+>
+  <div class="rich-text-split__inner page-width">
+
+    {%- comment %} Columna izquierda: título {%- endcomment %}
+    <div class="rich-text-split__col rich-text-split__col--left">
+      {%- if section.settings.pretitle != blank -%}
+        <p class="rich-text-split__pretitle">{{ section.settings.pretitle }}</p>
+      {%- endif -%}
+
+      <h2 class="rich-text-split__title">
+        {%- if section.settings.title_normal != blank -%}
+          <span class="rich-text-split__title--normal">{{ section.settings.title_normal }}</span>
+        {%- endif -%}
+        {%- if section.settings.title_italic != blank -%}
+          <em class="rich-text-split__title--italic">{{ section.settings.title_italic }}</em>
+        {%- endif -%}
+      </h2>
+
+      {%- if section.settings.show_cta and section.settings.cta_label != blank -%}
+        <a
+          href="{{ section.settings.cta_url | default: '#' }}"
+          class="rich-text-split__cta"
+        >
+          {{ section.settings.cta_label }}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment %} Divisor vertical (solo desktop) {%- endcomment %}
+    {%- if section.settings.show_divider -%}
+      <div class="rich-text-split__divider" aria-hidden="true"></div>
+    {%- endif -%}
+
+    {%- comment %} Columna derecha: cuerpo {%- endcomment %}
+    <div class="rich-text-split__col rich-text-split__col--right">
+      {%- if section.settings.body_text != blank -%}
+        <div class="rich-text-split__body">
+          {{ section.settings.body_text }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.body_text_2 != blank -%}
+        <div class="rich-text-split__body rich-text-split__body--secondary">
+          {{ section.settings.body_text_2 }}
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+
+.rich-text-split {
+  background: var(--rts-bg);
+  padding-top: var(--rts-padding-top);
+  padding-bottom: var(--rts-padding-bottom);
+}
+
+/* =====================================================
+   FLEX CONTAINER
+   ===================================================== */
+.rich-text-split__inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--rts-col-gap);
+  max-width: var(--container-v2);
+  margin:auto;
+  padding: 0px var(--padding-container);
+}
+
+/* =====================================================
+   COLUMNAS
+   ===================================================== */
+.rich-text-split__col {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.rich-text-split__col--left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.rich-text-split__col--right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* =====================================================
+   PRETITLE
+   ===================================================== */
+.rich-text-split__pretitle {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rts-body-color);
+  opacity: 0.55;
+  margin: 0;
+}
+
+/* =====================================================
+   TÍTULO
+   ===================================================== */
+.rich-text-split__title {
+  margin: 0;
+  font-size: var(--rts-title-size);
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--rts-title-color);
+}
+
+.rich-text-split__title--normal {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.rich-text-split__title--italic {
+  display: block;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--rts-title-italic-color);
+}
+
+/* =====================================================
+   CTA
+   ===================================================== */
+.rich-text-split__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--rts-title-color);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: gap 0.25s ease, opacity 0.2s ease;
+}
+
+.rich-text-split__cta:hover {
+  gap: 10px;
+  opacity: 0.7;
+}
+
+.rich-text-split__cta svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   DIVISOR VERTICAL
+   ===================================================== */
+.rich-text-split__divider {
+  flex-shrink: 0;
+  width: 1px;
+  align-self: stretch;
+  background: var(--rts-divider-color);
+  opacity: 0.2;
+  margin: 0 0.5rem;
+}
+
+/* =====================================================
+   CUERPO
+   ===================================================== */
+.rich-text-split__body {
+  font-size: var(--rts-body-size);
+  line-height: 1.7;
+  color: var(--rts-body-color);
+  margin: 0;
+}
+
+.rich-text-split__body p {
+  margin: 0 0 0.6em;
+}
+
+.rich-text-split__body p:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text-split__body--secondary {
+  opacity: 0.6;
+  font-size: calc(var(--rts-body-size) - 1px);
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media screen and (max-width: 720px) {
+  .rich-text-split__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.8rem;
+  }
+
+  .rich-text-split__col {
+    flex: unset;
+    width: 100%;
+  }
+
+  .rich-text-split__divider {
+    width: 40px;
+    height: 1px;
+    align-self: unset;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rich-text-split__cta {
+    transition: none;
+  }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "V2 Rich Text Split",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Columna izquierda — Título"
+    },
+    {
+      "type": "text",
+      "id": "pretitle",
+      "label": "Pretítulo (opcional)",
+    },
+    {
+      "type": "text",
+      "id": "title_normal",
+      "label": "Título — línea normal",
+      "default": "Piezas artesanales únicas"
+    },
+    {
+      "type": "text",
+      "id": "title_italic",
+      "label": "Título — línea en cursiva",
+      "default": "creadas en México."
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 18,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Mostrar botón CTA",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto del CTA",
+      "default": "Conoce más"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "URL del CTA"
+    },
+    {
+      "type": "header",
+      "content": "Columna derecha — Texto"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Párrafo principal",
+      "default": "<p>Abrazamos el arte mexicano auténtico, hecho a mano en colaboración con familias artesanas de comunidades indígenas de México.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text_2",
+      "label": "Párrafo secundario (opcional)",
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño del texto",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Divisor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Mostrar línea divisora entre columnas",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color del divisor",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fondo de la sección",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título (normal)",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "title_italic_color",
+      "label": "Color del título (cursiva)",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Color del texto del cuerpo",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "col_gap",
+      "min": 16,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "label": "Espacio entre columnas",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Rich Text Split"
+    }
+  ]
+}
+{% endschema %}

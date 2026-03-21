@@ -21053,17 +21053,6 @@ footer > *:nth-child(1){
   }
 }
 
-header{
-  background: #c48e7a
-  /*
-		header an object
-	*/
-  /* tt-box-info */
-  /* tt-cart-layout */
-  /* tt-search */
-  /* tt-social-icon */
-  /* tt-listing-01 */
-}
 
 header .tt-logo{
   position: relative;
@@ -26560,31 +26549,7 @@ h2:not(.small):not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^=
   }
 }
 
-h3:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]),
-h2.small:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]){
-  font-size: 30px;
-  line-height: 40px;
-  font-weight: 500;
-  padding-bottom: 23px;
-}
 
-@media (max-width: 1024px){
-  h3:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]),
-  h2.small:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]){
-    font-size: 26px;
-    line-height: 36px;
-    padding-bottom: 17px;
-  }
-}
-
-@media (max-width: 575px){
-  h3:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]),
-  h2.small:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]){
-    font-size: 19px;
-    line-height: 29px;
-    padding-bottom: 9px;
-  }
-}
 
 h4:not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]){
   font-size: 24px;
