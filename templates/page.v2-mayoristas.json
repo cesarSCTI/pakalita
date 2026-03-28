@@ -11,10 +11,71 @@
   "sections": {
     "main": {
       "type": "page",
+      "disabled": true,
       "settings": {}
+    },
+    "v2_banner_mEUNcX": {
+      "type": "V2-banner",
+      "name": "V2 Hero Banner",
+      "settings": {
+        "layout_width": "full",
+        "image": "shopify://shop_images/4a23c58f4de94ae3becd9c3f7a76c608b20548bb.jpg",
+        "banner_height": 800,
+        "banner_height_mobile": 360,
+        "banner_radius": 12,
+        "overlay_color": "#2A1108",
+        "overlay_opacity": 50,
+        "content_x": "center",
+        "content_y": "middle",
+        "content_padding": 48,
+        "content_max_width": 480,
+        "pretitle": "",
+        "title_normal": "Arte mexicano hecho a mano",
+        "title_italic": "para hoteles y empresas",
+        "title_size": 38,
+        "title_color": "#FFFFFF",
+        "subtitle": "",
+        "subtitle_size": 15,
+        "subtitle_color": "#F0EBE3",
+        "btn_label": "Solicitar catálogo",
+        "btn_url": "",
+        "btn_bg": "#FFFFFF",
+        "btn_text_color": "#ad6557",
+        "btn_border_color": "#FFFFFF",
+        "btn_radius": 24,
+        "btn2_label": "",
+        "btn2_url": ""
+      }
+    },
+    "v2_rich_text_hwxynF": {
+      "type": "V2-rich-text",
+      "name": "V2 Rich Text Split",
+      "settings": {
+        "pretitle": "",
+        "title_normal": "¡Queremos ser parte",
+        "title_italic": "de tu proyecto.",
+        "title_size": 30,
+        "show_cta": false,
+        "cta_label": "Conoce más",
+        "cta_url": "",
+        "body_text": "<p>En Pakalita creamos piezas artesanales para que tu proyecto corporativo u hotel refleje un cachito de México de manera auténtica y hecha a mano.<br/><br/></p>",
+        "body_text_2": "",
+        "body_size": 16,
+        "show_divider": false,
+        "divider_color": "#111111",
+        "bg_color": "#FFFFFF",
+        "title_color": "#111111",
+        "title_italic_color": "#111111",
+        "body_color": "#333333",
+        "col_gap": 80,
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "v2_banner_mEUNcX",
+    "v2_rich_text_hwxynF"
   ]
 }
