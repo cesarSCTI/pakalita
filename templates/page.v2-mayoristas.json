@@ -201,6 +201,29 @@
         "padding_left": 20,
         "padding_right": 20
       }
+    },
+    "v2_flex_text_image_WEmxH8": {
+      "type": "V2-flex-text-image",
+      "name": "V2 Flex Text + Image",
+      "settings": {
+        "title": "Usos y aplicaciones",
+        "title_tag": "h2",
+        "title_weight": "700",
+        "title_color": "#000000",
+        "description_color": "#000000",
+        "description": "Nuestros productos son ideales para:\n<br><br>\nAmenidades para proyectos hoteleros\nDetalles para habitaciones y áreas comunes\nRegalos corporativos con identidad mexicana\nProyectos especiales y ediciones personalizadas",
+        "image": "shopify://shop_images/f9d65bf08fb50e69a6319cf5c93e27e3cffe6fad.jpg",
+        "image_side": "right",
+        "align_vertical": "center",
+        "layout_width": "container",
+        "bg_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_left": 20,
+        "padding_right": 20,
+        "image_aspect_ratio": "1",
+        "image_border_radius": 8
+      }
     }
   },
   "order": [
@@ -208,6 +231,7 @@
     "v2_banner_mEUNcX",
     "v2_rich_text_hwxynF",
     "footer_section_iconbanners_EAh6TV",
-    "v2_gallery_carousel_P3bdHk"
+    "v2_gallery_carousel_P3bdHk",
+    "v2_flex_text_image_WEmxH8"
   ]
 }
