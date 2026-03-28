@@ -28,15 +28,15 @@
         "title_normal": "{{ collection.title }}",
         "title_italic": "",
         "title_size": 38,
-        "title_color": "#FFFFFF",
+        "title_color": "#ffffff",
         "subtitle": "",
         "subtitle_size": 15,
-        "subtitle_color": "#F0EBE3",
+        "subtitle_color": "#f0ebe3",
         "btn_label": "",
         "btn_url": "",
-        "btn_bg": "#FFFFFF",
-        "btn_text_color": "#2A1108",
-        "btn_border_color": "#FFFFFF",
+        "btn_bg": "#ffffff",
+        "btn_text_color": "#2a1108",
+        "btn_border_color": "#ffffff",
         "btn_radius": 24,
         "btn2_label": "",
         "btn2_url": ""
@@ -44,11 +44,49 @@
     },
     "main": {
       "type": "collection-template",
+      "disabled": true,
       "settings": {}
+    },
+    "v2_collection_filters_YXkaKB": {
+      "type": "V2-collection-filters",
+      "name": "V2 CollectionFilter",
+      "settings": {
+        "layout_width": "container",
+        "columns_desktop": 3,
+        "columns_tablet": 2,
+        "products_per_page": 16,
+        "grid_gap": 12,
+        "card_bg": "#FFFFFF",
+        "card_radius": 12,
+        "product_title_color": "#111111",
+        "price_color": "#111111",
+        "show_wishlist": true,
+        "show_label": false,
+        "label_bg_color": "#FFFFFF",
+        "label_bg_opacity": 90,
+        "label_text_color": "#111111",
+        "label_show_arrow": true,
+        "show_add_to_cart": true,
+        "add_to_cart_label": "AGREGAR AL CARRITO",
+        "add_bg_color": "#FFFFFF",
+        "add_text_color": "#111111",
+        "add_radius": 12,
+        "toolbar_bg": "#FFFFFF",
+        "toolbar_text_color": "#111111",
+        "show_filters": true,
+        "show_view_toggle": true,
+        "empty_text": "No se encontraron productos.",
+        "pagination_active_color": "#A0522D",
+        "pagination_text_color": "#333333",
+        "section_bg": "#FFFFFF",
+        "padding_top": 24,
+        "padding_bottom": 48
+      }
     }
   },
   "order": [
     "v2_banner_YT4a3Y",
-    "main"
+    "main",
+    "v2_collection_filters_YXkaKB"
   ]
 }
