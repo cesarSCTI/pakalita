@@ -1,0 +1,1432 @@
+{% comment %}
+  Section: CollectionGrid
+  - Compatible con Search & Discovery (filtros + sort)
+  - Grid flexbox de productos
+  - Mismo look de cards que collection-grid
+  - Paginación nativa de Shopify
+  - Archivo: sections/collection-products.liquid
+  - Template: templates/collection.json (ver instrucciones al final)
+{% endcomment %}
+
+{%- liquid
+  assign columns_desktop = section.settings.columns_desktop
+  assign columns_tablet = section.settings.columns_tablet
+  assign products_per_page = section.settings.products_per_page
+  assign add_to_cart_label = section.settings.add_to_cart_label | default: 'Agregar al carrito'
+  assign current_collection = collection
+  assign sort_by = current_collection.sort_by | default: current_collection.default_sort_by
+-%}
+
+<div
+  class="collection-page collection-page--{{ section.settings.layout_width }}"
+  id="collection-page-{{ section.id }}"
+  style="
+    --cp-columns: {{ columns_desktop }};
+    --cp-columns-tablet: {{ columns_tablet }};
+    --cp-gap: {{ section.settings.grid_gap }}px;
+    --cp-radius: {{ section.settings.card_radius }}px;
+    --cp-card-bg: {{ section.settings.card_bg }};
+    --cp-title-color: {{ section.settings.product_title_color }};
+    --cp-price-color: {{ section.settings.price_color }};
+    --cp-add-bg: {{ section.settings.add_bg_color }};
+    --cp-add-text: {{ section.settings.add_text_color }};
+    --cp-add-radius: {{ section.settings.add_radius }}px;
+    --cp-label-bg: {{ section.settings.label_bg_color }};
+    --cp-label-text: {{ section.settings.label_text_color }};
+    --cp-label-opacity: {{ section.settings.label_bg_opacity | divided_by: 100.0 }};
+    --cp-section-bg: {{ section.settings.section_bg }};
+    --cp-toolbar-bg: {{ section.settings.toolbar_bg }};
+    --cp-toolbar-text: {{ section.settings.toolbar_text_color }};
+    --cp-padding-top: {{ section.settings.padding_top }}px;
+    --cp-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --cp-pagination-active: {{ section.settings.pagination_active_color }};
+    --cp-pagination-text: {{ section.settings.pagination_text_color }};
+  "
+>
+
+  {%- comment %} ── WRAPPER PRINCIPAL: sidebar filtros | contenido ── {%- endcomment %}
+  <div class="collection-page__layout collection-page__layout--{{ section.settings.layout_width }}">
+
+    {%- comment %}
+      Search & Discovery inyecta los filtros como un sidebar si usas
+      el snippet 'facets'. Si no tienes sidebar, solo muestra el grid.
+    {%- endcomment %}
+
+    {%- comment %} ── TOOLBAR: conteo + sort + toggle filtros ── {%- endcomment %}
+    <div class="collection-page__toolbar">
+      <div class="collection-page__toolbar-inner">
+
+        {%- comment %} Conteo de resultados 
+        <p class="collection-page__count" aria-live="polite">
+          {%- if current_collection.products_count > 0 -%}
+            Mostrar {{ paginate.current_offset | plus: 1 }} –
+            {{ paginate.current_offset | plus: paginate.page_size | at_most: current_collection.all_products_count }}
+            de {{ current_collection.all_products_count }} resultados
+          {%- else -%}
+            Sin resultados
+          {%- endif -%}
+        </p>
+        {%- endcomment %}
+
+        {%- comment %} Filtros inline (Search & Discovery los renderiza aquí) {%- endcomment %}
+      {%- if current_collection.filters != empty and section.settings.show_filters -%}
+        <div class="collection-page__filters" id="collection-filters-{{ section.id }}">
+          {%- for filter in current_collection.filters -%}
+            <details class="collection-page__filter-group" {% if filter.active_values.size > 0 %}open{% endif %}>
+              <summary class="collection-page__filter-summary">
+                {{ filter.label }}
+                {%- if filter.active_values.size > 0 -%}
+                  <span class="collection-page__filter-count">{{ filter.active_values.size }}</span>
+                {%- endif -%}
+                <svg class="filter-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+              </summary>
+              <div class="collection-page__filter-options">
+                {%- case filter.type -%}
+                  {%- when 'list' -%}
+                    <ul class="collection-page__filter-list">
+                      {%- for value in filter.values -%}
+                        <li>
+                          <label class="collection-page__filter-label{% if value.count == 0 and value.active == false %} is-disabled{% endif %}">
+                            <input
+                              type="checkbox"
+                              name="{{ value.param_name }}"
+                              value="{{ value.value }}"
+                              {% if value.active %}checked{% endif %}
+                              {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                              class="collection-page__filter-checkbox"
+                              form="filter-form-{{ section.id }}"
+                            >
+                            <span class="collection-page__filter-check"></span>
+                            {{ value.label }}
+                            <span class="collection-page__filter-product-count">({{ value.count }})</span>
+                          </label>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- when 'price_range' -%}
+                    <div class="collection-page__price-range">
+                      <div class="collection-page__price-inputs">
+                        <div class="collection-page__price-input-wrap">
+                          <label for="filter-price-min-{{ section.id }}">Desde</label>
+                          <input
+                            type="number"
+                            id="filter-price-min-{{ section.id }}"
+                            name="{{ filter.min_value.param_name }}"
+                            value="{{ filter.min_value.value | divided_by: 100 }}"
+                            min="0"
+                            max="{{ filter.range_max | divided_by: 100 }}"
+                            placeholder="0"
+                            form="filter-form-{{ section.id }}"
+                            class="collection-page__price-input"
+                          >
+                        </div>
+                        <span>–</span>
+                        <div class="collection-page__price-input-wrap">
+                          <label for="filter-price-max-{{ section.id }}">Hasta</label>
+                          <input
+                            type="number"
+                            id="filter-price-max-{{ section.id }}"
+                            name="{{ filter.max_value.param_name }}"
+                            value="{{ filter.max_value.value | divided_by: 100 }}"
+                            min="0"
+                            max="{{ filter.range_max | divided_by: 100 }}"
+                            placeholder="{{ filter.range_max | divided_by: 100 }}"
+                            form="filter-form-{{ section.id }}"
+                            class="collection-page__price-input"
+                          >
+                        </div>
+                      </div>
+                    </div>
+                {%- endcase -%}
+              </div>
+            </details>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment %} ── FORM oculto para filtros (Search & Discovery) ── {%- endcomment %}
+    <form
+      id="filter-form-{{ section.id }}"
+      class="collection-page__filter-form"
+      action="{{ routes.collections_url }}/{{ current_collection.handle }}"
+    >
+      <input type="hidden" name="sort_by" value="{{ sort_by }}">
+    </form>
+
+
+
+
+        <div class="collection-page__toolbar-right">
+
+          {%- comment %} Filtros activos (chips) {%- endcomment %}
+          {%- if current_collection.filters != empty -%}
+            <div class="collection-page__active-filters">
+              {%- for filter in current_collection.filters -%}
+                {%- for value in filter.active_values -%}
+                  <a
+                    href="{{ value.url_to_remove }}"
+                    class="collection-page__filter-chip"
+                    aria-label="Eliminar filtro {{ value.label }}"
+                  >
+                    {{ value.label }}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
+                  </a>
+                {%- endfor -%}
+              {%- endfor -%}
+              {%- if current_collection.filters != empty -%}
+                {%- for filter in current_collection.filters -%}
+                  {%- if filter.active_values.size > 0 -%}
+                    <a href="{{ current_collection.url }}?sort_by={{ sort_by }}" class="collection-page__clear-filters">
+                      Limpiar todo
+                    </a>
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- comment %} Sort by — compatible con Search & Discovery {%- endcomment %}
+          <form class="collection-page__sort-form" id="sort-form-{{ section.id }}">
+            <label for="sort-select-{{ section.id }}" class="collection-page__sort-label">Ordenar</label>
+            <div class="collection-page__sort-wrap">
+              <select
+                id="sort-select-{{ section.id }}"
+                name="sort_by"
+                class="collection-page__sort-select"
+                aria-label="Ordenar por"
+              >
+                {%- for option in current_collection.sort_options -%}
+                  <option
+                    value="{{ option.value }}"
+                    {% if option.value == sort_by %}selected{% endif %}
+                  >
+                    {{ option.name }}
+                  </option>
+                {%- endfor -%}
+              </select>
+              <svg class="collection-page__sort-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+            </div>
+          </form>
+
+          {%- comment %} Toggle vista grid/lista (opcional) {%- endcomment %}
+          {%- if section.settings.show_view_toggle -%}
+            <div class="collection-page__view-toggle">
+              <button class="collection-page__view-btn is-active" data-view="grid" aria-label="Vista en cuadrícula">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+              </button>
+              <button class="collection-page__view-btn" data-view="list" aria-label="Vista en lista">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="1" y1="4" x2="15" y2="4"/><line x1="1" y1="8" x2="15" y2="8"/><line x1="1" y1="12" x2="15" y2="12"/></svg>
+              </button>
+            </div>
+          {%- endif -%}
+
+        </div>
+      </div>
+
+      
+
+    {%- comment %} ── GRID DE PRODUCTOS ── {%- endcomment %}
+    {%- paginate current_collection.products by products_per_page -%}
+
+      <div
+        class="collection-page__grid"
+        id="cp-grid-{{ section.id }}"
+        role="list"
+        aria-label="Productos"
+      >
+        {%- if current_collection.products.size > 0 -%}
+          {%- for product in current_collection.products -%}
+            <div class="collection-page__card" role="listitem">
+
+              {%- comment %} Imagen wrap {%- endcomment %}
+              <div class="cp-card__image-wrap">
+                <a href="{{ product.url }}" class="cp-card__image-link" tabindex="-1" aria-hidden="true">
+                  {%- if product.featured_media -%}
+                    {{
+                      product.featured_media
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '300, 500, 700, 800',
+                        sizes: '(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw',
+                        class: 'cp-card__image',
+                        alt: product.title
+                    }}
+                    {%- if product.media[1] -%}
+                      {{
+                        product.media[1]
+                        | image_url: width: 800
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '300, 500, 700, 800',
+                          sizes: '(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw',
+                          class: 'cp-card__image cp-card__image--hover',
+                          alt: product.title
+                      }}
+                    {%- endif -%}
+                  {%- else -%}
+                    <div class="cp-card__placeholder">
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {%- endif -%}
+                </a>
+
+                {%- comment %} Wishlist {%- endcomment %}
+                {%- if section.settings.show_wishlist -%}
+                  <button
+                    class="cp-card__wishlist"
+                    aria-label="Guardar {{ product.title }}"
+                    type="button"
+                    data-wishlist="{{ product.id }}"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  </button>
+                {%- endif -%}
+
+                {%- comment %} Badge sale {%- endcomment %}
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="cp-card__badge cp-card__badge--sale">Sale</span>
+                {%- endif -%}
+
+                {%- comment %} Label con nombre (mismo hover del collection-grid) {%- endcomment %}
+                {%- if section.settings.show_label -%}
+                  <div class="cp-card__label">
+                    <span class="cp-card__label-text">
+                      {{ product.title }}
+                      {%- if section.settings.label_show_arrow -%}
+                        <svg class="cp-card__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 10h10M11 6l4 4-4 4"/></svg>
+                      {%- endif -%}
+                    </span>
+                  </div>
+                {%- endif -%}
+
+                {%- comment %} Add to cart hover {%- endcomment %}
+                {%- if section.settings.show_add_to_cart -%}
+                  {%- if product.variants.size == 1 and product.variants.first.available -%}
+                    <form action="/cart/add" method="post" class="cp-card__add-form">
+                      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                      <input type="hidden" name="quantity" value="1">
+                      <button type="submit" class="cp-card__add-btn">{{ add_to_cart_label }}</button>
+                    </form>
+                  {%- else -%}
+                    <a href="{{ product.url }}" class="cp-card__add-btn cp-card__add-btn--link">
+                      Ver todas las opciones
+                    </a>
+                  {%- endif -%}
+                {%- endif -%}
+
+              </div>
+
+              {%- comment %} Info {%- endcomment %}
+              <div class="cp-card__info">
+                <a href="{{ product.url }}" class="cp-card__title-link">
+                  <h3 class="cp-card__title">{{ product.title }}</h3>
+                </a>
+                <div class="cp-card__price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <s class="cp-card__price--compare">{{ product.compare_at_price | money }}</s>
+                    <span class="cp-card__price--sale">{{ product.price | money }}</span>
+                  {%- else -%}
+                    <span>{{ product.price | money }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="collection-page__empty">
+            <p>{{ section.settings.empty_text | default: 'No se encontraron productos.' }}</p>
+            <a href="{{ routes.all_products_collection_url }}" class="collection-page__empty-link">Ver todos los productos</a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment %} ── PAGINACIÓN ── {%- endcomment %}
+      {%- if paginate.pages > 1 -%}
+        <nav class="collection-page__pagination" aria-label="Paginación" role="navigation">
+          <ul class="collection-page__pages">
+
+            {%- comment %} Anterior {%- endcomment %}
+            <li class="collection-page__page-item">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="collection-page__page-link collection-page__page-link--nav" aria-label="Página anterior">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 15 7 10 12 5"/></svg>
+                </a>
+              {%- else -%}
+                <span class="collection-page__page-link collection-page__page-link--nav is-disabled" aria-disabled="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 15 7 10 12 5"/></svg>
+                </span>
+              {%- endif -%}
+            </li>
+
+            {%- comment %} Páginas con elipsis {%- endcomment %}
+            {%- for part in paginate.parts -%}
+              <li class="collection-page__page-item">
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="collection-page__page-link" aria-label="Página {{ part.title }}">{{ part.title }}</a>
+                {%- elsif part.title == paginate.current_page -%}
+                  <span class="collection-page__page-link is-active" aria-current="page">{{ part.title }}</span>
+                {%- else -%}
+                  <span class="collection-page__page-link collection-page__page-link--ellipsis">{{ part.title }}</span>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+
+            {%- comment %} Siguiente {%- endcomment %}
+            <li class="collection-page__page-item">
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="collection-page__page-link collection-page__page-link--nav" aria-label="Siguiente página">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 13 10 8 5"/></svg>
+                </a>
+              {%- else -%}
+                <span class="collection-page__page-link collection-page__page-link--nav is-disabled" aria-disabled="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 15 13 10 8 5"/></svg>
+                </span>
+              {%- endif -%}
+            </li>
+
+          </ul>
+        </nav>
+      {%- endif -%}
+
+    {%- endpaginate -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+
+/* =====================================================
+   COLLECTION PAGE
+   ===================================================== */
+.collection-page {
+  background: var(--cp-section-bg);
+  padding-top: var(--cp-padding-top);
+  padding-bottom: var(--cp-padding-bottom);
+}
+
+.collection-page__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.collection-page--full .collection-page__layout {
+  max-width: 100%;
+  padding:10px;
+}
+
+.collection-page--container .collection-page__layout {
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+/* =====================================================
+   TOOLBAR
+   ===================================================== */
+.collection-page__toolbar {
+  background: var(--cp-toolbar-bg);
+  padding: 0.75rem 0 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+      display: flex;
+    justify-content: space-between;
+    font-family: "Poppins", sans-serif;
+}
+
+.collection-page__toolbar-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.collection-page__count {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--cp-toolbar-text);
+  opacity: 0.65;
+  white-space: nowrap;
+}
+
+.collection-page__toolbar-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* ---- Filtros activos (chips) ---- */
+.collection-page__active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.collection-page__filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px 3px 10px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.07);
+  color: var(--cp-toolbar-text);
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.collection-page__filter-chip:hover { background: rgba(0,0,0,0.13); }
+.collection-page__filter-chip svg { width: 10px; height: 10px; }
+
+.collection-page__clear-filters {
+  font-size: 0.75rem;
+  color: var(--cp-toolbar-text);
+  opacity: 0.55;
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+
+.collection-page__clear-filters:hover { opacity: 1; }
+
+/* ---- Sort ---- */
+.collection-page__sort-form { display: flex; align-items: center; gap: 0.4rem; }
+
+.collection-page__sort-label {
+  font-size: 0.82rem;
+  color: var(--cp-toolbar-text);
+  opacity: 0.65;
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.collection-page__sort-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.collection-page__sort-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 6px;
+  padding: 5px 28px 5px 10px;
+  font-size: 0.82rem;
+  color: var(--cp-toolbar-text);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.collection-page__sort-select:focus { border-color: var(--cp-toolbar-text); }
+
+.collection-page__sort-chevron {
+  position: absolute;
+  right: 8px;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  color: var(--cp-toolbar-text);
+  opacity: 0.5;
+}
+
+/* ---- View toggle ---- */
+.collection-page__view-toggle {
+  display: flex;
+  gap: 2px;
+}
+
+.collection-page__view-btn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cp-toolbar-text);
+  opacity: 0.4;
+  padding: 0;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+
+.collection-page__view-btn svg { width: 14px; height: 14px; }
+.collection-page__view-btn.is-active { opacity: 1; border-color: rgba(0,0,0,0.15); }
+
+/* =====================================================
+   FILTROS INLINE (Search & Discovery)
+   ===================================================== */
+.collection-page__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.collection-page__filter-form {
+  display: none; /* Formulario oculto — solo actúa como container de inputs */
+}
+
+.collection-page__filter-group {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.collection-page__filter-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  color: var(--cp-toolbar-text);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.collection-page__filter-summary::-webkit-details-marker { display: none; }
+.collection-page__filter-summary::marker { display: none; }
+
+details[open] .collection-page__filter-summary {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.25);
+}
+
+.collection-page__filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cp-pagination-active);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.filter-chevron { width: 10px; height: 10px; transition: transform 0.2s; }
+details[open] .filter-chevron { transform: rotate(180deg); }
+
+.collection-page__filter-options {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  padding: 0.75rem;
+  z-index: 100;
+}
+
+.collection-page__filter-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.collection-page__filter-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.collection-page__filter-label.is-disabled { opacity: 0.4; cursor: not-allowed; }
+
+.collection-page__filter-checkbox { display: none; }
+
+.collection-page__filter-check {
+  width: 15px;
+  height: 15px;
+  border: 1.5px solid rgba(0,0,0,0.25);
+  border-radius: 3px;
+  flex-shrink: 0;
+  position: relative;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.collection-page__filter-checkbox:checked + .collection-page__filter-check {
+  background: var(--cp-pagination-active);
+  border-color: var(--cp-pagination-active);
+}
+
+.collection-page__filter-checkbox:checked + .collection-page__filter-check::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='1 4 4 7 9 1'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.collection-page__filter-product-count { opacity: 0.45; font-size: 0.78rem; margin-left: auto; }
+
+/* Price range */
+.collection-page__price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.collection-page__price-input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: "Poppins", sans-serif;
+}
+
+.collection-page__price-input-wrap label { font-size: 0.72rem; opacity: 0.6; }
+
+.collection-page__price-input {
+  width: 80px;
+  padding: 5px 8px;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+}
+
+.collection-page__price-input:focus { border-color: var(--cp-pagination-active); }
+
+/* =====================================================
+   GRID DE PRODUCTOS — Flexbox
+   ===================================================== */
+.collection-page__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cp-gap);
+  padding-top: 1.25rem;
+}
+
+/* =====================================================
+   CARD
+   Ancho = (100% - gaps) / columnas
+   ===================================================== */
+.collection-page__card {
+  flex: 0 0 calc(
+    (100% - (var(--cp-columns) - 1) * var(--cp-gap)) / var(--cp-columns)
+  );
+  min-width: 0;
+  background: var(--cp-card-bg);
+  border-radius: var(--cp-radius);
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.collection-page__card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* ---- Imagen ---- */
+.cp-card__image-wrap {
+  position: relative;
+  overflow: hidden;
+  background: #f5f3f0;
+  aspect-ratio: 1 / 1;
+}
+
+.cp-card__image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cp-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.4s ease;
+}
+
+.cp-card__image--hover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.cp-card__image-link:hover .cp-card__image:not(.cp-card__image--hover) { opacity: 0; }
+.cp-card__image-link:hover .cp-card__image--hover { opacity: 1; }
+
+.cp-card__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0ece6;
+}
+
+.cp-card__placeholder .placeholder-svg { width: 55%; height: 55%; opacity: 0.3; }
+
+/* ---- Wishlist ---- */
+.cp-card__wishlist {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 2;
+  padding: 0;
+}
+
+.cp-card__wishlist:hover { transform: scale(1.12); box-shadow: 0 3px 10px rgba(0,0,0,0.18); }
+.cp-card__wishlist.is-active svg { fill: #c0392b; color: #c0392b; stroke: #c0392b; }
+.cp-card__wishlist svg { width: 16px; height: 16px; color: #333; }
+
+/* ---- Badge ---- */
+.cp-card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.cp-card__badge--sale { background: #c0392b; color: #fff; }
+
+/* ---- Label hover (mismo que collection-grid) ---- */
+.cp-card__label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.85rem 0.9rem;
+  pointer-events: none;
+}
+
+.cp-card__label-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.45em 0.9em;
+  border-radius: 6px;
+  background-color: color-mix(
+    in srgb,
+    var(--cp-label-bg) calc(var(--cp-label-opacity) * 100%),
+    transparent
+  );
+  color: var(--cp-label-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+  .cp-card__label-text { background-color: var(--cp-label-bg); }
+}
+
+.cp-card__arrow { width: 1em; height: 1em; flex-shrink: 0; transition: transform 0.25s ease; }
+
+.cp-card__image-wrap:hover .cp-card__label-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cp-card__image-wrap:hover .cp-card__arrow { transform: translateX(3px); }
+
+/* ---- Add to cart hover ---- */
+.cp-card__add-form,
+.cp-card__add-btn--link {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.cp-card__add-btn {
+  display: block;
+  width: 90%;
+  padding: 0.75rem 1rem;
+  background: var(--cp-add-bg);
+  color: var(--cp-add-text);
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  margin:auto;
+  font-family: Poppins, sans-serif !important;
+}
+
+.cp-card__add-btn--link {
+  display: block;
+  padding: 0.75rem 1rem;
+  background: var(--cp-add-bg);
+  color: var(--cp-add-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cp-card__image-wrap:hover .cp-card__add-btn,
+.cp-card__image-wrap:hover .cp-card__add-btn--link {
+  transform: translateY(-20px);
+}
+
+/* ---- Info ---- */
+.cp-card__info { padding: 0.85rem 0.9rem 1rem; font-family: "Poppins", sans-serif;text-align:center;
+display: flex;
+    flex-direction: column;
+    align-items: center;}
+
+.cp-card__title-link { text-decoration: none; color: inherit; }
+
+.cp-card__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem;
+  color: var(--cp-title-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Poppins", sans-serif;
+}
+
+.cp-card__price {
+  font-size: 0.9rem;
+  color: var(--cp-price-color);
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  font-family: "Poppins", sans-serif;
+}
+
+.cp-card__price--compare { color: #999; font-weight: 400; text-decoration: line-through; }
+.cp-card__price--sale { color: #c0392b; font-weight: 600; }
+
+/* ---- Empty state ---- */
+.collection-page__empty {
+  width: 100%;
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--cp-title-color);
+  opacity: 0.55;
+  flex: 1;
+}
+
+.collection-page__empty-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--cp-pagination-active);
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+/* =====================================================
+   PAGINACIÓN
+   ===================================================== */
+.collection-page__pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.collection-page__pages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.collection-page__page-item { display: flex; }
+
+.collection-page__page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  padding: 0 8px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  color: var(--cp-pagination-text);
+  border: 1px solid transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.collection-page__page-link:hover:not(.is-disabled):not(.is-active) {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.1);
+}
+
+.collection-page__page-link.is-active {
+  background: var(--cp-pagination-active);
+  color: #fff;
+  border-color: var(--cp-pagination-active);
+  font-weight: 600;
+}
+
+.collection-page__page-link.is-disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.collection-page__page-link--nav { border-color: rgba(0,0,0,0.12); }
+.collection-page__page-link--nav svg { width: 14px; height: 14px; }
+.collection-page__page-link--ellipsis { border: none; cursor: default; }
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media screen and (max-width: 900px) {
+  .collection-page__card {
+    flex: 0 0 calc(
+      (100% - (var(--cp-columns-tablet) - 1) * var(--cp-gap)) / var(--cp-columns-tablet)
+    );
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .collection-page__card {
+    flex: 0 0 calc((100% - var(--cp-gap)) / 2);
+  }
+
+  .collection-page__toolbar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .collection-page__filters {
+    gap: 0.35rem;
+  }
+
+  .collection-page__filter-options {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    max-height: 60vh;
+    border-radius: 16px 16px 0 0;
+    border: none;
+    box-shadow: 0 -4px 32px rgba(0,0,0,0.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-card__image,
+  .cp-card__label-text,
+  .cp-card__add-btn,
+  .cp-card__add-btn--link { transition: none; }
+}
+
+{% endstylesheet %}
+
+<script>
+(function () {
+  const sid = '{{ section.id }}';
+
+  /* ─── Sort form: submit al cambiar ─── */
+  const sortSelect = document.getElementById('sort-select-' + sid);
+  if (sortSelect) {
+    sortSelect.addEventListener('change', () => {
+      const form = sortSelect.closest('form');
+      if (form) form.submit();
+    });
+  }
+
+  /* ─── Filter checkboxes: submit al cambiar ─── */
+  const filterForm = document.getElementById('filter-form-' + sid);
+  const checkboxes = document.querySelectorAll('.collection-page__filter-checkbox');
+
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      if (filterForm) {
+        /* Remueve inputs del form que ya no aplican y agrega los activos */
+        const existing = filterForm.querySelectorAll('input[type="hidden"]:not([name="sort_by"])');
+        existing.forEach(i => i.remove());
+
+        const allChecked = document.querySelectorAll('.collection-page__filter-checkbox:checked');
+        allChecked.forEach(c => {
+          const hidden = document.createElement('input');
+          hidden.type = 'hidden';
+          hidden.name = c.name;
+          hidden.value = c.value;
+          filterForm.appendChild(hidden);
+        });
+
+        /* Price range */
+        const priceMin = document.getElementById('filter-price-min-' + sid);
+        const priceMax = document.getElementById('filter-price-max-' + sid);
+        if (priceMin && priceMin.value) {
+          const h = document.createElement('input');
+          h.type = 'hidden'; h.name = priceMin.name; h.value = priceMin.value * 100;
+          filterForm.appendChild(h);
+        }
+        if (priceMax && priceMax.value) {
+          const h = document.createElement('input');
+          h.type = 'hidden'; h.name = priceMax.name; h.value = priceMax.value * 100;
+          filterForm.appendChild(h);
+        }
+
+        filterForm.submit();
+      }
+    });
+  });
+
+  /* ─── Wishlist toggle ─── */
+  document.querySelectorAll('[data-wishlist]').forEach(btn => {
+    btn.addEventListener('click', () => btn.classList.toggle('is-active'));
+  });
+
+  /* ─── View toggle (grid / list) ─── */
+  const viewBtns = document.querySelectorAll('.collection-page__view-btn');
+  const grid = document.getElementById('cp-grid-' + sid);
+
+  viewBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      viewBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      if (grid) {
+        grid.classList.toggle('is-list-view', btn.dataset.view === 'list');
+      }
+    });
+  });
+
+  /* ─── Cerrar dropdowns de filtros al hacer click fuera ─── */
+  document.addEventListener('click', e => {
+    const details = document.querySelectorAll('.collection-page__filter-group[open]');
+    details.forEach(d => {
+      if (!d.contains(e.target)) d.removeAttribute('open');
+    });
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "V2 CollectionFilter",
+  "tag": "div",
+  "class": "collection-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_width",
+      "label": "Ancho del contenedor",
+      "default": "container",
+      "options": [
+        {"value": "container", "label": "Ancho contenedor (1360px)"},
+        {"value": "full", "label": "Ancho completo"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Grid de productos"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columnas en desktop",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columnas en tablet",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "label": "Productos por página",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre cards",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Tarjeta de producto"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Fondo de la tarjeta",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez de esquinas",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Color del título del producto",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Color del precio",
+      "default": "#111111"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Mostrar botón de wishlist",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Label hover (estilo collection-grid)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_label",
+      "label": "Mostrar label con nombre al hacer hover",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "label_bg_color",
+      "label": "Color de fondo del label",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "label_bg_opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad del fondo del label",
+      "default": 90
+    },
+    {
+      "type": "color",
+      "id": "label_text_color",
+      "label": "Color del texto del label",
+      "default": "#111111"
+    },
+    {
+      "type": "checkbox",
+      "id": "label_show_arrow",
+      "label": "Mostrar flecha en el label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Botón Agregar al carrito"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart",
+      "label": "Mostrar 'Agregar al carrito' en hover",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Texto del botón",
+      "default": "AGREGAR AL CARRITO"
+    },
+    {
+      "type": "color",
+      "id": "add_bg_color",
+      "label": "Fondo del botón",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "add_text_color",
+      "label": "Texto del botón",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "add_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez del botón",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Toolbar y filtros"
+    },
+    {
+      "type": "color",
+      "id": "toolbar_bg",
+      "label": "Fondo del toolbar",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "toolbar_text_color",
+      "label": "Color del texto del toolbar",
+      "default": "#111111"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Mostrar filtros de Search & Discovery",
+      "default": true,
+      "info": "Requiere la app Search & Discovery de Shopify configurada"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_toggle",
+      "label": "Mostrar toggle de vista (grid/lista)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Mensaje cuando no hay productos",
+      "default": "No se encontraron productos."
+    },
+    {
+      "type": "header",
+      "content": "Paginación"
+    },
+    {
+      "type": "color",
+      "id": "pagination_active_color",
+      "label": "Color de página activa",
+      "default": "#A0522D"
+    },
+    {
+      "type": "color",
+      "id": "pagination_text_color",
+      "label": "Color del texto de paginación",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Sección"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Fondo de la sección",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 CollectionFilter"
+    }
+  ]
+}
+{% endschema %}
