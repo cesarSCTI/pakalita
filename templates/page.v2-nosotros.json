@@ -45,10 +45,149 @@
         "btn2_label": "",
         "btn2_url": ""
       }
+    },
+    "v2_flex_text_image_CtnArG": {
+      "type": "V2-flex-text-image",
+      "name": "V2 Flex Text + Image",
+      "settings": {
+        "title": "Hecho a mano<br> con el corazón",
+        "title_tag": "h2",
+        "title_weight": "700",
+        "title_color": "#ad6557",
+        "description": "Hola, soy Melissa, creadora de Pakalita.\n<br><br>\nTe doy la bienvenida a este espacio y agradezco profundamente tu interés por mi proyecto. \n<br><br>\nEmprender este camino ha sido una forma de vida: una elección guiada por mi amor por lo artesanal y por el deseo de trabajar de la mano con comunidades indígenas.",
+        "image": "shopify://shop_images/b299a11fe4591819731233bdec35e04610997c60.jpg",
+        "image_side": "right",
+        "align_vertical": "center",
+        "layout_width": "container"
+      }
+    },
+    "v2_flex_text_image_VqMB9e": {
+      "type": "V2-flex-text-image",
+      "name": "V2 Flex Text + Image",
+      "settings": {
+        "title": "Crear va mucho más alla de diseñar objetos",
+        "title_tag": "h2",
+        "title_weight": "700",
+        "title_color": "#ad6557",
+        "description": "Más que productos, busco crear vínculos reales, preservar tradiciones y compartir la riqueza cultural de México a través de lo hecho a mano.",
+        "image": "shopify://shop_images/78ac19ad249ed481b4f4113b8ffe08a875a96035.jpg",
+        "image_side": "left",
+        "align_vertical": "center",
+        "layout_width": "container"
+      }
+    },
+    "v2_flex_text_image_9RrYWx": {
+      "type": "V2-flex-text-image",
+      "name": "V2 Flex Text + Image",
+      "settings": {
+        "title": "Comunidades que dan vida a Pakalita",
+        "title_tag": "h2",
+        "title_weight": "700",
+        "title_color": "#ad6557",
+        "description": "Trabajamos de la mano con artesanos de distintas regiones de México. \n<br><br>\nCada comunidad aporta:\n<ul>\n\n<li>su identidad</li>\n<li>sus técnicas</li>\n<li>y su forma de ver el mundo, </li>\n</ul>\n<br>\nDando vida a piezas que conectan tradición y contemporaneidad.",
+        "image": "shopify://shop_images/70ffce4ffee2dff59e3f2cbee72e98461a42d232_1.jpg",
+        "image_side": "right",
+        "align_vertical": "center",
+        "layout_width": "container"
+      }
+    },
+    "v2_image_cards_grid_pRRybe": {
+      "type": "V2-image-cards-grid",
+      "blocks": {
+        "card_eMbp67": {
+          "type": "card",
+          "settings": {
+            "card_label": "PAKALiTA",
+            "card_image": "shopify://shop_images/46ff1ed709cb4addd27d729f9b6cfd7ed3f54c5f.jpg",
+            "card_link": "/"
+          }
+        },
+        "card_m3FKwQ": {
+          "type": "card",
+          "settings": {
+            "card_label": "TEXTIL",
+            "card_image": "shopify://shop_images/1a973b16febe6be5abd41d383daba3031921a167.jpg",
+            "card_link": "/"
+          }
+        },
+        "card_EhH4Ar": {
+          "type": "card",
+          "settings": {
+            "card_label": "OAXACA",
+            "card_image": "shopify://shop_images/98ff6ad8081670a65a8896ff1b2c35cd043244a0.jpg",
+            "card_link": "/"
+          }
+        }
+      },
+      "block_order": [
+        "card_eMbp67",
+        "card_m3FKwQ",
+        "card_EhH4Ar"
+      ],
+      "name": "V2 Image Cards Grid",
+      "settings": {
+        "section_title": "",
+        "layout_width": "container",
+        "bg_color": "#fbf2ec",
+        "padding_top": 70,
+        "padding_bottom": 70,
+        "padding_left": 20,
+        "padding_right": 20
+      }
+    },
+    "v2_gallery_carousel_PDPKWT": {
+      "type": "V2-gallery-carousel",
+      "blocks": {
+        "gallery_item_dTeULx": {
+          "type": "gallery_item",
+          "settings": {
+            "item_image": "shopify://shop_images/6fe918386bdd84e6797d7e1b0f2ae0734890cc12.png",
+            "item_title": "Arte Zapoteca",
+            "item_description": "Tejidos que narran historia"
+          }
+        },
+        "gallery_item_r7AJLU": {
+          "type": "gallery_item",
+          "settings": {
+            "item_image": "shopify://shop_images/b06c67e00af1002588f72d0db58d946a7ead27a3_1.png",
+            "item_title": "Arte Mixteca",
+            "item_description": "Tradición en cada hilo"
+          }
+        },
+        "gallery_item_JKxgTD": {
+          "type": "gallery_item",
+          "settings": {
+            "item_image": "shopify://shop_images/c5d6fb9ae90a5a40f72994bf66d8ba388db91c71.png",
+            "item_title": "Arte Huichol",
+            "item_description": "Historias que se crean"
+          }
+        }
+      },
+      "block_order": [
+        "gallery_item_dTeULx",
+        "gallery_item_r7AJLU",
+        "gallery_item_JKxgTD"
+      ],
+      "name": "V2 Gallery Carousel",
+      "settings": {
+        "section_title": "Galería",
+        "layout_width": "container",
+        "columns_desktop": 3,
+        "bg_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_left": 20,
+        "padding_right": 20
+      }
     }
   },
   "order": [
     "main",
-    "v2_banner_qFqtzh"
+    "v2_banner_qFqtzh",
+    "v2_flex_text_image_CtnArG",
+    "v2_flex_text_image_VqMB9e",
+    "v2_flex_text_image_9RrYWx",
+    "v2_image_cards_grid_pRRybe",
+    "v2_gallery_carousel_PDPKWT"
   ]
 }
