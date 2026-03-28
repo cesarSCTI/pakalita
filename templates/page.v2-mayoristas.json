@@ -229,6 +229,59 @@
         "image_aspect_ratio": "1",
         "image_border_radius": 8
       }
+    },
+    "index_section_brands_cUwX3k": {
+      "type": "index-section-brands",
+      "blocks": {
+        "logo_image_6AYxGP": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Group.png",
+            "link": ""
+          }
+        },
+        "logo_image_8e7g8t": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/Group_1.png",
+            "link": ""
+          }
+        },
+        "logo_image_AUNEDM": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/pV1S5v_tif.png",
+            "link": ""
+          }
+        },
+        "logo_image_NJqYE9": {
+          "type": "logo_image",
+          "settings": {
+            "image": "shopify://shop_images/zNyPDc.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_image_6AYxGP",
+        "logo_image_8e7g8t",
+        "logo_image_AUNEDM",
+        "logo_image_NJqYE9"
+      ],
+      "name": "Brands list",
+      "settings": {
+        "top_offset": "none",
+        "fullwidth": false,
+        "useimageopacityonhover": true,
+        "show_title": true,
+        "title_to_left": false,
+        "text1": "Nuestros clientes",
+        "text2": "",
+        "toshow": "4",
+        "step": "2",
+        "module_autoplay": false,
+        "delay_time": "7000"
+      }
     }
   },
   "order": [
@@ -237,6 +290,7 @@
     "v2_rich_text_hwxynF",
     "footer_section_iconbanners_EAh6TV",
     "v2_gallery_carousel_P3bdHk",
-    "v2_flex_text_image_WEmxH8"
+    "v2_flex_text_image_WEmxH8",
+    "index_section_brands_cUwX3k"
   ]
 }
