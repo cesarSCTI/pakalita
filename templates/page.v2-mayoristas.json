@@ -72,6 +72,81 @@
         "padding_bottom": 64
       }
     },
+    "footer_section_iconbanners_EAh6TV": {
+      "type": "footer-section-iconbanners",
+      "blocks": {
+        "item_UeFhXB": {
+          "type": "item",
+          "settings": {
+            "link": "",
+            "show_icon": "image",
+            "icon": "icon-f-48",
+            "image": "shopify://shop_images/048-carpet_1.png",
+            "text1": "Hecho a mano\nen México",
+            "text2": "Trabajamos con artesanos mexicanos, cuidando cada proceso y acabado",
+            "icon_color": "#2879fe"
+          }
+        },
+        "item_Xp8Mk9": {
+          "type": "item",
+          "settings": {
+            "link": "",
+            "show_icon": "image",
+            "icon": "icon-f-35",
+            "image": "shopify://shop_images/Vector_1.png",
+            "text1": "Producción en mayoreo y personalización",
+            "text2": " Ajustamos colores, materiales y cantidades según cada proyecto.",
+            "icon_color": "#2879fe"
+          }
+        },
+        "item_n9mXcY": {
+          "type": "item",
+          "settings": {
+            "link": "",
+            "show_icon": "image",
+            "icon": "icon-e-09",
+            "image": "shopify://shop_images/042-sun_1.png",
+            "text1": "Atención directa\ny cercana",
+            "text2": " Te asesoramos desde la idea hasta\nla entrega final.",
+            "icon_color": "#2879fe"
+          }
+        }
+      },
+      "block_order": [
+        "item_UeFhXB",
+        "item_Xp8Mk9",
+        "item_n9mXcY"
+      ],
+      "name": "Icon Banners",
+      "settings": {
+        "top_offset": "normal-onlyindex",
+        "top_offset_normal": "tt-offset-normal_base",
+        "custom_classes": "",
+        "fullwidth": false,
+        "vertical": true,
+        "items_always_in_center": false,
+        "items": "4",
+        "show_title": true,
+        "title_to_left": false,
+        "boxed_title": false,
+        "text1": "¿Cómo trabajamos?",
+        "text2": "",
+        "main_title_color": "#ad6557",
+        "main_desc_color": "#777777",
+        "same_iconcolor": true,
+        "icon_color": "#2879fe",
+        "title_color": "#191919",
+        "desc_color": "#777777",
+        "title_hover_color": "#2879fe",
+        "usebgcolor": true,
+        "useboxedbgcolor": false,
+        "bgco": "#fbf2ec",
+        "bgdepad": "80",
+        "bgdepad_2": "80",
+        "bgmopad": "80",
+        "bgmopad_2": "80"
+      }
+    },
     "v2_gallery_carousel_P3bdHk": {
       "type": "V2-gallery-carousel",
       "blocks": {
@@ -127,6 +202,7 @@
     "main",
     "v2_banner_mEUNcX",
     "v2_rich_text_hwxynF",
+    "footer_section_iconbanners_EAh6TV",
     "v2_gallery_carousel_P3bdHk"
   ]
 }
