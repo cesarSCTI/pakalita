@@ -119,7 +119,8 @@
       ],
       "custom_css": [
         ".tt-col-icon {background: #cd807a; padding: 15px; border-radius: 50%;}",
-        ".tt-offset-normal_base {margin: 10px;}"
+        ".tt-offset-normal_base {margin: 10px;}",
+        ".subsectionbg {border-radius: 20px;}"
       ],
       "name": "Icon Banners",
       "settings": {
@@ -139,9 +140,9 @@
         "main_desc_color": "#777777",
         "same_iconcolor": true,
         "icon_color": "#2879fe",
-        "title_color": "#191919",
-        "desc_color": "#777777",
-        "title_hover_color": "#2879fe",
+        "title_color": "#ad6557",
+        "desc_color": "#000000",
+        "title_hover_color": "#ad6557",
         "usebgcolor": true,
         "useboxedbgcolor": false,
         "bgco": "#fbf2ec",
