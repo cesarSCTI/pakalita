@@ -158,29 +158,33 @@
         "gallery_item_qyD6Uc": {
           "type": "gallery_item",
           "settings": {
-            "item_title": "Arte Zapoteca",
-            "item_description": "Tejidos que narran historia"
+            "item_image": "shopify://shop_images/a5e3e67c2d3a075e5fb3c1f0b63540836e42164c.jpg",
+            "item_title": "Bienvenida y experiencia en habitación",
+            "item_description": " (tequileros, tazas, termos, porta vasos, lufas)"
           }
         },
         "gallery_item_TtC9Qb": {
           "type": "gallery_item",
           "settings": {
-            "item_title": "Arte Mixteca",
-            "item_description": "Tradición en cada hilo"
+            "item_image": "shopify://shop_images/19bcb2ea19b10997fcffe5b4d9f6d79fde87d79b.jpg",
+            "item_title": "Regalos y recuerdos",
+            "item_description": " (llaveros, imanes, espejos, bases de fotos)"
           }
         },
         "gallery_item_r34hVY": {
           "type": "gallery_item",
           "settings": {
-            "item_title": "Arte Huichol",
-            "item_description": "Historias que se crean"
+            "item_image": "shopify://shop_images/d63885680538f6a59a685aaecc755b553518c215.jpg",
+            "item_title": "Arte y decoración",
+            "item_description": "(alebrijes, ojos de dios, colas de ballena)"
           }
         },
         "gallery_item_CmyEXm": {
           "type": "gallery_item",
           "settings": {
-            "item_title": "Arte Huichol",
-            "item_description": "Historias que se crean"
+            "item_image": "shopify://shop_images/26407a27c1008c44fde6ac515be4ab450d35a9f7.jpg",
+            "item_title": "Accesorios artesanales",
+            "item_description": "(bolsas, sombreros, abanicos, carteras)"
           }
         }
       },
