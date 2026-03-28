@@ -140,9 +140,9 @@
   {{ var_header }}
   {%- endif -%}
   {%- endif -%}
+{% if settings.show_breadcrumbs %}{%- include "breadcrumb" -%}{% endif %}
   {% endcomment %}
   
-  {% if settings.show_breadcrumbs %}{%- include "breadcrumb" -%}{% endif %}
   <div id="tt-pageContent"{% if settings.show_unavailable_variants %} class="show_unavailable_variants"{% endif %}>
     {{ content_for_layout }}
   </div>

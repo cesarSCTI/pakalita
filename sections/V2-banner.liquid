@@ -33,7 +33,7 @@
 -%}
 
 <section
-  class="hero-banner"
+  class="hero-banner hero-banner--{{ section.settings.layout_width }}"
   id="hero-banner-{{ section.id }}"
   style="
     --hb-height: {{ section.settings.banner_height }}px;
@@ -137,14 +137,22 @@
    ===================================================== */
 .hero-banner {
   position: relative;
-  width: 100%;
+  width: auto;
   height: var(--hb-height);
   border-radius: var(--hb-radius);
   overflow: hidden;
-  display: flex; 
-max-width: var(--container-v2);
+  display: flex;
   margin: auto;
   padding: 0px var(--padding-container);
+}
+
+.hero-banner--full {
+  max-width: 100%;
+  margin: 10px;
+}
+
+.hero-banner--container {
+  max-width: 1360px
 }
 
 /* =====================================================
@@ -360,6 +368,20 @@ max-width: var(--container-v2);
   "class": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_width",
+      "label": "Ancho del banner",
+      "default": "container",
+      "options": [
+        {"value": "container", "label": "Ancho contenedor"},
+        {"value": "full", "label": "Ancho completo"}
+      ]
+    },
     {
       "type": "header",
       "content": "Imagen"

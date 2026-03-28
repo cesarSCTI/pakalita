@@ -5,7 +5,21 @@
   - Imagen selectable
 {% endcomment %}
 
-<section class="flex-text-image-section flex-text-image-section--{{ section.settings.layout_width }}" id="flex-text-image-{{ section.id }}">
+<section 
+  class="flex-text-image-section flex-text-image-section--{{ section.settings.layout_width }}" 
+  id="flex-text-image-{{ section.id }}"
+  style="
+    background-color: {{ section.settings.bg_color }};
+    background-image: {% if section.settings.bg_image %}url('{{ section.settings.bg_image | image_url }}'){% endif %};
+    background-size: cover;
+    background-position: center;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_left }}px;
+    padding-right: {{ section.settings.padding_right }}px;
+    --image-border-radius: {{ section.settings.image_border_radius }}px;
+  "
+>
   <div class="flex-text-image__wrapper">
     <div class="flex-text-image__inner" style="flex-direction: 
   {%if section.settings.image_side == 'left' %}
@@ -27,13 +41,15 @@
       {% endif %}
 
       {% if section.settings.description != blank %}
-        <p class="flex-text-image__description">{{ section.settings.description }}</p>
+        <p class="flex-text-image__description" style="color: {{ section.settings.description_color }};">{{ section.settings.description }}</p>
       {% endif %}
     </div>
 
-    <div class="flex-text-image__media">
+    <div class="flex-text-image__media" style="--image-aspect-ratio: {{ section.settings.image_aspect_ratio }}; ">
       {% if section.settings.image != blank %}
-        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'flex-text-image__img', alt: section.settings.image.alt | default: section.settings.title | escape }}
+        <div class="flex-text-image__image-wrapper">
+          {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'flex-text-image__img', alt: section.settings.image.alt | default: section.settings.title | escape }}
+        </div>
       {% else %}
         <div class="flex-text-image__placeholder">Imagen no seleccionada</div>
       {% endif %}
@@ -46,8 +62,8 @@
 {% style %}
 .flex-text-image-section {
   width: 100%;
-  padding: 2rem 1rem;
   box-sizing: border-box;
+  border-radius: var(--image-border-radius, 8px);
 }
 
 .flex-text-image__wrapper {
@@ -60,7 +76,7 @@
 }
 
 .flex-text-image-section--container .flex-text-image__wrapper {
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto;
 }
 
@@ -87,16 +103,23 @@
   color: #333;
 }
 
+.flex-text-image__image-wrapper {
+  width: 100%;
+  aspect-ratio: var(--image-aspect-ratio, auto);
+  overflow: hidden;
+  border-radius: var(--image-border-radius, 8px);
+}
+
 .flex-text-image__img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
-  border-radius: 0.5rem;
 }
 
 .flex-text-image__placeholder {
-  min-height: 220px;
+  width: 100%;
+  aspect-ratio: var(--image-aspect-ratio, 1);
   background: #f2f2f2;
   border: 1px dashed #ccc;
   border-radius: 0.5rem;
@@ -105,6 +128,7 @@
   align-items: center;
   justify-content: center;
   color: #666;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
@@ -160,6 +184,12 @@
       "default": "#111111"
     },
     {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color de la descripción",
+      "default": "#333333"
+    },
+    {
       "type": "textarea",
       "id": "description",
       "label": "Descripción",
@@ -200,6 +230,81 @@
         {"value": "container", "label": "Ancho contenedor"},
         {"value": "full", "label": "Ancho completo"}
       ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Imagen de fondo (opcional)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding izquierdo",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding derecho",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "image_aspect_ratio",
+      "label": "Relación de aspecto de la imagen",
+      "default": "auto",
+      "options": [
+        {"value": "auto", "label": "Automático"},
+        {"value": "1", "label": "1:1 (Cuadrado)"},
+        {"value": "4/3", "label": "4:3"},
+        {"value": "16/9", "label": "16:9"},
+        {"value": "3/2", "label": "3:2"},
+        {"value": "2/1", "label": "2:1"}
+      ]
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Border radius de la imagen",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 8
     }
   ],
   "presets": [

@@ -1,0 +1,354 @@
+{% comment %}
+  Section: Text Banner / CTA Section
+  - Fondo personalizable (color + imagen)
+  - Textos centrados con colores editables
+  - Paddings independientes
+  - Botón CTA opcional
+  - Responsive
+{% endcomment %}
+
+<section
+  class="text-banner"
+  id="text-banner-{{ section.id }}"
+  style="
+    background-color: {{ section.settings.bg_color }};
+    background-image: {% if section.settings.bg_image %}url('{{ section.settings.bg_image | image_url }}'){% endif %};
+    background-size: cover;
+    background-position: center;
+    background-attachment: {% if section.settings.parallax %}fixed{% else %}scroll{% endif %};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_left }}px;
+    padding-right: {{ section.settings.padding_right }}px;
+  "
+>
+  <div class="text-banner__wrapper text-banner__wrapper--{{ section.settings.layout_width }}">
+    <div class="text-banner__inner">
+
+      {% if section.settings.title != blank %}
+        <{{ section.settings.title_tag }}
+          class="text-banner__title"
+          style="color: {{ section.settings.title_color }}; font-weight: {{ section.settings.title_weight }};"
+        >
+          {{ section.settings.title }}
+        </{{ section.settings.title_tag }}>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p 
+          class="text-banner__description"
+          style="color: {{ section.settings.description_color }};"
+        >
+          {{ section.settings.description }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.btn_label != blank %}
+        <div class="text-banner__button-wrap">
+          <a
+            href="{{ section.settings.btn_url | default: '#' }}"
+            class="text-banner__button"
+            style="
+              background-color: {{ section.settings.btn_bg }};
+              color: {{ section.settings.btn_text_color }};
+              border-color: {{ section.settings.btn_border_color }};
+              border-radius: {{ section.settings.btn_radius }}px;
+            "
+            {% if section.settings.btn_url == blank %}aria-disabled="true"{% endif %}
+          >
+            {{ section.settings.btn_label }}
+          </a>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+
+.text-banner {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.text-banner__wrapper {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.text-banner__wrapper--full {
+  max-width: 100%;
+}
+
+.text-banner__wrapper--container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.text-banner__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.text-banner__title {
+  margin: 0;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  line-height: 1.2;
+  max-width: 800px;
+}
+
+.text-banner__description {
+  margin: 0;
+  font-size: clamp(0.95rem, 2vw, 1.25rem);
+  line-height: 1.6;
+  max-width: 700px;
+  font-weight: 400;
+}
+
+.text-banner__button-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.text-banner__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid;
+  border-radius: 24px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.text-banner__button:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.text-banner__button[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .text-banner__title {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .text-banner__description {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  }
+
+  .text-banner__button {
+    padding: 0.6rem 1.4rem;
+    font-size: 0.85rem;
+  }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "V2 just text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_width",
+      "label": "Ancho del contenedor",
+      "default": "container",
+      "options": [
+        {"value": "container", "label": "Ancho contenedor"},
+        {"value": "full", "label": "Ancho completo"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Fondo"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#C89080"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Imagen de fondo (opcional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "parallax",
+      "label": "Efecto parallax en fondo",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Paddings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 20,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 20,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding izquierdo",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding derecho",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Conecta con la esencia"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Etiqueta de título",
+      "default": "h2",
+      "options": [
+        {"value": "h1", "label": "H1"},
+        {"value": "h2", "label": "H2"},
+        {"value": "h3", "label": "H3"},
+        {"value": "h4", "label": "H4"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Grosor del título",
+      "default": "500",
+      "options": [
+        {"value": "300", "label": "Ligero (300)"},
+        {"value": "400", "label": "Normal (400)"},
+        {"value": "500", "label": "Medio (500)"},
+        {"value": "600", "label": "Semi-bold (600)"},
+        {"value": "700", "label": "Bold (700)"}
+      ]
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Descripción"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Texto descriptivo",
+      "default": "Cada pieza es una invitación a conectar con las manos que la crearon y con la riqueza cultural de México."
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color de la descripción",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Texto del botón",
+      "default": "Conocer productos"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "URL del botón"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Fondo del botón",
+      "default": "#8B6F62"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Color del texto del botón",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "label": "Color del borde del botón",
+      "default": "#8B6F62"
+    },
+    {
+      "type": "range",
+      "id": "btn_radius",
+      "label": "Border radius del botón",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 just text",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
