@@ -1,0 +1,321 @@
+{% comment %}
+  Section: Image Cards Grid
+  - Grid de tarjetas con bloques reutilizables
+  - Cada bloque: label, imagen y link
+  - Control de fondo, padding y ancho (full-width / container)
+{% endcomment %}
+
+<section
+  class="image-cards-grid"
+  id="image-cards-grid-{{ section.id }}"
+  style="
+    background-color: {{ section.settings.bg_color }};
+    background-image: {% if section.settings.bg_image %}url('{{ section.settings.bg_image | image_url }}'){% endif %};
+    background-size: cover;
+    background-position: center;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_left }}px;
+    padding-right: {{ section.settings.padding_right }}px;
+  "
+>
+  <div class="image-cards-grid__wrapper" style="max-width: {% if section.settings.layout_width == 'full' %}100%{% else %}1200px{% endif %}; margin: 0 auto;">
+
+    {% if section.settings.section_title != blank %}
+      <div class="image-cards-grid__header">
+        <h2 class="image-cards-grid__title">{{ section.settings.section_title }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="image-cards-grid__container">
+      {% for block in section.blocks %}
+        <div class="image-cards-grid__card" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.card_link }}" class="image-cards-grid__card-link">
+            
+            {% if block.settings.card_label != blank %}
+              <div class="image-cards-grid__label">
+                <span>
+                    {{ block.settings.card_label }}
+                </span>
+              </div>
+            {% endif %}
+
+            {% if block.settings.card_image != blank %}
+              <div class="image-cards-grid__image-wrap">
+                {{ block.settings.card_image | image_url: width: 800 | image_tag: 
+                  class: 'image-cards-grid__image',
+                  alt: block.settings.card_label | default: shop.name | escape
+                }}
+              </div>
+            {% else %}
+              <div class="image-cards-grid__placeholder">
+                <svg class="placeholder-svg" viewBox="0 0 400 400">
+                  <rect fill="#f2f2f2" width="400" height="400"/>
+                  <text x="200" y="200" text-anchor="middle" dy=".3em" fill="#ccc" font-size="24">
+                    Imagen no seleccionada
+                  </text>
+                </svg>
+              </div>
+            {% endif %}
+            <div class="image-cards-grid_space"></div>
+
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% style %}
+
+.image-cards-grid {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.image-cards-grid__wrapper {
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+.image-cards-grid__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.image-cards-grid__title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #111;
+}
+
+.image-cards-grid__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.image-cards-grid__card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-cards-grid__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.image-cards-grid__card-link {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+}
+
+.image-cards-grid__label {
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #111;
+  backdrop-filter: blur(10px);
+}
+.image-cards-grid_space{
+    height:30px;
+}
+.image-cards-grid__label span {
+    background: #F5F5F5;
+    padding: 5px 8px;
+}
+.image-cards-grid__image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #fff;
+  padding:0 15px;
+}
+
+.image-cards-grid__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.4s ease;
+}
+
+.image-cards-grid__card:hover .image-cards-grid__image {
+  transform: scale(1.05);
+}
+
+.image-cards-grid__placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #f2f2f2;
+  border: 1px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.image-cards-grid__placeholder .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .image-cards-grid__container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .image-cards-grid__title {
+    font-size: 1.5rem;
+  }
+
+  .image-cards-grid__label {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
+    top: 0.75rem;
+    left: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-cards-grid__container {
+    grid-template-columns: 1fr;
+  }
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "V2 Image Cards Grid",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Título de la sección (opcional)",
+      "default": "Nuestras Colecciones"
+    },
+    {
+      "type": "select",
+      "id": "layout_width",
+      "label": "Ancho del contenedor",
+      "default": "container",
+      "options": [
+        {"value": "container", "label": "Ancho del contenedor"},
+        {"value": "full", "label": "Ancho completo"}
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Imagen de fondo (opcional)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "label": "Padding izquierdo",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "label": "Padding derecho",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Tarjeta de imagen",
+      "settings": [
+        {
+          "type": "text",
+          "id": "card_label",
+          "label": "Texto superior (badge)",
+          "default": "Etiqueta"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Imagen de la tarjeta"
+        },
+        {
+          "type": "url",
+          "id": "card_link",
+          "label": "Link de la tarjeta",
+          "default": "/"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Image Cards Grid",
+      "category": "Custom",
+      "blocks": [
+        {"type": "card", "settings": {"card_label": "COLECCIÓN 1"}},
+        {"type": "card", "settings": {"card_label": "COLECCIÓN 2"}},
+        {"type": "card", "settings": {"card_label": "COLECCIÓN 3"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,212 @@
+{% comment %}
+  Section: Flex Text + Image
+  - Layout flexbox 2 columnas
+  - Control de tag h1..h6, color, grosor y descripción
+  - Imagen selectable
+{% endcomment %}
+
+<section class="flex-text-image-section flex-text-image-section--{{ section.settings.layout_width }}" id="flex-text-image-{{ section.id }}">
+  <div class="flex-text-image__wrapper">
+    <div class="flex-text-image__inner" style="flex-direction: 
+  {%if section.settings.image_side == 'left' %}
+  row-reverse
+  {% else %}
+  row
+  {% endif %}
+  ; 
+   align-items: {{ section.settings.align_vertical }};">
+
+    <div class="flex-text-image__content">
+      {% if section.settings.title != blank %}
+        <{{ section.settings.title_tag }}
+          class="flex-text-image__title"
+          style="color: {{ section.settings.title_color }}; font-weight: {{ section.settings.title_weight }};"
+        >
+          {{ section.settings.title }}
+        </{{ section.settings.title_tag }}>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p class="flex-text-image__description">{{ section.settings.description }}</p>
+      {% endif %}
+    </div>
+
+    <div class="flex-text-image__media">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'flex-text-image__img', alt: section.settings.image.alt | default: section.settings.title | escape }}
+      {% else %}
+        <div class="flex-text-image__placeholder">Imagen no seleccionada</div>
+      {% endif %}
+    </div>
+
+    </div>
+  </div>
+</section>
+
+{% style %}
+.flex-text-image-section {
+  width: 100%;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+.flex-text-image__wrapper {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.flex-text-image-section--full .flex-text-image__wrapper {
+  max-width: 100%;
+}
+
+.flex-text-image-section--container .flex-text-image__wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.flex-text-image__inner {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.flex-text-image__content,
+.flex-text-image__media {
+  flex: 1 1 300px;
+  min-width: 280px;
+}
+
+.flex-text-image__title {
+  margin: 0 0 0.75rem;
+}
+
+.flex-text-image__description {
+  margin: 0;
+  line-height: 1.5;
+  color: #333;
+}
+
+.flex-text-image__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.flex-text-image__placeholder {
+  min-height: 220px;
+  background: #f2f2f2;
+  border: 1px dashed #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .flex-text-image__inner {
+    flex-direction: column;
+  }
+}
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "V2 Flex Text + Image",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Título de ejemplo"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Etiqueta de título",
+      "default": "h2",
+      "options": [
+        {"value": "h1", "label": "H1"},
+        {"value": "h2", "label": "H2"},
+        {"value": "h3", "label": "H3"},
+        {"value": "h4", "label": "H4"},
+        {"value": "h5", "label": "H5"},
+        {"value": "h6", "label": "H6"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Grosor del título",
+      "default": "700",
+      "options": [
+        {"value": "300", "label": "Ligero (300)"},
+        {"value": "400", "label": "Normal (400)"},
+        {"value": "500", "label": "Medio (500)"},
+        {"value": "600", "label": "Semi-bold (600)"},
+        {"value": "700", "label": "Bold (700)"},
+        {"value": "800", "label": "Extra-bold (800)"}
+      ]
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#111111"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "Descripción de ejemplo para este bloque."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen"
+    },
+    {
+      "type": "select",
+      "id": "image_side",
+      "label": "Posición de la imagen",
+      "default": "right",
+      "options": [
+        {"value": "right", "label": "Derecha"},
+        {"value": "left", "label": "Izquierda"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "align_vertical",
+      "label": "Alineación vertical",
+      "default": "center",
+      "options": [
+        {"value": "flex-start", "label": "Arriba"},
+        {"value": "center", "label": "Centro"},
+        {"value": "flex-end", "label": "Abajo"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout_width",
+      "label": "Ancho del contenedor",
+      "default": "container",
+      "options": [
+        {"value": "container", "label": "Ancho contenedor"},
+        {"value": "full", "label": "Ancho completo"}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Flex Text + Image",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
