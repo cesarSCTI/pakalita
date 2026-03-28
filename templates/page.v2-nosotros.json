@@ -18,6 +18,7 @@
       "type": "V2-banner",
       "name": "V2 Hero Banner",
       "settings": {
+        "layout_width": "full",
         "image": "shopify://shop_images/db494dbfdc31aec61916625530947b75b193441f.jpg",
         "banner_height": 360,
         "banner_height_mobile": 360,
@@ -32,15 +33,15 @@
         "title_normal": "Nosotros",
         "title_italic": "",
         "title_size": 38,
-        "title_color": "#FFFFFF",
+        "title_color": "#ffffff",
         "subtitle": "",
         "subtitle_size": 15,
-        "subtitle_color": "#F0EBE3",
+        "subtitle_color": "#f0ebe3",
         "btn_label": "",
         "btn_url": "",
-        "btn_bg": "#FFFFFF",
-        "btn_text_color": "#2A1108",
-        "btn_border_color": "#FFFFFF",
+        "btn_bg": "#ffffff",
+        "btn_text_color": "#2a1108",
+        "btn_border_color": "#ffffff",
         "btn_radius": 24,
         "btn2_label": "",
         "btn2_url": ""
@@ -50,15 +51,23 @@
       "type": "V2-flex-text-image",
       "name": "V2 Flex Text + Image",
       "settings": {
-        "title": "Hecho a mano<br> con el corazón",
+        "title": "Hecho a mano con el corazón",
         "title_tag": "h2",
         "title_weight": "700",
         "title_color": "#ad6557",
+        "description_color": "#000000",
         "description": "Hola, soy Melissa, creadora de Pakalita.\n<br><br>\nTe doy la bienvenida a este espacio y agradezco profundamente tu interés por mi proyecto. \n<br><br>\nEmprender este camino ha sido una forma de vida: una elección guiada por mi amor por lo artesanal y por el deseo de trabajar de la mano con comunidades indígenas.",
         "image": "shopify://shop_images/b299a11fe4591819731233bdec35e04610997c60.jpg",
         "image_side": "right",
         "align_vertical": "center",
-        "layout_width": "container"
+        "layout_width": "container",
+        "bg_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_left": 20,
+        "padding_right": 20,
+        "image_aspect_ratio": "auto",
+        "image_border_radius": 8
       }
     },
     "v2_flex_text_image_VqMB9e": {
@@ -68,27 +77,46 @@
         "title": "Crear va mucho más alla de diseñar objetos",
         "title_tag": "h2",
         "title_weight": "700",
-        "title_color": "#ad6557",
+        "title_color": "#ffffff",
+        "description_color": "#ffffff",
         "description": "Más que productos, busco crear vínculos reales, preservar tradiciones y compartir la riqueza cultural de México a través de lo hecho a mano.",
         "image": "shopify://shop_images/78ac19ad249ed481b4f4113b8ffe08a875a96035.jpg",
         "image_side": "left",
         "align_vertical": "center",
-        "layout_width": "container"
+        "layout_width": "container",
+        "bg_color": "#cd807a",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "padding_left": 20,
+        "padding_right": 20,
+        "image_aspect_ratio": "1",
+        "image_border_radius": 8
       }
     },
     "v2_flex_text_image_9RrYWx": {
       "type": "V2-flex-text-image",
+      "custom_css": [
+        "ul {color: #000;}"
+      ],
       "name": "V2 Flex Text + Image",
       "settings": {
         "title": "Comunidades que dan vida a Pakalita",
         "title_tag": "h2",
         "title_weight": "700",
         "title_color": "#ad6557",
+        "description_color": "#000000",
         "description": "Trabajamos de la mano con artesanos de distintas regiones de México. \n<br><br>\nCada comunidad aporta:\n<ul>\n\n<li>su identidad</li>\n<li>sus técnicas</li>\n<li>y su forma de ver el mundo, </li>\n</ul>\n<br>\nDando vida a piezas que conectan tradición y contemporaneidad.",
         "image": "shopify://shop_images/70ffce4ffee2dff59e3f2cbee72e98461a42d232_1.jpg",
         "image_side": "right",
         "align_vertical": "center",
-        "layout_width": "container"
+        "layout_width": "container",
+        "bg_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "padding_left": 20,
+        "padding_right": 20,
+        "image_aspect_ratio": "1",
+        "image_border_radius": 8
       }
     },
     "v2_image_cards_grid_pRRybe": {
