@@ -194,9 +194,10 @@
         "gallery_item_r34hVY",
         "gallery_item_CmyEXm"
       ],
+      "custom_css": [],
       "name": "V2 Gallery Carousel",
       "settings": {
-        "section_title": "Galería",
+        "section_title": "Galería de productos",
         "layout_width": "container",
         "columns_desktop": 4,
         "bg_color": "#ffffff",
