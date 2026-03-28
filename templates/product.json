@@ -1,1 +1,157 @@
-{"sections":{"main":{"type":"product-template","blocks":{"1513760820453":{"type":"tab_desc","settings":{"title":"Descripción","open_tab_by_default":true}},"1517579484161":{"type":"tab_unique","settings":{"key":"Key name","title":"UNIQUE TAB","open_tab_by_default":false}},"7cfa47f5-db2d-49f9-a6cf-13de29b199ce":{"type":"tab_same_html","settings":{"title":"Política de envío","html":"<b>Pakalita - Política de Envíos<\/b>\n\n<br>\n<br>\nGracias por elegir nuestros productos artesanales mexicanos. Queremos asegurarnos de que tu experiencia de compra sea excelente desde el momento en que realizas tu pedido hasta que recibes tus artículos.\n\n<br>\n<br>\n<b>Ámbito de Envío<\/b>\n\n<br>\n<br>\nRealizamos envíos a nivel mundial para que puedas disfrutar de nuestros productos donde quiera que estés.\nTrabajamos con servicios de envío confiables para garantizar la entrega segura y oportuna de tus pedidos.\n\n<br>\n<br>\n<b>Tiempo de Procesamiento y Envío<\/b>\n\n<br>\n<br>\nProcesaremos tu pedido en un plazo de 1-3 días hábiles a partir de la confirmación de tu compra.\nEl tiempo de envío variará según la ubicación. Los plazos aproximados se detallarán durante el proceso de compra.\nTen en cuenta que los tiempos de envío pueden verse afectados por factores fuera de nuestro control, como restricciones aduaneras o situaciones climáticas inesperadas.\n\n<br>\n<br>\n<b>Tarifas y Costos de Envío<\/b>\n\n<br>\n<br>\nOfrecemos tarifas de envío competitivas basadas en el peso y la ubicación del envío.\nLos costos de envío se calculan al finalizar la compra y se mostrarán antes de confirmar tu pedido.\nPara pedidos internacionales, ten en cuenta que podrían aplicarse aranceles, impuestos o tasas aduaneras según las regulaciones de tu país, y estos serán responsabilidad del comprador.\n\n<br>\n<br>\n<b>Seguimiento de Envíos<\/b>\n\n<br>\n<br>\nProporcionaremos un número de seguimiento una vez que tu pedido haya sido enviado para que puedas rastrear su progreso.\nComunícate con nuestro equipo de atención al cliente si tienes alguna pregunta o necesitas asistencia con el seguimiento de tu envío.\n\n<br>\n<br>\n<b>Dirección de Envío<\/b>\n\n<br>\n<br>\nEs responsabilidad del cliente proporcionar una dirección de envío precisa y completa al realizar la compra.\nVerifica cuidadosamente la información de envío para evitar retrasos o entregas incorrectas.\n\n<br>\n<br>\n<b>Envíos Dañados o Extraviados<\/b>\n\n<br>\n<br>\nEn caso de que tu pedido llegue dañado o se extravíe durante el envío, contáctanos de inmediato para que podamos ayudarte a resolver la situación.\nConserva el embalaje original y cualquier documentación relacionada para facilitar el proceso de reclamo.\n\n<br>\n<br>\n<b>Cambios en la Política de Envío<\/b>\n\n<br>\n<br>\nNos reservamos el derecho de realizar cambios en nuestra política de envíos.\nCualquier modificación se comunicará claramente en nuestro sitio web.\n\n<br>\n<br>\n<b>Contacto<\/b>\n<br>\n<br>\nSi tienes alguna pregunta sobre nuestras políticas de envío o necesitas ayuda adicional, no dudes en contactar a nuestro equipo de atención al cliente en hola@pakalita.com.mx","open_tab_by_default":false}},"e21fc013-9d77-49c1-a88d-b7597ffb4ed2":{"type":"related_products","settings":{"fullscreen":false,"titleincenter":true,"title":"Productos vistos recientemente","product_upsell_collection_count":"4","slickdesktoptoshow":"4"}}},"block_order":["1513760820453","1517579484161","7cfa47f5-db2d-49f9-a6cf-13de29b199ce","e21fc013-9d77-49c1-a88d-b7597ffb4ed2"],"custom_css":["form * {font-family: \"Inter\", sans-serif;}",".tt-title {font-family: \"Inter\", sans-serif; font-weight: 700 !important;}",".tt-title-small {font-size: 20px !important;}",".nav-item a {font-size: 20px !important;}",".tt-add-info {font-family: \"Inter\";}",".tt-price {font-family: \"Inter\" !important; font-weight: 700 !important;}",".tt-swatches-container .tt-wrapper {border-top: solid 1px #d8c2b6; padding-top: 15px;}",".tt-product-policies {display: none;}"],"settings":{"page_design":"product_page_1_design","full_width_description":"design_tabs_in_row","history":true,"show_badge_new":false,"show_badge_featured":false,"show_review":true,"show_share_buttons":false,"show_tax_text":false,"use_select_button":false,"gallery_no_zoom":true,"gallery_scroll":true,"stickygallery":true,"mobiledots":true,"gallery_type":"horizontal","show_thumbnails":true,"show_thumbnails_arrows":true,"show_thumbnails_zoom":true,"show_product_main_info":true,"show_sku":true,"show_qiantity":true,"show_trust_badge":false,"image_l":"shopify:\/\/shop_images\/pagos.png","image_max_width":"300","image_lm":"shopify:\/\/shop_images\/pagos.png","image_max_width_m":"300","designoption1":"getButtonHtml","designoption2":"getButtonHtml","designoption3":"getButtonHtml","show_product_info":true,"show_product_vendor":false,"show_product_type":false,"show_product_barcode":false,"show_product_tags":true,"product_tab_tags":"","product_item_show_wishlist":false,"product_item_show_compare":false,"show_sizechart":false,"btnname":"<span class=\"icon-f-09\"><\/span> Size guide","popupcontent":"<h6 class=\"tt-title\">SIZE GUIDE<\/h6>\nThis is an approximate conversion table to help you find your size.\n<div class=\"tt-table-responsive-md\">\n\t<table class=\"tt-table-modal-info\">\n\t\t<thead>\n\t\t\t<tr>\n\t\t\t\t<th>Italian<\/th>\n\t\t\t\t<th>Spanish<\/th>\n\t\t\t\t<th>German<\/th>\n\t\t\t\t<th>UK<\/th>\n\t\t\t\t<th>US<\/th>\n\t\t\t\t<th>Japanese<\/th>\n\t\t\t\t<th>Chinese<\/th>\n\t\t\t\t<th>Russian<\/th>\n\t\t\t\t<th>Korean<\/th>\n\t\t\t<\/tr>\n\t\t<\/thead>\n\t\t<tbody>\n\t\t\t<tr>\n\t\t\t\t<td>34<\/td>\n\t\t\t\t<td>30<\/td>\n\t\t\t\t<td>28<\/td>\n\t\t\t\t<td>4<\/td>\n\t\t\t\t<td>00<\/td>\n\t\t\t\t<td>3<\/td>\n\t\t\t\t<td>155\/75A<\/td>\n\t\t\t\t<td>36<\/td>\n\t\t\t\t<td>44<\/td>\n\t\t\t<\/tr>\n\t\t\t<tr>\n\t\t\t\t<td>36<\/td>\n\t\t\t\t<td>32<\/td>\n\t\t\t\t<td>30<\/td>\n\t\t\t\t<td>6<\/td>\n\t\t\t\t<td>0<\/td>\n\t\t\t\t<td>5<\/td>\n\t\t\t\t<td>155\/80A<\/td>\n\t\t\t\t<td>38<\/td>\n\t\t\t\t<td>44<\/td>\n\t\t\t<\/tr>\n\t\t\t<tr>\n\t\t\t\t<td>38<\/td>\n\t\t\t\t<td>34<\/td>\n\t\t\t\t<td>32<\/td>\n\t\t\t\t<td>8<\/td>\n\t\t\t\t<td>2<\/td>\n\t\t\t\t<td>7<\/td>\n\t\t\t\t<td>160\/84A<\/td>\n\t\t\t\t<td>40<\/td>\n\t\t\t\t<td>55<\/td>\n\t\t\t<\/tr>\n\t\t\t<tr>\n\t\t\t\t<td>40<\/td>\n\t\t\t\t<td>36<\/td>\n\t\t\t\t<td>34<\/td>\n\t\t\t\t<td>10<\/td>\n\t\t\t\t<td>4<\/td>\n\t\t\t\t<td>9<\/td>\n\t\t\t\t<td>165\/88A<\/td>\n\t\t\t\t<td>42<\/td>\n\t\t\t\t<td>55<\/td>\n\t\t\t<\/tr>\n\t\t\t<tr>\n\t\t\t\t<td>42<\/td>\n\t\t\t\t<td>38<\/td>\n\t\t\t\t<td>36<\/td>\n\t\t\t\t<td>12<\/td>\n\t\t\t\t<td>6<\/td>\n\t\t\t\t<td>11<\/td>\n\t\t\t\t<td>170\/92A<\/td>\n\t\t\t\t<td>44<\/td>\n\t\t\t\t<td>66<\/td>\n\t\t\t<\/tr>\n\t\t\t<tr>\n\t\t\t\t<td>44<\/td>\n\t\t\t\t<td>40<\/td>\n\t\t\t\t<td>38<\/td>\n\t\t\t\t<td>14<\/td>\n\t\t\t\t<td>8<\/td>\n\t\t\t\t<td>13<\/td>\n\t\t\t\t<td>175\/96A<\/td>\n\t\t\t\t<td>46<\/td>\n\t\t\t\t<td>66<\/td>\n\t\t\t<\/tr>\n\t\t\t<tr>\n\t\t\t\t<td>46<\/td>\n\t\t\t\t<td>42<\/td>\n\t\t\t\t<td>40<\/td>\n\t\t\t\t<td>16<\/td>\n\t\t\t\t<td>10<\/td>\n\t\t\t\t<td>15<\/td>\n\t\t\t\t<td>170\/98A<\/td>\n\t\t\t\t<td>48<\/td>\n\t\t\t\t<td>77<\/td>\n\t\t\t<\/tr>\n\t\t\t<tr>\n\t\t\t\t<td>48<\/td>\n\t\t\t\t<td>44<\/td>\n\t\t\t\t<td>42<\/td>\n\t\t\t\t<td>18<\/td>\n\t\t\t\t<td>12<\/td>\n\t\t\t\t<td>17<\/td>\n\t\t\t\t<td>170\/100B<\/td>\n\t\t\t\t<td>50<\/td>\n\t\t\t\t<td>77<\/td>\n\t\t\t<\/tr>\n\t\t\t<tr>\n\t\t\t\t<td>50<\/td>\n\t\t\t\t<td>46<\/td>\n\t\t\t\t<td>44<\/td>\n\t\t\t\t<td>20<\/td>\n\t\t\t\t<td>14<\/td>\n\t\t\t\t<td>19<\/td>\n\t\t\t\t<td>175\/100B<\/td>\n\t\t\t\t<td>52<\/td>\n\t\t\t\t<td>88<\/td>\n\t\t\t<\/tr>\n\t\t\t<tr>\n\t\t\t\t<td>52<\/td>\n\t\t\t\t<td>48<\/td>\n\t\t\t\t<td>46<\/td>\n\t\t\t\t<td>22<\/td>\n\t\t\t\t<td>16<\/td>\n\t\t\t\t<td>21<\/td>\n\t\t\t\t<td>180\/104B<\/td>\n\t\t\t\t<td>54<\/td>\n\t\t\t\t<td>88<\/td>\n\t\t\t<\/tr>\n\t\t<\/tbody>\n\t<\/table>\n<\/div>","show_shipping":false,"btnname2":"<span class=\"icon-f-44\"><\/span> Shipping","popupcontentshipping":"<h6 class=\"tt-title\">SHIPPING<\/h6>\n<ul>\n\t<li>Complimentary ground shipping within 1 to 7 business days<\/li>\n\t<li>In-store collection available within 1 to 7 business days<\/li>\n\t<li>Next-day and Express delivery options also available<\/li>\n\t<li>Purchases are delivered in an orange box tied with a Bolduc ribbon, with the exception of certain items<\/li>\n\t<li>See the delivery FAQs for details on shipping methods, costs and delivery times<\/li>\n<\/ul>\n<h6 class=\"tt-title\">RETURNS AND EXCHANGES<\/h6>\n<ul>\n\t<li>Easy and complimentary, within 14 days<\/li>\n\t<li>See conditions and procedure in our return FAQs<\/li>\n<\/ul>","show_message":false,"btnname3":"<span class=\"icon-f-72\"> Preguntas<\/span>","prpage_tree_col_html":"<div class=\"tt-services-aside\">\n\t<a href=\"#\" class=\"tt-services-block\">\n\t\t<div class=\"tt-col-icon\">\n\t\t\t<i class=\"icon-f-48\"><\/i>\n\t\t<\/div>\n\t\t<div class=\"tt-col-description\">\n\t\t\t<h4 class=\"tt-title\">FREE SHIPPING<\/h4>\n\t\t\t<p>Free shipping on all US order or order above $99<\/p>\n\t\t<\/div>\n\t<\/a>\n\t<a href=\"#\" class=\"tt-services-block\">\n\t\t<div class=\"tt-col-icon\">\n\t\t\t<i class=\"icon-f-35\"><\/i>\n\t\t<\/div>\n\t\t<div class=\"tt-col-description\">\n\t\t\t<h4 class=\"tt-title\">SUPPORT 24\/7<\/h4>\n\t\t\t<p>Contact us 24 hours a day, 7 days a week<\/p>\n\t\t<\/div>\n\t<\/a>\n\t<a href=\"#\" class=\"tt-services-block\">\n\t\t<div class=\"tt-col-icon\">\n\t\t\t<i class=\"icon-e-09\"><\/i>\n\t\t<\/div>\n\t\t<div class=\"tt-col-description\">\n\t\t\t<h4 class=\"tt-title\">30 DAYS RETURN<\/h4>\n\t\t\t<p>Simply return it within 30 days for an exchange.<\/p>\n\t\t<\/div>\n\t<\/a>\n<\/div>","show_custom_related":true,"custom_related_fullscreen":false,"custom_related_titleincenter":false,"custom_related_title":"Productos vistos recientemente","custom_related_length":"8","custom_related_slickdesktoptoshow":"4"}}},"order":["main"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "v2_banner_UzAxXq": {
+      "type": "V2-banner",
+      "name": "V2 Hero Banner",
+      "settings": {
+        "layout_width": "full",
+        "image": "shopify://shop_images/db494dbfdc31aec61916625530947b75b193441f.jpg",
+        "banner_height": 320,
+        "banner_height_mobile": 360,
+        "banner_radius": 12,
+        "overlay_color": "#cd807a",
+        "overlay_opacity": 80,
+        "content_x": "center",
+        "content_y": "middle",
+        "content_padding": 48,
+        "content_max_width": 480,
+        "pretitle": "",
+        "title_normal": "{{ product.title }}",
+        "title_italic": "",
+        "title_size": 38,
+        "title_color": "#FFFFFF",
+        "subtitle": "",
+        "subtitle_size": 15,
+        "subtitle_color": "#F0EBE3",
+        "btn_label": "",
+        "btn_url": "",
+        "btn_bg": "#FFFFFF",
+        "btn_text_color": "#2A1108",
+        "btn_border_color": "#FFFFFF",
+        "btn_radius": 24,
+        "btn2_label": "",
+        "btn2_url": ""
+      }
+    },
+    "main": {
+      "type": "product-template",
+      "blocks": {
+        "1513760820453": {
+          "type": "tab_desc",
+          "settings": {
+            "title": "Descripción",
+            "open_tab_by_default": true
+          }
+        },
+        "1517579484161": {
+          "type": "tab_unique",
+          "settings": {
+            "key": "Key name",
+            "title": "UNIQUE TAB",
+            "open_tab_by_default": false
+          }
+        },
+        "7cfa47f5-db2d-49f9-a6cf-13de29b199ce": {
+          "type": "tab_same_html",
+          "settings": {
+            "title": "Política de envío",
+            "html": "<b>Pakalita - Política de Envíos</b>\n\n<br>\n<br>\nGracias por elegir nuestros productos artesanales mexicanos. Queremos asegurarnos de que tu experiencia de compra sea excelente desde el momento en que realizas tu pedido hasta que recibes tus artículos.\n\n<br>\n<br>\n<b>Ámbito de Envío</b>\n\n<br>\n<br>\nRealizamos envíos a nivel mundial para que puedas disfrutar de nuestros productos donde quiera que estés.\nTrabajamos con servicios de envío confiables para garantizar la entrega segura y oportuna de tus pedidos.\n\n<br>\n<br>\n<b>Tiempo de Procesamiento y Envío</b>\n\n<br>\n<br>\nProcesaremos tu pedido en un plazo de 1-3 días hábiles a partir de la confirmación de tu compra.\nEl tiempo de envío variará según la ubicación. Los plazos aproximados se detallarán durante el proceso de compra.\nTen en cuenta que los tiempos de envío pueden verse afectados por factores fuera de nuestro control, como restricciones aduaneras o situaciones climáticas inesperadas.\n\n<br>\n<br>\n<b>Tarifas y Costos de Envío</b>\n\n<br>\n<br>\nOfrecemos tarifas de envío competitivas basadas en el peso y la ubicación del envío.\nLos costos de envío se calculan al finalizar la compra y se mostrarán antes de confirmar tu pedido.\nPara pedidos internacionales, ten en cuenta que podrían aplicarse aranceles, impuestos o tasas aduaneras según las regulaciones de tu país, y estos serán responsabilidad del comprador.\n\n<br>\n<br>\n<b>Seguimiento de Envíos</b>\n\n<br>\n<br>\nProporcionaremos un número de seguimiento una vez que tu pedido haya sido enviado para que puedas rastrear su progreso.\nComunícate con nuestro equipo de atención al cliente si tienes alguna pregunta o necesitas asistencia con el seguimiento de tu envío.\n\n<br>\n<br>\n<b>Dirección de Envío</b>\n\n<br>\n<br>\nEs responsabilidad del cliente proporcionar una dirección de envío precisa y completa al realizar la compra.\nVerifica cuidadosamente la información de envío para evitar retrasos o entregas incorrectas.\n\n<br>\n<br>\n<b>Envíos Dañados o Extraviados</b>\n\n<br>\n<br>\nEn caso de que tu pedido llegue dañado o se extravíe durante el envío, contáctanos de inmediato para que podamos ayudarte a resolver la situación.\nConserva el embalaje original y cualquier documentación relacionada para facilitar el proceso de reclamo.\n\n<br>\n<br>\n<b>Cambios en la Política de Envío</b>\n\n<br>\n<br>\nNos reservamos el derecho de realizar cambios en nuestra política de envíos.\nCualquier modificación se comunicará claramente en nuestro sitio web.\n\n<br>\n<br>\n<b>Contacto</b>\n<br>\n<br>\nSi tienes alguna pregunta sobre nuestras políticas de envío o necesitas ayuda adicional, no dudes en contactar a nuestro equipo de atención al cliente en hola@pakalita.com.mx",
+            "open_tab_by_default": false
+          }
+        },
+        "e21fc013-9d77-49c1-a88d-b7597ffb4ed2": {
+          "type": "related_products",
+          "settings": {
+            "fullscreen": false,
+            "titleincenter": true,
+            "title": "Productos vistos recientemente",
+            "product_upsell_collection_count": "4",
+            "slickdesktoptoshow": "4"
+          }
+        }
+      },
+      "block_order": [
+        "1513760820453",
+        "1517579484161",
+        "7cfa47f5-db2d-49f9-a6cf-13de29b199ce",
+        "e21fc013-9d77-49c1-a88d-b7597ffb4ed2"
+      ],
+      "custom_css": [
+        "form * {font-family: \"Inter\", sans-serif;}",
+        ".tt-title {font-family: \"Inter\", sans-serif; font-weight: 700 !important;}",
+        ".tt-title-small {font-size: 20px !important;}",
+        ".nav-item a {font-size: 20px !important;}",
+        ".tt-add-info {font-family: \"Inter\";}",
+        ".tt-price {font-family: \"Inter\" !important; font-weight: 700 !important;}",
+        ".tt-swatches-container .tt-wrapper {border-top: solid 1px #d8c2b6; padding-top: 15px;}",
+        ".tt-product-policies {display: none;}"
+      ],
+      "settings": {
+        "page_design": "product_page_1_design",
+        "full_width_description": "design_tabs_in_row",
+        "history": true,
+        "show_badge_new": false,
+        "show_badge_featured": false,
+        "show_review": true,
+        "show_share_buttons": false,
+        "show_tax_text": false,
+        "use_select_button": false,
+        "gallery_no_zoom": true,
+        "gallery_scroll": true,
+        "stickygallery": true,
+        "mobiledots": true,
+        "gallery_type": "horizontal",
+        "show_thumbnails": true,
+        "show_thumbnails_arrows": true,
+        "show_thumbnails_zoom": true,
+        "show_product_main_info": true,
+        "show_sku": true,
+        "show_qiantity": true,
+        "show_trust_badge": false,
+        "image_l": "shopify://shop_images/pagos.png",
+        "image_max_width": "300",
+        "image_lm": "shopify://shop_images/pagos.png",
+        "image_max_width_m": "300",
+        "designoption1": "getButtonHtml",
+        "designoption2": "getButtonHtml",
+        "designoption3": "getButtonHtml",
+        "show_product_info": true,
+        "show_product_vendor": false,
+        "show_product_type": false,
+        "show_product_barcode": false,
+        "show_product_tags": true,
+        "product_tab_tags": "",
+        "product_item_show_wishlist": false,
+        "product_item_show_compare": false,
+        "show_sizechart": false,
+        "btnname": "<span class=\"icon-f-09\"></span> Size guide",
+        "popupcontent": "<h6 class=\"tt-title\">SIZE GUIDE</h6>\nThis is an approximate conversion table to help you find your size.\n<div class=\"tt-table-responsive-md\">\n\t<table class=\"tt-table-modal-info\">\n\t\t<thead>\n\t\t\t<tr>\n\t\t\t\t<th>Italian</th>\n\t\t\t\t<th>Spanish</th>\n\t\t\t\t<th>German</th>\n\t\t\t\t<th>UK</th>\n\t\t\t\t<th>US</th>\n\t\t\t\t<th>Japanese</th>\n\t\t\t\t<th>Chinese</th>\n\t\t\t\t<th>Russian</th>\n\t\t\t\t<th>Korean</th>\n\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n\t\t\t<tr>\n\t\t\t\t<td>34</td>\n\t\t\t\t<td>30</td>\n\t\t\t\t<td>28</td>\n\t\t\t\t<td>4</td>\n\t\t\t\t<td>00</td>\n\t\t\t\t<td>3</td>\n\t\t\t\t<td>155/75A</td>\n\t\t\t\t<td>36</td>\n\t\t\t\t<td>44</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>36</td>\n\t\t\t\t<td>32</td>\n\t\t\t\t<td>30</td>\n\t\t\t\t<td>6</td>\n\t\t\t\t<td>0</td>\n\t\t\t\t<td>5</td>\n\t\t\t\t<td>155/80A</td>\n\t\t\t\t<td>38</td>\n\t\t\t\t<td>44</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>38</td>\n\t\t\t\t<td>34</td>\n\t\t\t\t<td>32</td>\n\t\t\t\t<td>8</td>\n\t\t\t\t<td>2</td>\n\t\t\t\t<td>7</td>\n\t\t\t\t<td>160/84A</td>\n\t\t\t\t<td>40</td>\n\t\t\t\t<td>55</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>40</td>\n\t\t\t\t<td>36</td>\n\t\t\t\t<td>34</td>\n\t\t\t\t<td>10</td>\n\t\t\t\t<td>4</td>\n\t\t\t\t<td>9</td>\n\t\t\t\t<td>165/88A</td>\n\t\t\t\t<td>42</td>\n\t\t\t\t<td>55</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>42</td>\n\t\t\t\t<td>38</td>\n\t\t\t\t<td>36</td>\n\t\t\t\t<td>12</td>\n\t\t\t\t<td>6</td>\n\t\t\t\t<td>11</td>\n\t\t\t\t<td>170/92A</td>\n\t\t\t\t<td>44</td>\n\t\t\t\t<td>66</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>44</td>\n\t\t\t\t<td>40</td>\n\t\t\t\t<td>38</td>\n\t\t\t\t<td>14</td>\n\t\t\t\t<td>8</td>\n\t\t\t\t<td>13</td>\n\t\t\t\t<td>175/96A</td>\n\t\t\t\t<td>46</td>\n\t\t\t\t<td>66</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>46</td>\n\t\t\t\t<td>42</td>\n\t\t\t\t<td>40</td>\n\t\t\t\t<td>16</td>\n\t\t\t\t<td>10</td>\n\t\t\t\t<td>15</td>\n\t\t\t\t<td>170/98A</td>\n\t\t\t\t<td>48</td>\n\t\t\t\t<td>77</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>48</td>\n\t\t\t\t<td>44</td>\n\t\t\t\t<td>42</td>\n\t\t\t\t<td>18</td>\n\t\t\t\t<td>12</td>\n\t\t\t\t<td>17</td>\n\t\t\t\t<td>170/100B</td>\n\t\t\t\t<td>50</td>\n\t\t\t\t<td>77</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>50</td>\n\t\t\t\t<td>46</td>\n\t\t\t\t<td>44</td>\n\t\t\t\t<td>20</td>\n\t\t\t\t<td>14</td>\n\t\t\t\t<td>19</td>\n\t\t\t\t<td>175/100B</td>\n\t\t\t\t<td>52</td>\n\t\t\t\t<td>88</td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>52</td>\n\t\t\t\t<td>48</td>\n\t\t\t\t<td>46</td>\n\t\t\t\t<td>22</td>\n\t\t\t\t<td>16</td>\n\t\t\t\t<td>21</td>\n\t\t\t\t<td>180/104B</td>\n\t\t\t\t<td>54</td>\n\t\t\t\t<td>88</td>\n\t\t\t</tr>\n\t\t</tbody>\n\t</table>\n</div>",
+        "show_shipping": false,
+        "btnname2": "<span class=\"icon-f-44\"></span> Shipping",
+        "popupcontentshipping": "<h6 class=\"tt-title\">SHIPPING</h6>\n<ul>\n\t<li>Complimentary ground shipping within 1 to 7 business days</li>\n\t<li>In-store collection available within 1 to 7 business days</li>\n\t<li>Next-day and Express delivery options also available</li>\n\t<li>Purchases are delivered in an orange box tied with a Bolduc ribbon, with the exception of certain items</li>\n\t<li>See the delivery FAQs for details on shipping methods, costs and delivery times</li>\n</ul>\n<h6 class=\"tt-title\">RETURNS AND EXCHANGES</h6>\n<ul>\n\t<li>Easy and complimentary, within 14 days</li>\n\t<li>See conditions and procedure in our return FAQs</li>\n</ul>",
+        "show_message": false,
+        "btnname3": "<span class=\"icon-f-72\"> Preguntas</span>",
+        "prpage_tree_col_html": "<div class=\"tt-services-aside\">\n\t<a href=\"#\" class=\"tt-services-block\">\n\t\t<div class=\"tt-col-icon\">\n\t\t\t<i class=\"icon-f-48\"></i>\n\t\t</div>\n\t\t<div class=\"tt-col-description\">\n\t\t\t<h4 class=\"tt-title\">FREE SHIPPING</h4>\n\t\t\t<p>Free shipping on all US order or order above $99</p>\n\t\t</div>\n\t</a>\n\t<a href=\"#\" class=\"tt-services-block\">\n\t\t<div class=\"tt-col-icon\">\n\t\t\t<i class=\"icon-f-35\"></i>\n\t\t</div>\n\t\t<div class=\"tt-col-description\">\n\t\t\t<h4 class=\"tt-title\">SUPPORT 24/7</h4>\n\t\t\t<p>Contact us 24 hours a day, 7 days a week</p>\n\t\t</div>\n\t</a>\n\t<a href=\"#\" class=\"tt-services-block\">\n\t\t<div class=\"tt-col-icon\">\n\t\t\t<i class=\"icon-e-09\"></i>\n\t\t</div>\n\t\t<div class=\"tt-col-description\">\n\t\t\t<h4 class=\"tt-title\">30 DAYS RETURN</h4>\n\t\t\t<p>Simply return it within 30 days for an exchange.</p>\n\t\t</div>\n\t</a>\n</div>",
+        "show_custom_related": true,
+        "custom_related_fullscreen": false,
+        "custom_related_titleincenter": false,
+        "custom_related_title": "Productos vistos recientemente",
+        "custom_related_length": "8",
+        "custom_related_slickdesktoptoshow": "4"
+      }
+    }
+  },
+  "order": [
+    "v2_banner_UzAxXq",
+    "main"
+  ]
+}
