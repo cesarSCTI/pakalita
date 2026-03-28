@@ -171,7 +171,7 @@
       "name": "V2 Gallery Carousel",
       "settings": {
         "section_title": "Galería",
-        "layout_width": "container",
+        "layout_width": "full",
         "columns_desktop": 3,
         "bg_color": "#ffffff",
         "padding_top": 40,
