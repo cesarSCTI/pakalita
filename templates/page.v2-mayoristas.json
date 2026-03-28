@@ -118,7 +118,8 @@
         "item_n9mXcY"
       ],
       "custom_css": [
-        ".tt-col-icon {background: #CD807A; padding: 15px; border-radius: 50%;}"
+        ".tt-col-icon {background: #cd807a; padding: 15px; border-radius: 50%;}",
+        ".tt-offset-normal_base {margin: 10px;}"
       ],
       "name": "Icon Banners",
       "settings": {
