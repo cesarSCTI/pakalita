@@ -71,11 +71,62 @@
         "padding_top": 64,
         "padding_bottom": 64
       }
+    },
+    "v2_gallery_carousel_P3bdHk": {
+      "type": "V2-gallery-carousel",
+      "blocks": {
+        "gallery_item_qyD6Uc": {
+          "type": "gallery_item",
+          "settings": {
+            "item_title": "Arte Zapoteca",
+            "item_description": "Tejidos que narran historia"
+          }
+        },
+        "gallery_item_TtC9Qb": {
+          "type": "gallery_item",
+          "settings": {
+            "item_title": "Arte Mixteca",
+            "item_description": "Tradición en cada hilo"
+          }
+        },
+        "gallery_item_r34hVY": {
+          "type": "gallery_item",
+          "settings": {
+            "item_title": "Arte Huichol",
+            "item_description": "Historias que se crean"
+          }
+        },
+        "gallery_item_CmyEXm": {
+          "type": "gallery_item",
+          "settings": {
+            "item_title": "Arte Huichol",
+            "item_description": "Historias que se crean"
+          }
+        }
+      },
+      "block_order": [
+        "gallery_item_qyD6Uc",
+        "gallery_item_TtC9Qb",
+        "gallery_item_r34hVY",
+        "gallery_item_CmyEXm"
+      ],
+      "name": "V2 Gallery Carousel",
+      "settings": {
+        "section_title": "Galería",
+        "layout_width": "container",
+        "columns_desktop": 4,
+        "bg_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_left": 20,
+        "padding_right": 20
+      }
     }
   },
   "order": [
     "main",
     "v2_banner_mEUNcX",
-    "v2_rich_text_hwxynF"
+    "v2_rich_text_hwxynF",
+    "v2_gallery_carousel_P3bdHk"
   ]
 }
