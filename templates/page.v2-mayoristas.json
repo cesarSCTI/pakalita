@@ -117,6 +117,9 @@
         "item_Xp8Mk9",
         "item_n9mXcY"
       ],
+      "custom_css": [
+        ".tt-col-icon {background: #CD807A; padding: 15px; border-radius: 50%;}"
+      ],
       "name": "Icon Banners",
       "settings": {
         "top_offset": "normal-onlyindex",
