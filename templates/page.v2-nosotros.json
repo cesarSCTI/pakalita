@@ -207,6 +207,31 @@
         "padding_left": 20,
         "padding_right": 20
       }
+    },
+    "v2_text_banner_6byCwz": {
+      "type": "V2-text-banner",
+      "name": "V2 just text",
+      "settings": {
+        "layout_width": "container",
+        "bg_color": "#cd807a",
+        "parallax": false,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_left": 20,
+        "padding_right": 20,
+        "title": "",
+        "title_tag": "h2",
+        "title_weight": "500",
+        "title_color": "#FFFFFF",
+        "description": "Cada pieza es una invitación a conectar con las manos que la crearon y con la riqueza cultural de México.",
+        "description_color": "#FFFFFF",
+        "btn_label": "Conocer productos",
+        "btn_url": "shopify://collections/all",
+        "btn_bg": "#ad6557",
+        "btn_text_color": "#FFFFFF",
+        "btn_border_color": "#8B6F62",
+        "btn_radius": 24
+      }
     }
   },
   "order": [
@@ -216,6 +241,7 @@
     "v2_flex_text_image_VqMB9e",
     "v2_flex_text_image_9RrYWx",
     "v2_image_cards_grid_pRRybe",
-    "v2_gallery_carousel_PDPKWT"
+    "v2_gallery_carousel_PDPKWT",
+    "v2_text_banner_6byCwz"
   ]
 }
