@@ -322,7 +322,7 @@
               {%- comment %} Info {%- endcomment %}
               <div class="cp-card__info">
                 <a href="{{ product.url }}" class="cp-card__title-link">
-                  <h3 class="cp-card__title">{{ product.title }}</h3>
+                  <h3 class="cp-card__title">{{ product.title |  truncate: 25}}</h3>
                 </a>
                 <div class="cp-card__price">
                   {%- if product.compare_at_price > product.price -%}
@@ -438,6 +438,14 @@
       display: flex;
     justify-content: space-between;
     font-family: "Poppins", sans-serif;
+}
+@media (max-width: 600px) {
+    .collection-page__toolbar{
+        flex-direction: column;
+    }
+    .cp-card__title, .cp-card__price {
+        font-size: 14px;
+    }
 }
 
 .collection-page__toolbar-inner {
@@ -940,7 +948,7 @@ display: flex;
 .cp-card__title-link { text-decoration: none; color: inherit; }
 
 .cp-card__title {
-  font-size: 0.9rem;
+  font-size: 16px;
   font-weight: 600;
   margin: 0 0 0.3rem;
   color: var(--cp-title-color);
@@ -951,7 +959,7 @@ display: flex;
 }
 
 .cp-card__price {
-  font-size: 0.9rem;
+  font-size: 16px;
   color: var(--cp-price-color);
   display: flex;
   gap: 0.5rem;
