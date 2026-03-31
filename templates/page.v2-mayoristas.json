@@ -23,7 +23,7 @@
         "banner_height": 800,
         "banner_height_mobile": 360,
         "banner_radius": 12,
-        "overlay_color": "#2A1108",
+        "overlay_color": "#2a1108",
         "overlay_opacity": 50,
         "content_x": "center",
         "content_y": "middle",
@@ -33,15 +33,15 @@
         "title_normal": "Arte mexicano hecho a mano",
         "title_italic": "para hoteles y empresas",
         "title_size": 38,
-        "title_color": "#FFFFFF",
+        "title_color": "#ffffff",
         "subtitle": "",
         "subtitle_size": 15,
-        "subtitle_color": "#F0EBE3",
+        "subtitle_color": "#f0ebe3",
         "btn_label": "Solicitar catálogo",
         "btn_url": "",
-        "btn_bg": "#FFFFFF",
+        "btn_bg": "#ffffff",
         "btn_text_color": "#ad6557",
-        "btn_border_color": "#FFFFFF",
+        "btn_border_color": "#ffffff",
         "btn_radius": 24,
         "btn2_label": "",
         "btn2_url": ""
@@ -63,7 +63,7 @@
         "body_size": 16,
         "show_divider": false,
         "divider_color": "#111111",
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "title_color": "#111111",
         "title_italic_color": "#111111",
         "body_color": "#333333",
@@ -230,57 +230,71 @@
         "image_border_radius": 8
       }
     },
-    "index_section_brands_cUwX3k": {
-      "type": "index-section-brands",
+    "v2_logo_section_wQ4QmU": {
+      "type": "V2-logo-section",
       "blocks": {
-        "logo_image_6AYxGP": {
-          "type": "logo_image",
+        "logo_mV6C8B": {
+          "type": "logo",
           "settings": {
             "image": "shopify://shop_images/Group.png",
-            "link": ""
+            "alt_text": "",
+            "link": "",
+            "open_new_tab": true
           }
         },
-        "logo_image_8e7g8t": {
-          "type": "logo_image",
+        "logo_c74ARL": {
+          "type": "logo",
           "settings": {
             "image": "shopify://shop_images/Group_1.png",
-            "link": ""
+            "alt_text": "",
+            "link": "",
+            "open_new_tab": true
           }
         },
-        "logo_image_AUNEDM": {
-          "type": "logo_image",
+        "logo_xRGp9G": {
+          "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/pV1S5v_tif.png",
-            "link": ""
+            "image": "shopify://shop_images/Group.png",
+            "alt_text": "",
+            "link": "",
+            "open_new_tab": true
           }
         },
-        "logo_image_NJqYE9": {
-          "type": "logo_image",
+        "logo_i9CWCr": {
+          "type": "logo",
           "settings": {
             "image": "shopify://shop_images/zNyPDc.png",
-            "link": ""
+            "alt_text": "",
+            "link": "",
+            "open_new_tab": true
           }
         }
       },
       "block_order": [
-        "logo_image_6AYxGP",
-        "logo_image_8e7g8t",
-        "logo_image_AUNEDM",
-        "logo_image_NJqYE9"
+        "logo_mV6C8B",
+        "logo_c74ARL",
+        "logo_xRGp9G",
+        "logo_i9CWCr"
       ],
-      "name": "Brands list",
+      "name": "V2 Logo Carousel",
       "settings": {
-        "top_offset": "none",
-        "fullwidth": false,
-        "useimageopacityonhover": true,
-        "show_title": true,
-        "title_to_left": false,
-        "text1": "Nuestros clientes",
-        "text2": "",
-        "toshow": "4",
-        "step": "2",
-        "module_autoplay": false,
-        "delay_time": "7000"
+        "title": "Nuestros clientes",
+        "full_width": false,
+        "cols_desktop": 4,
+        "cols_tablet": 3,
+        "cols_mobile": 2,
+        "logo_height": 56,
+        "logo_opacity": 100,
+        "logo_opacity_hover": 55,
+        "grayscale": false,
+        "show_divider_top": false,
+        "show_divider_bottom": false,
+        "bg_color": "#FFFFFF",
+        "title_color": "#111111",
+        "divider_color": "#111111",
+        "gap": 32,
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     }
   },
@@ -291,6 +305,6 @@
     "footer_section_iconbanners_EAh6TV",
     "v2_gallery_carousel_P3bdHk",
     "v2_flex_text_image_WEmxH8",
-    "index_section_brands_cUwX3k"
+    "v2_logo_section_wQ4QmU"
   ]
 }
