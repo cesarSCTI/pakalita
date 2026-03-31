@@ -28,15 +28,15 @@
         "title_normal": "{{ product.title }}",
         "title_italic": "",
         "title_size": 38,
-        "title_color": "#FFFFFF",
+        "title_color": "#ffffff",
         "subtitle": "",
         "subtitle_size": 15,
-        "subtitle_color": "#F0EBE3",
+        "subtitle_color": "#f0ebe3",
         "btn_label": "",
         "btn_url": "",
-        "btn_bg": "#FFFFFF",
-        "btn_text_color": "#2A1108",
-        "btn_border_color": "#FFFFFF",
+        "btn_bg": "#ffffff",
+        "btn_text_color": "#2a1108",
+        "btn_border_color": "#ffffff",
         "btn_radius": 24,
         "btn2_label": "",
         "btn2_url": ""
@@ -85,6 +85,7 @@
         "7cfa47f5-db2d-49f9-a6cf-13de29b199ce",
         "e21fc013-9d77-49c1-a88d-b7597ffb4ed2"
       ],
+      "disabled": true,
       "custom_css": [
         "form * {font-family: \"Inter\", sans-serif;}",
         ".tt-title {font-family: \"Inter\", sans-serif; font-weight: 700 !important;}",
@@ -148,10 +149,78 @@
         "custom_related_length": "8",
         "custom_related_slickdesktoptoshow": "4"
       }
+    },
+    "v2_product_main_yqyNTK": {
+      "type": "V2-product-main",
+      "blocks": {
+        "trust_badge_QqDHXy": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "truck",
+            "title": "Free Shipping",
+            "subtitle": "Free shipping on orders over $75."
+          }
+        },
+        "trust_badge_bbdx4t": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "return",
+            "title": "100 - Day Returns",
+            "subtitle": "Support from 8:30 AM to 10:00 PM everyday"
+          }
+        },
+        "trust_badge_TiNAkN": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "support",
+            "title": "Soporte 24/7",
+            "subtitle": "Not impressed? Get a refund. You have 100 days."
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_QqDHXy",
+        "trust_badge_bbdx4t",
+        "trust_badge_TiNAkN"
+      ],
+      "name": "V2 Product Main",
+      "settings": {
+        "thumb_width": 80,
+        "thumb_gap": 8,
+        "image_radius": 16,
+        "show_vendor": false,
+        "show_description": true,
+        "show_stars": true,
+        "star_count": 4,
+        "review_count": 234,
+        "show_share": true,
+        "show_wishlist": true,
+        "swatch_size": 38,
+        "pill_radius": 8,
+        "add_to_cart_label": "AGREGAR AL CARRITO",
+        "sold_out_label": "AGOTADO",
+        "added_label": "¡Producto agregado al carrito!",
+        "btn_bg": "#A0522D",
+        "btn_text": "#FFFFFF",
+        "btn_radius": 20,
+        "accent_color": "#A0522D",
+        "title_color": "#111111",
+        "price_color": "#111111",
+        "text_color": "#333333",
+        "meta_color": "#555555",
+        "border_color": "#DDDDDD",
+        "qty_bg": "#FFFFFF",
+        "qty_text": "#111111",
+        "section_bg": "#FFFFFF",
+        "col_gap": 48,
+        "padding_top": 32,
+        "padding_bottom": 48
+      }
     }
   },
   "order": [
     "v2_banner_UzAxXq",
-    "main"
+    "main",
+    "v2_product_main_yqyNTK"
   ]
 }
