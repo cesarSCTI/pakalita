@@ -1,0 +1,765 @@
+{% comment %}
+  Section: Contact Form with Image
+  - Formulario izquierda + imagen derecha
+  - Compatible con Shopify Forms app (form nativo + action url)
+  - Full width o container width configurable
+  - Flexbox responsive
+{% endcomment %}
+
+<section
+  class="contact-form-section"
+  id="contact-form-{{ section.id }}"
+  style="
+    --cf-bg: {{ section.settings.section_bg }};
+    --cf-card-bg: {{ section.settings.card_bg }};
+    --cf-card-radius: {{ section.settings.card_radius }}px;
+    --cf-title-color: {{ section.settings.title_color }};
+    --cf-title-italic-color: {{ section.settings.title_italic_color }};
+    --cf-text-color: {{ section.settings.text_color }};
+    --cf-input-border: {{ section.settings.input_border_color }};
+    --cf-input-text: {{ section.settings.input_text_color }};
+    --cf-input-label: {{ section.settings.label_color }};
+    --cf-btn-bg: {{ section.settings.btn_bg }};
+    --cf-btn-text: {{ section.settings.btn_text_color }};
+    --cf-btn-radius: {{ section.settings.btn_radius }}px;
+    --cf-padding-top: {{ section.settings.padding_top }}px;
+    --cf-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --cf-image-radius: {{ section.settings.image_radius }}px;
+    --cf-gap: {{ section.settings.col_gap }}px;
+    --cf-form-padding: {{ section.settings.form_padding }}px;
+    --cf-title-size: {{ section.settings.title_size }}px;
+  "
+>
+  <div class="contact-form__outer{% if section.settings.full_width %} contact-form__outer--full{% else %} page-width{% endif %}">
+    <div class="contact-form__card">
+
+      {%- comment %} ── COLUMNA IZQUIERDA: FORMULARIO ── {%- endcomment %}
+      <div class="contact-form__left">
+
+        {%- if section.settings.title_normal != blank or section.settings.title_italic != blank -%}
+          <h2 class="contact-form__title">
+            {%- if section.settings.title_normal != blank -%}
+              <span class="contact-form__title--normal">{{ section.settings.title_normal }}</span>
+            {%- endif -%}
+            {%- if section.settings.title_italic != blank -%}
+              <em class="contact-form__title--italic">{{ section.settings.title_italic }}</em>
+            {%- endif -%}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <p class="contact-form__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+
+        {%- comment %}
+          FORMULARIO
+          Compatible con Shopify Forms app:
+          - Usa {% form 'contact' %} nativo de Shopify
+          - Los campos se envían a contact@shopify y se guardan en el admin
+          - Si usas la app "Shopify Forms", reemplaza el action del form
+            con el ID de tu formulario de la app (instrucciones en los settings)
+        {%- endcomment %}
+
+        {%- form 'contact', id: 'contact-form-id-{{ section.id }}' -%}
+
+          {%- if form.posted_successfully? -%}
+            <div class="contact-form__success" role="alert">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              {{ section.settings.success_message | default: '¡Gracias! Nos pondremos en contacto pronto.' }}
+            </div>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="contact-form__error" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="contact-form__fields">
+
+            {%- comment %} Fila 1: Nombre + Email {%- endcomment %}
+            <div class="contact-form__row">
+              <div class="contact-form__field">
+                <label class="contact-form__label" for="cf-name-{{ section.id }}">
+                  {{ section.settings.label_name | default: 'Nombre' }}
+                </label>
+                <input
+                  type="text"
+                  id="cf-name-{{ section.id }}"
+                  name="contact[name]"
+                  class="contact-form__input"
+                  value="{{ form.name }}"
+                  autocomplete="name"
+                  {% if section.settings.name_required %}required{% endif %}
+                >
+              </div>
+
+              <div class="contact-form__field">
+                <label class="contact-form__label" for="cf-email-{{ section.id }}">
+                  {{ section.settings.label_email | default: 'Email' }}
+                </label>
+                <input
+                  type="email"
+                  id="cf-email-{{ section.id }}"
+                  name="contact[email]"
+                  class="contact-form__input"
+                  value="{{ form.email }}"
+                  autocomplete="email"
+                  required
+                >
+              </div>
+            </div>
+
+            {%- comment %} Fila 2: Teléfono + Empresa {%- endcomment %}
+            {%- if section.settings.show_phone or section.settings.show_company -%}
+              <div class="contact-form__row">
+                {%- if section.settings.show_phone -%}
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="cf-phone-{{ section.id }}">
+                      {{ section.settings.label_phone | default: 'Teléfono' }}
+                    </label>
+                    <input
+                      type="tel"
+                      id="cf-phone-{{ section.id }}"
+                      name="contact[phone]"
+                      class="contact-form__input"
+                      autocomplete="tel"
+                      {% if section.settings.phone_required %}required{% endif %}
+                    >
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.show_company -%}
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="cf-company-{{ section.id }}">
+                      {{ section.settings.label_company | default: 'Empresa / Proyecto' }}
+                    </label>
+                    <input
+                      type="text"
+                      id="cf-company-{{ section.id }}"
+                      name="contact[company]"
+                      class="contact-form__input"
+                      autocomplete="organization"
+                    >
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- comment %} Mensaje / textarea {%- endcomment %}
+            {%- if section.settings.show_message -%}
+              <div class="contact-form__field contact-form__field--full">
+                <label class="contact-form__label" for="cf-message-{{ section.id }}">
+                  {{ section.settings.label_message | default: 'Cuéntanos tu idea' }}
+                </label>
+                <textarea
+                  id="cf-message-{{ section.id }}"
+                  name="contact[body]"
+                  class="contact-form__input contact-form__textarea"
+                  rows="{{ section.settings.textarea_rows }}"
+                  {% if section.settings.message_required %}required{% endif %}
+                ></textarea>
+              </div>
+            {%- endif -%}
+
+            {%- comment %} Campo honeypot anti-spam {%- endcomment %}
+            <input type="hidden" name="contact[tags]" value="{{ section.settings.form_tag | default: 'contact-form' }}">
+
+          </div>
+
+          <button type="submit" class="contact-form__btn">
+            {{ section.settings.btn_label | default: 'Solicitar catálogo' }}
+          </button>
+
+        {%- endform -%}
+
+      </div>
+
+      {%- comment %} ── COLUMNA DERECHA: IMAGEN ── {%- endcomment %}
+      {%- if section.settings.image != blank -%}
+        <div class="contact-form__right">
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1000, 1200',
+              sizes: '(max-width: 768px) 100vw, 45vw',
+              class: 'contact-form__image',
+              alt: section.settings.image.alt | default: shop.name
+          }}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+
+/* =====================================================
+   SECTION
+   ===================================================== */
+.contact-form-section {
+  background: var(--cf-bg);
+  padding-top: var(--cf-padding-top);
+  padding-bottom: var(--cf-padding-bottom);
+}
+
+.contact-form__outer--full {
+  width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   CARD — flex row: form | imagen
+   ===================================================== */
+.contact-form__card {
+  background: var(--cf-card-bg);
+  border-radius: var(--cf-card-radius);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+/* =====================================================
+   COLUMNA IZQUIERDA: FORMULARIO
+   ===================================================== */
+.contact-form__left {
+  flex: 1 1 55%;
+  padding: var(--cf-form-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   TÍTULO
+   ===================================================== */
+.contact-form__title {
+  margin: 0;
+  font-size: var(--cf-title-size);
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--cf-title-color);
+}
+
+.contact-form__title--normal {
+  display: block;
+  font-style: normal;
+}
+
+.contact-form__title--italic {
+  display: block;
+  font-style: italic;
+  color: var(--cf-title-italic-color);
+}
+
+/* =====================================================
+   DESCRIPCIÓN
+   ===================================================== */
+.contact-form__description {
+  margin: -0.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--cf-text-color);
+  opacity: 0.7;
+  line-height: 1.6;
+}
+
+/* =====================================================
+   CAMPOS — grid flex
+   ===================================================== */
+.contact-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contact-form__row {
+  display: flex;
+  flex-direction: row;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.contact-form__field {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.contact-form__field--full {
+  flex: 1 1 100%;
+}
+
+/* =====================================================
+   LABEL
+   ===================================================== */
+.contact-form__label {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--cf-input-label);
+}
+
+/* =====================================================
+   INPUT / TEXTAREA — estilo línea inferior
+   ===================================================== */
+.contact-form__input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--cf-input-border);
+  border-radius: 0;
+  padding: 0.45rem 0;
+  font-size: 0.9rem;
+  color: var(--cf-input-text);
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.contact-form__input:focus {
+  border-bottom-color: var(--cf-title-color);
+}
+
+.contact-form__input::placeholder {
+  color: transparent;
+}
+
+.contact-form__textarea {
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   BOTÓN
+   ===================================================== */
+.contact-form__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7em 1.8em;
+  background: var(--cf-btn-bg);
+  color: var(--cf-btn-text);
+  border: none;
+  border-radius: var(--cf-btn-radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.contact-form__btn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   MENSAJES ÉXITO / ERROR
+   ===================================================== */
+.contact-form__success {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--cf-input-text);
+  background: rgba(39, 174, 96, 0.12);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.contact-form__success svg { width: 18px; height: 18px; color: #27ae60; flex-shrink: 0; }
+
+.contact-form__error {
+  font-size: 0.85rem;
+  color: #c0392b;
+  background: rgba(192, 57, 43, 0.08);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+/* =====================================================
+   COLUMNA DERECHA: IMAGEN
+   ===================================================== */
+.contact-form__right {
+  flex: 0 0 45%;
+  position: relative;
+  min-height: 300px;
+  overflow: hidden;
+  border-radius: 0 var(--cf-image-radius) var(--cf-image-radius) 0;
+}
+
+.contact-form__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media screen and (max-width: 768px) {
+  .contact-form__card {
+    flex-direction: column;
+  }
+
+  .contact-form__right {
+    flex: unset;
+    min-height: 260px;
+    order: -1; /* imagen arriba en móvil */
+    border-radius: var(--cf-image-radius) var(--cf-image-radius) 0 0;
+  }
+
+  .contact-form__left {
+    padding: calc(var(--cf-form-padding) * 0.7);
+  }
+
+  .contact-form__row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-form__outer--full {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .contact-form__btn {
+    align-self: stretch;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-form__input,
+  .contact-form__btn { transition: none; }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "V2 Contact Form",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Ancho de la sección"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo (full width)",
+      "default": false,
+      "info": "Si está desactivado usa el contenedor estándar (page-width)"
+    },
+    {
+      "type": "header",
+      "content": "Imagen"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen del lado derecho"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez de esquinas de la imagen",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Título del formulario"
+    },
+    {
+      "type": "text",
+      "id": "title_normal",
+      "label": "Título — línea normal",
+      "default": "¿Te gustaría conocer"
+    },
+    {
+      "type": "text",
+      "id": "title_italic",
+      "label": "Título — línea en cursiva",
+      "default": "nuestro catálogo?"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 18,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Tamaño del título",
+      "default": 32
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción (opcional)",
+    },
+    {
+      "type": "header",
+      "content": "Campos del formulario"
+    },
+    {
+      "type": "text",
+      "id": "label_name",
+      "label": "Etiqueta — Nombre",
+      "default": "Nombre"
+    },
+    {
+      "type": "checkbox",
+      "id": "name_required",
+      "label": "Nombre requerido",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_email",
+      "label": "Etiqueta — Email",
+      "default": "Email"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Mostrar campo Teléfono",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_phone",
+      "label": "Etiqueta — Teléfono",
+      "default": "Teléfono"
+    },
+    {
+      "type": "checkbox",
+      "id": "phone_required",
+      "label": "Teléfono requerido",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_company",
+      "label": "Mostrar campo Empresa / Proyecto",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_company",
+      "label": "Etiqueta — Empresa",
+      "default": "Empresa / Proyecto"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_message",
+      "label": "Mostrar campo de mensaje",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_message",
+      "label": "Etiqueta — Mensaje",
+      "default": "Cuéntanos tu idea"
+    },
+    {
+      "type": "checkbox",
+      "id": "message_required",
+      "label": "Mensaje requerido",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "textarea_rows",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Filas del área de mensaje",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Integración con Shopify Forms"
+    },
+    {
+      "type": "text",
+      "id": "form_tag",
+      "label": "Tag del formulario (contact[tags])",
+      "default": "contact-form",
+      "info": "Este tag se guarda en cada envío. Úsalo para filtrar en el admin o en la app Shopify Forms."
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Mensaje de confirmación",
+      "default": "¡Gracias! Nos pondremos en contacto pronto."
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Texto del botón",
+      "default": "Solicitar catálogo"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Fondo del botón",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Texto del botón",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "btn_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez del botón",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Fondo de la sección",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Fondo de la tarjeta",
+      "default": "#C07070"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez de la tarjeta",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título (normal)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "title_italic_color",
+      "label": "Color del título (cursiva)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto descriptivo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color de etiquetas del formulario",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Color del borde de los inputs",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "Color del texto de los inputs",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "col_gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre formulario e imagen",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "form_padding",
+      "min": 24,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding interno del formulario",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior de la sección",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior de la sección",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Contact Form"
+    }
+  ]
+}
+{% endschema %}

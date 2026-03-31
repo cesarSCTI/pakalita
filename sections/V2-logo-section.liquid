@@ -1,0 +1,477 @@
+{% comment %}
+  Section: Logo Carousel
+  - Cada logo es un bloque con imagen + link opcional
+  - Columnas configurables por dispositivo (desktop/tablet/móvil)
+  - Full width o container width
+  - Carrusel en móvil si hay más logos que columnas
+{% endcomment %}
+
+<section
+  class="logo-carousel"
+  id="logo-carousel-{{ section.id }}"
+  style="
+    --lc-bg: {{ section.settings.bg_color }};
+    --lc-cols-desktop: {{ section.settings.cols_desktop }};
+    --lc-cols-tablet: {{ section.settings.cols_tablet }};
+    --lc-cols-mobile: {{ section.settings.cols_mobile }};
+    --lc-gap: {{ section.settings.gap }}px;
+    --lc-logo-height: {{ section.settings.logo_height }}px;
+    --lc-logo-opacity: {{ section.settings.logo_opacity | divided_by: 100.0 }};
+    --lc-logo-opacity-hover: {{ section.settings.logo_opacity_hover | divided_by: 100.0 }};
+    --lc-padding-top: {{ section.settings.padding_top }}px;
+    --lc-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --lc-title-color: {{ section.settings.title_color }};
+    --lc-divider-color: {{ section.settings.divider_color }};
+    --lc-filter: {% if section.settings.grayscale %}grayscale(1){% else %}grayscale(0){% endif %};
+  "
+>
+  <div class="logo-carousel__wrap{% if section.settings.full_width %} logo-carousel__wrap--full{% else %} page-width{% endif %}">
+
+    {%- if section.settings.title != blank -%}
+      <h2 class="logo-carousel__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.show_divider_top -%}
+      <div class="logo-carousel__divider" aria-hidden="true"></div>
+    {%- endif -%}
+
+    {%- comment %} VIEWPORT — recorta overflow del track en móvil {%- endcomment %}
+    <div class="logo-carousel__viewport" id="lc-viewport-{{ section.id }}">
+      <div
+        class="logo-carousel__track"
+        id="lc-track-{{ section.id }}"
+        role="list"
+        aria-label="Logos de clientes"
+      >
+        {%- for block in section.blocks -%}
+          <div
+            class="logo-carousel__item"
+            role="listitem"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.image != blank -%}
+              {%- if block.settings.link != blank -%}
+                <a
+                  href="{{ block.settings.link }}"
+                  class="logo-carousel__link"
+                  aria-label="{{ block.settings.alt_text | default: block.settings.image.alt | default: 'Logo cliente' }}"
+                  {% if block.settings.open_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                >
+                  {{
+                    block.settings.image
+                    | image_url: width: 600
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '120, 200, 300, 400, 600',
+                      sizes: '200px',
+                      class: 'logo-carousel__image',
+                      alt: block.settings.alt_text | default: block.settings.image.alt | default: 'Logo'
+                  }}
+                </a>
+              {%- else -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 600
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '120, 200, 300, 400, 600',
+                    sizes: '200px',
+                    class: 'logo-carousel__image',
+                    alt: block.settings.alt_text | default: block.settings.image.alt | default: 'Logo'
+                }}
+              {%- endif -%}
+            {%- else -%}
+              <div class="logo-carousel__placeholder">Logo</div>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          {%- for i in (1..4) -%}
+            <div class="logo-carousel__item">
+              <div class="logo-carousel__placeholder">BRAND {{ i }}</div>
+            </div>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if section.settings.show_divider_bottom -%}
+      <div class="logo-carousel__divider" aria-hidden="true"></div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% stylesheet %}
+
+/* =====================================================
+   SECTION
+   ===================================================== */
+.logo-carousel {
+  background: var(--lc-bg);
+  padding-top: var(--lc-padding-top);
+  padding-bottom: var(--lc-padding-bottom);
+}
+
+.logo-carousel__wrap--full {
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   TÍTULO
+   ===================================================== */
+.logo-carousel__title {
+  text-align: center;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--lc-title-color);
+  margin: 0 0 1.75rem;
+  letter-spacing: -0.01em;
+}
+
+/* =====================================================
+   DIVISOR
+   ===================================================== */
+.logo-carousel__divider {
+  height: 1px;
+  background: var(--lc-divider-color);
+  opacity: 0.12;
+  margin: 1rem 0;
+}
+
+/* =====================================================
+   VIEWPORT
+   ===================================================== */
+.logo-carousel__viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* =====================================================
+   TRACK — flex siempre
+   En desktop: wrap, ancho automático por columnas
+   En móvil: sin wrap, scroll horizontal
+   ===================================================== */
+.logo-carousel__track {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lc-gap);
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* =====================================================
+   ITEM
+   flex-basis calculado por columnas desktop
+   ===================================================== */
+.logo-carousel__item {
+  flex: 0 0 calc(
+    (100% - (var(--lc-cols-desktop) - 1) * var(--lc-gap)) / var(--lc-cols-desktop)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =====================================================
+   IMAGEN
+   ===================================================== */
+.logo-carousel__image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: var(--lc-logo-height);
+  object-fit: contain;
+  object-position: center;
+  filter: var(--lc-filter);
+  opacity: var(--lc-logo-opacity);
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+.logo-carousel__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.logo-carousel__link:hover .logo-carousel__image,
+.logo-carousel__item:not(:has(a)):hover .logo-carousel__image {
+  opacity: var(--lc-logo-opacity-hover);
+  filter: grayscale(0);
+}
+
+.logo-carousel__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--lc-logo-height);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--lc-title-color);
+  opacity: 0.3;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+@media screen and (max-width: 900px) {
+  .logo-carousel__item {
+    flex: 0 0 calc(
+      (100% - (var(--lc-cols-tablet) - 1) * var(--lc-gap)) / var(--lc-cols-tablet)
+    );
+  }
+}
+
+/* =====================================================
+   MÓVIL — carrusel horizontal con scroll snap
+   ===================================================== */
+@media screen and (max-width: 600px) {
+  .logo-carousel__track {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .logo-carousel__track::-webkit-scrollbar { display: none; }
+
+  .logo-carousel__item {
+    flex: 0 0 calc(
+      (100% - (var(--lc-cols-mobile) - 1) * var(--lc-gap)) / var(--lc-cols-mobile)
+    );
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  .logo-carousel__wrap--full {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-carousel__image { transition: none; }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "V2 Logo Carousel",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 16,
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título de la sección",
+      "default": "Nuestros clientes"
+    },
+    {
+      "type": "header",
+      "content": "Ancho"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo (full width)",
+      "default": false,
+      "info": "Si está desactivado usa el contenedor estándar (page-width)"
+    },
+    {
+      "type": "header",
+      "content": "Columnas por dispositivo"
+    },
+    {
+      "type": "range",
+      "id": "cols_desktop",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "Logos por fila — Desktop (>900px)",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "cols_tablet",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Logos por fila — Tablet (601–900px)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "cols_mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Logos visibles — Móvil (≤600px, carrusel)",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Logos"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Altura de los logos",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "logo_opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad normal",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "logo_opacity_hover",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad al hacer hover",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "label": "Mostrar logos en escala de grises",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Divisores"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider_top",
+      "label": "Línea divisora superior",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider_bottom",
+      "label": "Línea divisora inferior",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colores y espaciado"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fondo de la sección",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del título",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color del divisor",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Espacio entre logos",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen del logo"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Texto alternativo (alt)",
+          "info": "Describe la empresa para accesibilidad"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link del logo (opcional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab",
+          "label": "Abrir en nueva pestaña",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Logo Carousel",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}
