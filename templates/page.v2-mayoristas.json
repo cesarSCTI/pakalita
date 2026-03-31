@@ -296,6 +296,50 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "v2_contat_form_A6mVBR": {
+      "type": "V2-contat-form",
+      "name": "V2 Contact Form",
+      "settings": {
+        "full_width": true,
+        "image": "shopify://shop_images/a08f7132dfee49edd86bed05948eb120d3cdcaf4.jpg",
+        "image_radius": 16,
+        "title_normal": "¿Te gustaría conocer",
+        "title_italic": "nuestro catálogo?",
+        "title_size": 32,
+        "description": "",
+        "label_name": "Nombre",
+        "name_required": true,
+        "label_email": "Email",
+        "show_phone": true,
+        "label_phone": "Teléfono",
+        "phone_required": false,
+        "show_company": true,
+        "label_company": "Empresa / Proyecto",
+        "show_message": true,
+        "label_message": "Cuéntanos tu idea",
+        "message_required": false,
+        "textarea_rows": 3,
+        "form_tag": "contact-form",
+        "success_message": "¡Gracias! Nos pondremos en contacto pronto.",
+        "btn_label": "Solicitar catálogo",
+        "btn_bg": "#FFFFFF",
+        "btn_text_color": "#111111",
+        "btn_radius": 24,
+        "section_bg": "#FFFFFF",
+        "card_bg": "#C07070",
+        "card_radius": 20,
+        "title_color": "#FFFFFF",
+        "title_italic_color": "#FFFFFF",
+        "text_color": "#FFFFFF",
+        "label_color": "#FFFFFF",
+        "input_border_color": "#FFFFFF",
+        "input_text_color": "#FFFFFF",
+        "col_gap": 0,
+        "form_padding": 48,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
     }
   },
   "order": [
@@ -305,6 +349,7 @@
     "footer_section_iconbanners_EAh6TV",
     "v2_gallery_carousel_P3bdHk",
     "v2_flex_text_image_WEmxH8",
-    "v2_logo_section_wQ4QmU"
+    "v2_logo_section_wQ4QmU",
+    "v2_contat_form_A6mVBR"
   ]
 }
