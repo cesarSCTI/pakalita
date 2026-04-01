@@ -286,18 +286,6 @@
               </div>
             {%- endfor -%}
           {%- endunless -%}
-
-          {%- comment %} Disponibilidad {%- endcomment %}
-          <p class="product-main__availability" id="pm-availability-{{ section.id }}">
-            {%- if current_variant.available -%}
-              <span class="pm-avail-dot pm-avail-dot--in"></span>
-              En stock
-            {%- else -%}
-              <span class="pm-avail-dot pm-avail-dot--out"></span>
-              Agotado
-            {%- endif -%}
-          </p>
-
           {%- comment %} ── CANTIDAD + AGREGAR AL CARRITO ── {%- endcomment %}
           <div class="product-main__purchase-row">
 
@@ -409,10 +397,12 @@
    ===================================================== */
 .product-main {
   background: var(--pm-section-bg);
-  padding-top: var(--pm-padding-top);
+  padding-top: var(--pm-padding-top); 
   padding-bottom: var(--pm-padding-bottom);
 }
-
+.product-main__layout * {
+    font-family: "Poppins", sans-serif !important;
+}
 /* =====================================================
    LAYOUT: galería izq | info der — FLEX ROW
    ===================================================== */
@@ -527,7 +517,7 @@
 .product-main__header {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
 }
@@ -592,7 +582,7 @@
   font-weight: 600;
   line-height: 1.2;
   color: var(--pm-title-color);
-  letter-spacing: -0.02em;
+  padding:0px !important;
 }
 
 /* ---- Estrellas ---- */
@@ -668,19 +658,20 @@
 
 /* ---- Divisor ---- */
 .product-main__divider {
-  height: 1px;
-  background: var(--pm-border-color);
-  opacity: 0.15;
-  flex-shrink: 0;
+    height: 1px;
+    background: #E9E9E9;
+    opacity: 1;
+    flex-shrink: 0;
 }
 
 /* =====================================================
    OPCIONES DE VARIANTE
    ===================================================== */
 .product-main__option {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    margin-bottom: 1rem;
 }
 
 .product-main__option-header {
@@ -838,11 +829,12 @@
   flex-direction: row;
   align-items: center;
   gap: 0;
-  border-radius: 100px;
-  background: var(--pm-qty-bg);
-  border: 1.5px solid var(--pm-border-color);
+  border-radius: 12px;
+  background: #F7F7F7;
+  border: 1.5px solid #E9E9E9;
   overflow: hidden;
   flex-shrink: 0;
+  font-family: "Poppins", sans-serif;
 }
 
 .product-main__qty-btn {
@@ -880,7 +872,7 @@
   gap: 0.5rem;
   height: 46px;
   border: none;
-  border-radius: var(--pm-btn-radius);
+  border-radius: 12px;
   background: var(--pm-btn-bg);
   color: var(--pm-btn-text);
   font-size: 0.8rem;
@@ -891,6 +883,7 @@
   transition: opacity 0.2s ease, transform 0.15s ease;
   position: relative;
   overflow: hidden;
+  font-family: "Poppins", sans-serif;
 }
 
 .product-main__add-btn:hover:not(:disabled) {
@@ -956,7 +949,7 @@
 .product-main__badge-text {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: .5rem;
 }
 
 .product-main__badge-title {
