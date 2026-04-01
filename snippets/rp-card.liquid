@@ -1,0 +1,91 @@
+{% comment %}
+  Snippet: rp-card
+  Variables esperadas:
+    product                   — objeto product de Shopify
+    add_to_cart_label         — string
+    add_to_cart_label_options — string
+    show_wishlist             — boolean
+    show_add_to_cart          — boolean
+{% endcomment %}
+
+<div class="related-products__card" role="listitem">
+  <div class="rp-card__image-wrap">
+
+    <a href="{{ product.url }}" class="rp-card__image-link" tabindex="-1" aria-hidden="true">
+      {%- if product.featured_media -%}
+        {{
+          product.featured_media
+          | image_url: width: 800
+          | image_tag:
+            loading: 'lazy',
+            widths: '400, 600, 800',
+            sizes: '(max-width: 600px) 80vw, 30vw',
+            class: 'rp-card__image',
+            alt: product.title
+        }}
+        {%- if product.media[1] -%}
+          {{
+            product.media[1]
+            | image_url: width: 800
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800',
+              sizes: '(max-width: 600px) 80vw, 30vw',
+              class: 'rp-card__image rp-card__image--hover',
+              alt: product.title
+          }}
+        {%- endif -%}
+      {%- else -%}
+        <div class="rp-card__placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </a>
+
+    {%- if show_wishlist -%}
+      <button
+        class="rp-card__wishlist"
+        aria-label="Guardar {{ product.title }}"
+        type="button"
+        data-rp-wishlist="{{ product.id }}"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+    {%- endif -%}
+
+    {%- if product.compare_at_price > product.price -%}
+      <span class="rp-card__badge rp-card__badge--sale">
+        {{- 'products.product.on_sale' | t | default: 'Sale' -}}
+      </span>
+    {%- endif -%}
+
+    {%- if show_add_to_cart -%}
+      {%- if product.variants.size == 1 and product.variants.first.available -%}
+        <form action="/cart/add" method="post" class="rp-card__add-form">
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="rp-card__add-btn">{{ add_to_cart_label }}</button>
+        </form>
+      {%- else -%}
+        <a href="{{ product.url }}" class="rp-card__add-btn rp-card__add-btn--link">
+          {{ add_to_cart_label_options }}
+        </a>
+      {%- endif -%}
+    {%- endif -%}
+
+  </div>
+
+  <div class="rp-card__info">
+    <a href="{{ product.url }}" class="rp-card__title-link">
+      <h3 class="rp-card__title">{{ product.title | truncate: 25 }}</h3>
+    </a>
+    <div class="rp-card__price">
+      {%- if product.compare_at_price > product.price -%}
+        <s class="rp-card__price--compare">{{ product.compare_at_price | money }}</s>
+        <span class="rp-card__price--sale">{{ product.price | money }}</span>
+      {%- else -%}
+        <span>{{ product.price | money }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
