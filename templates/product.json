@@ -200,20 +200,51 @@
         "add_to_cart_label": "AGREGAR AL CARRITO",
         "sold_out_label": "AGOTADO",
         "added_label": "¡Producto agregado al carrito!",
-        "btn_bg": "#A0522D",
-        "btn_text": "#FFFFFF",
+        "btn_bg": "#a0522d",
+        "btn_text": "#ffffff",
         "btn_radius": 20,
-        "accent_color": "#A0522D",
+        "accent_color": "#a0522d",
         "title_color": "#111111",
         "price_color": "#111111",
         "text_color": "#333333",
         "meta_color": "#555555",
-        "border_color": "#DDDDDD",
-        "qty_bg": "#FFFFFF",
+        "border_color": "#dddddd",
+        "qty_bg": "#ffffff",
         "qty_text": "#111111",
-        "section_bg": "#FFFFFF",
+        "section_bg": "#ffffff",
         "col_gap": 48,
         "padding_top": 32,
+        "padding_bottom": 48
+      }
+    },
+    "v2_related_products_pg6GLx": {
+      "type": "V2-related-products",
+      "name": "V2 Related Products",
+      "settings": {
+        "title": "También te puede gustar",
+        "product_source": "collection",
+        "products_to_show": 6,
+        "columns_desktop": 3,
+        "gap": 16,
+        "card_bg": "#FFFFFF",
+        "card_radius": 12,
+        "product_title_color": "#111111",
+        "price_color": "#111111",
+        "show_wishlist": true,
+        "show_add_to_cart": true,
+        "add_to_cart_label": "AGREGAR AL CARRITO",
+        "add_to_cart_label_options": "VER TODAS LAS OPCIONES",
+        "add_bg_color": "#FFFFFF",
+        "add_text_color": "#111111",
+        "nav_color": "#333333",
+        "show_view_all": false,
+        "view_all_label": "Ver todos",
+        "btn_bg_color": "#A0522D",
+        "btn_text_color": "#FFFFFF",
+        "btn_radius": 24,
+        "section_bg": "#FFFFFF",
+        "title_color": "#111111",
+        "padding_top": 48,
         "padding_bottom": 48
       }
     }
@@ -221,6 +252,7 @@
   "order": [
     "v2_banner_UzAxXq",
     "main",
-    "v2_product_main_yqyNTK"
+    "v2_product_main_yqyNTK",
+    "v2_related_products_pg6GLx"
   ]
 }
