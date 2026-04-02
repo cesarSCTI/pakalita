@@ -1,0 +1,802 @@
+{% comment %}
+  Section: Product Tabs
+  - Tab 1: Descripción completa del producto
+  - Tab 2: Política de envío nativa de Shopify
+  - Tab 3: Reseñas (compatible con apps de reviews)
+  - Flexbox, responsive, personalizable
+  - Template: product
+{% endcomment %}
+
+<section
+  class="product-tabs"
+  id="product-tabs-{{ section.id }}"
+  style="
+    --pt-bg: {{ section.settings.section_bg }};
+    --pt-tab-active-bg: {{ section.settings.tab_active_bg }};
+    --pt-tab-active-text: {{ section.settings.tab_active_text }};
+    --pt-tab-inactive-text: {{ section.settings.tab_inactive_text }};
+    --pt-tab-font-size: {{ section.settings.tab_font_size }}px;
+    --pt-content-text: {{ section.settings.content_text_color }};
+    --pt-content-size: {{ section.settings.content_font_size }}px;
+    --pt-divider: {{ section.settings.divider_color }};
+    --pt-tab-radius: {{ section.settings.tab_radius }}px;
+    --pt-padding-top: {{ section.settings.padding_top }}px;
+    --pt-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="product-tabs__inner{% if section.settings.full_width %} product-tabs__inner--full{% else %} page-width{% endif %}">
+
+    {%- comment %} ── DIVISOR SUPERIOR ── {%- endcomment %}
+    {%- if section.settings.show_top_divider -%}
+      <div class="product-tabs__top-divider" aria-hidden="true"></div>
+    {%- endif -%}
+
+    {%- comment %} ── LAYOUT: nav izq | contenido der ── {%- endcomment %}
+    <div class="product-tabs__layout">
+
+      {%- comment %} ── NAVEGACIÓN DE TABS ── {%- endcomment %}
+      <nav class="product-tabs__nav" role="tablist" aria-label="Información del producto">
+
+        {%- if section.settings.show_description -%}
+          <button
+            class="product-tabs__tab is-active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="pt-panel-desc-{{ section.id }}"
+            id="pt-tab-desc-{{ section.id }}"
+            type="button"
+            data-pt-tab="desc"
+            data-pt-section="{{ section.id }}"
+          >
+            {{ section.settings.tab_label_desc | default: 'Descripción' | upcase }}
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.show_shipping -%}
+          <button
+            class="product-tabs__tab{% unless section.settings.show_description %} is-active{% endunless %}"
+            role="tab"
+            aria-selected="{% unless section.settings.show_description %}true{% else %}false{% endunless %}"
+            aria-controls="pt-panel-ship-{{ section.id }}"
+            id="pt-tab-ship-{{ section.id }}"
+            type="button"
+            data-pt-tab="ship"
+            data-pt-section="{{ section.id }}"
+          >
+            {{ section.settings.tab_label_ship | default: 'Política de Envío' | upcase }}
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.show_reviews -%}
+          <button
+            class="product-tabs__tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="pt-panel-reviews-{{ section.id }}"
+            id="pt-tab-reviews-{{ section.id }}"
+            type="button"
+            data-pt-tab="reviews"
+            data-pt-section="{{ section.id }}"
+          >
+            {{ section.settings.tab_label_reviews | default: 'Reseñas' | upcase }}
+          </button>
+        {%- endif -%}
+
+        {%- comment %} Tabs adicionales (bloques) {%- endcomment %}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'custom_tab' -%}
+            <button
+              class="product-tabs__tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="pt-panel-custom-{{ section.id }}-{{ forloop.index0 }}"
+              id="pt-tab-custom-{{ section.id }}-{{ forloop.index0 }}"
+              type="button"
+              data-pt-tab="custom-{{ forloop.index0 }}"
+              data-pt-section="{{ section.id }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.label | upcase }}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+
+      </nav>
+
+      {%- comment %} ── PANELES DE CONTENIDO ── {%- endcomment %}
+      <div class="product-tabs__content">
+
+        {%- comment %} Panel: Descripción {%- endcomment %}
+        {%- if section.settings.show_description -%}
+          <div
+            class="product-tabs__panel is-active"
+            role="tabpanel"
+            id="pt-panel-desc-{{ section.id }}"
+            aria-labelledby="pt-tab-desc-{{ section.id }}"
+            tabindex="0"
+            data-pt-panel="desc"
+            data-pt-section="{{ section.id }}"
+          >
+            <div class="product-tabs__rte">
+              {{ product.description }}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Panel: Política de envío {%- endcomment %}
+        {%- if section.settings.show_shipping -%}
+          <div
+            class="product-tabs__panel{% unless section.settings.show_description %} is-active{% endunless %}"
+            role="tabpanel"
+            id="pt-panel-ship-{{ section.id }}"
+            aria-labelledby="pt-tab-ship-{{ section.id }}"
+            tabindex="0"
+            data-pt-panel="ship"
+            data-pt-section="{{ section.id }}"
+          >
+            <div class="product-tabs__rte">
+              {%- if shop.shipping_policy.body != blank -%}
+                {{ shop.shipping_policy.body }}
+              {%- else -%}
+                <p class="product-tabs__empty">
+                  {{ section.settings.no_shipping_text | default: 'No hay política de envío configurada aún.' }}
+                </p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Panel: Reseñas {%- endcomment %}
+        {%- if section.settings.show_reviews -%}
+          <div
+            class="product-tabs__panel"
+            role="tabpanel"
+            id="pt-panel-reviews-{{ section.id }}"
+            aria-labelledby="pt-tab-reviews-{{ section.id }}"
+            tabindex="0"
+            data-pt-panel="reviews"
+            data-pt-section="{{ section.id }}"
+          >
+            {%- comment %}
+              Este div es el punto de montaje para apps de reseñas.
+              - Shopify Product Reviews: usa id="shopify-product-reviews"
+              - Judge.me: usa data-id="{{ product.id }}" class="jdgm-widget"
+              - Okendo: usa data-oke-reviews-product-id="{{ product.id }}"
+              - Yotpo: usa class="yotpo yotpo-main-widget"
+              Descomenta la que uses según tu app:
+            {%- endcomment %}
+
+            {%- case section.settings.reviews_app -%}
+
+              {%- when 'shopify' -%}
+                <div id="shopify-product-reviews" data-id="{{ product.id }}">
+                  {{ product.metafields.spr.reviews }}
+                </div>
+
+              {%- when 'judgeme' -%}
+                <div
+                  class="jdgm-widget jdgm-review-widget"
+                  data-id="{{ product.id }}"
+                  data-product-title="{{ product.title | escape }}"
+                ></div>
+
+              {%- when 'okendo' -%}
+                <div
+                  data-oke-reviews-product-id="shopify-{{ product.id }}"
+                ></div>
+
+              {%- when 'yotpo' -%}
+                <div
+                  class="yotpo yotpo-main-widget"
+                  data-product-id="{{ product.id }}"
+                  data-price="{{ product.price | money_without_currency }}"
+                  data-currency="{{ cart.currency.iso_code }}"
+                  data-name="{{ product.title | escape }}"
+                  data-url="{{ shop.url }}{{ product.url }}"
+                  data-image-url="{{ product.featured_image | img_url: '450x450' }}"
+                  data-description="{{ product.description | strip_html | escape }}"
+                ></div>
+
+              {%- when 'loox' -%}
+                <div
+                  id="loox-{{ product.id }}"
+                  class="loox-reviews-widget"
+                  data-id="{{ product.id }}"
+                ></div>
+
+              {%- else -%}
+                {%- comment %} Sin app configurada — placeholder {%- endcomment %}
+                <div class="product-tabs__reviews-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 20" fill="none" aria-hidden="true">
+                    {%- for i in (1..5) -%}
+                      <path d="{{ 10 | plus: forloop.index0 | times: 12 | minus: 2 }}" fill="#D4A52A" d="M{{ forloop.index0 | times: 12 }}0 l2.3 5 5.4.8-3.9 3.8.9 5.4L0 12.4l-4.7 2.6.9-5.4-3.9-3.8 5.4-.8z" transform="translate({{ forloop.index0 | times: 12 | plus: 6 }}, 10)"/>
+                    {%- endfor -%}
+                  </svg>
+                  <p>{{ section.settings.no_reviews_text | default: 'Configura tu app de reseñas en los ajustes de la sección.' }}</p>
+                </div>
+            {%- endcase -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Paneles de tabs adicionales (bloques) {%- endcomment %}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'custom_tab' -%}
+            <div
+              class="product-tabs__panel"
+              role="tabpanel"
+              id="pt-panel-custom-{{ section.id }}-{{ forloop.index0 }}"
+              aria-labelledby="pt-tab-custom-{{ section.id }}-{{ forloop.index0 }}"
+              tabindex="0"
+              data-pt-panel="custom-{{ forloop.index0 }}"
+              data-pt-section="{{ section.id }}"
+            >
+              <div class="product-tabs__rte">
+                {{ block.settings.content }}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+
+/* =====================================================
+   SECTION
+   ===================================================== */
+.product-tabs {
+  background: var(--pt-bg);
+  padding-top: var(--pt-padding-top);
+  padding-bottom: var(--pt-padding-bottom);
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.product-tabs *{
+    font-family: "Poppins", sans-serif !important;
+}
+
+.product-tabs__inner--full {
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   DIVISOR SUPERIOR
+   ===================================================== */
+.product-tabs__top-divider {
+  height: 1px;
+  background: var(--pt-divider);
+  opacity: 0.15;
+  margin-bottom: 2rem;
+}
+
+/* =====================================================
+   LAYOUT — flex row: nav izq | contenido der
+   ===================================================== */
+.product-tabs__layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+/* =====================================================
+   NAV DE TABS — flex column, alineada a la izquierda
+   ===================================================== */
+.product-tabs__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  flex-shrink: 0;
+  width: 200px;
+}
+
+/* =====================================================
+   BOTÓN DE TAB
+   ===================================================== */
+.product-tabs__tab {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1.1rem;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: var(--pt-tab-font-size);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--pt-tab-inactive-text);
+  cursor: pointer;
+  border-radius: var(--pt-tab-radius);
+  transition: background 0.2s ease, color 0.2s ease;
+  line-height: 1.2;
+}
+
+.product-tabs__tab:hover:not(.is-active) {
+  color: var(--pt-tab-active-text);
+  background: color-mix(in srgb, var(--pt-tab-active-bg) 15%, transparent);
+}
+
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+  .product-tabs__tab:hover:not(.is-active) {
+    background: rgba(0,0,0,0.04);
+  }
+}
+
+.product-tabs__tab.is-active {
+  background: var(--pt-tab-active-bg);
+  color: var(--pt-tab-active-text);
+}
+
+/* =====================================================
+   PANELES DE CONTENIDO
+   ===================================================== */
+.product-tabs__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-tabs__panel {
+  display: none;
+  animation: pt-fade-in 0.25s ease forwards;
+}
+
+.product-tabs__panel.is-active {
+  display: block;
+}
+
+@keyframes pt-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================
+   RTE — tipografía del contenido
+   ===================================================== */
+.product-tabs__rte {
+  font-size: var(--pt-content-size);
+  line-height: 1.75;
+  color: var(--pt-content-text);
+}
+
+.product-tabs__rte p {
+  margin: 0 0 1em;
+}
+
+.product-tabs__rte p:last-child {
+  margin-bottom: 0;
+}
+
+.product-tabs__rte h1,
+.product-tabs__rte h2,
+.product-tabs__rte h3,
+.product-tabs__rte h4 {
+  font-weight: 600;
+  margin: 1.25em 0 0.5em;
+  line-height: 1.3;
+  color: var(--pt-content-text);
+}
+
+.product-tabs__rte h1 { font-size: 1.4em; }
+.product-tabs__rte h2 { font-size: 1.25em; }
+.product-tabs__rte h3 { font-size: 1.1em; }
+
+.product-tabs__rte ul,
+.product-tabs__rte ol {
+  padding-left: 1.5rem;
+  margin: 0 0 1em;
+}
+
+.product-tabs__rte li {
+  margin-bottom: 0.35em;
+}
+
+.product-tabs__rte a {
+  color: var(--pt-tab-active-bg);
+  text-decoration: underline;
+}
+
+.product-tabs__rte img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.product-tabs__rte table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.9em;
+}
+
+.product-tabs__rte th,
+.product-tabs__rte td {
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--pt-divider);
+  text-align: left;
+}
+
+.product-tabs__rte th {
+  font-weight: 600;
+  background: rgba(0,0,0,0.03);
+}
+
+/* =====================================================
+   ESTADOS VACÍOS
+   ===================================================== */
+.product-tabs__empty {
+  opacity: 0.5;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* =====================================================
+   PLACEHOLDER RESEÑAS
+   ===================================================== */
+.product-tabs__reviews-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 0;
+}
+
+.product-tabs__reviews-placeholder p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--pt-content-text);
+  opacity: 0.55;
+}
+
+/* =====================================================
+   RESPONSIVE — en móvil los tabs se vuelven acordeón
+   ===================================================== */
+@media screen and (max-width: 680px) {
+  .product-tabs__layout {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .product-tabs__nav {
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+    border-bottom: 1px solid var(--pt-divider);
+    opacity: 0.15;
+    margin-bottom: 0;
+  }
+
+  .product-tabs__nav {
+    opacity: 1;
+    border-bottom: none;
+  }
+
+  .product-tabs__tab {
+    border-bottom: 1px solid;
+    border-color: color-mix(in srgb, var(--pt-divider) 20%, transparent);
+    border-radius: 0;
+    padding: 0.9rem 0;
+    font-size: calc(var(--pt-tab-font-size) * 0.9);
+  }
+
+  .product-tabs__tab.is-active {
+    border-radius: 0;
+    background: transparent;
+    color: var(--pt-tab-active-bg);
+    border-left: 3px solid var(--pt-tab-active-bg);
+    padding-left: 0.75rem;
+  }
+
+  .product-tabs__content {
+    padding-top: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-tabs__panel { animation: none; }
+}
+
+{% endstylesheet %}
+
+<script>
+(function () {
+  const sid = '{{ section.id }}';
+
+  const tabs   = Array.from(document.querySelectorAll('[data-pt-tab][data-pt-section="' + sid + '"]'));
+  const panels = Array.from(document.querySelectorAll('[data-pt-panel][data-pt-section="' + sid + '"]'));
+
+  if (!tabs.length) return;
+
+  function activateTab(tabKey) {
+    tabs.forEach(t => {
+      const isActive = t.dataset.ptTab === tabKey;
+      t.classList.toggle('is-active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+    });
+
+    panels.forEach(p => {
+      const isActive = p.dataset.ptPanel === tabKey;
+      p.classList.toggle('is-active', isActive);
+      /* Re-trigger animation */
+      if (isActive) {
+        p.style.animation = 'none';
+        p.offsetHeight; /* reflow */
+        p.style.animation = '';
+      }
+    });
+
+    /* Guardar en sessionStorage para mantener tab activa al navegar */
+    try {
+      sessionStorage.setItem('pt-active-' + sid, tabKey);
+    } catch (e) {}
+  }
+
+  /* Restaurar tab activa si existe */
+  try {
+    const saved = sessionStorage.getItem('pt-active-' + sid);
+    if (saved && tabs.find(t => t.dataset.ptTab === saved)) {
+      activateTab(saved);
+    }
+  } catch (e) {}
+
+  /* Eventos de click */
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => activateTab(tab.dataset.ptTab));
+  });
+
+  /* Navegación por teclado (accesibilidad) */
+  tabs.forEach((tab, idx) => {
+    tab.addEventListener('keydown', e => {
+      let targetIdx = -1;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        targetIdx = (idx + 1) % tabs.length;
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        targetIdx = (idx - 1 + tabs.length) % tabs.length;
+      } else if (e.key === 'Home') {
+        targetIdx = 0;
+      } else if (e.key === 'End') {
+        targetIdx = tabs.length - 1;
+      }
+
+      if (targetIdx >= 0) {
+        e.preventDefault();
+        tabs[targetIdx].focus();
+        activateTab(tabs[targetIdx].dataset.ptTab);
+      }
+    });
+  });
+
+  /* Manejar hash en URL: si la URL tiene #reviews, abrir ese tab */
+  if (window.location.hash === '#reviews' && tabs.find(t => t.dataset.ptTab === 'reviews')) {
+    activateTab('reviews');
+    const reviewPanel = document.getElementById('pt-panel-reviews-' + sid);
+    if (reviewPanel) {
+      setTimeout(() => reviewPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+  }
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "V2 Product Tabs",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Tabs visibles"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Mostrar tab Descripción",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tab_label_desc",
+      "label": "Etiqueta — Descripción",
+      "default": "Descripción"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping",
+      "label": "Mostrar tab Política de Envío",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tab_label_ship",
+      "label": "Etiqueta — Política de Envío",
+      "default": "Política de Envío"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Mostrar tab Reseñas",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tab_label_reviews",
+      "label": "Etiqueta — Reseñas",
+      "default": "Reseñas"
+    },
+    {
+      "type": "header",
+      "content": "App de reseñas"
+    },
+    {
+      "type": "select",
+      "id": "reviews_app",
+      "label": "App de reseñas instalada",
+      "options": [
+        { "value": "none",    "label": "Sin app (placeholder)" },
+        { "value": "shopify", "label": "Shopify Product Reviews" },
+        { "value": "judgeme", "label": "Judge.me" },
+        { "value": "okendo",  "label": "Okendo" },
+        { "value": "yotpo",   "label": "Yotpo" },
+        { "value": "loox",    "label": "Loox" }
+      ],
+      "default": "none",
+      "info": "Selecciona la app que tengas instalada. Deberás también activar el widget desde la configuración de tu app."
+    },
+    {
+      "type": "text",
+      "id": "no_shipping_text",
+      "label": "Texto si no hay política configurada",
+      "default": "No hay política de envío configurada aún."
+    },
+    {
+      "type": "text",
+      "id": "no_reviews_text",
+      "label": "Texto si no hay app de reseñas",
+      "default": "Configura tu app de reseñas en los ajustes de la sección."
+    },
+    {
+      "type": "header",
+      "content": "Diseño de tabs"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_bg",
+      "label": "Fondo del tab activo",
+      "default": "#C07070"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_text",
+      "label": "Texto del tab activo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "tab_inactive_text",
+      "label": "Texto de tabs inactivos",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "tab_font_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de fuente de tabs",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "tab_radius",
+      "min": 0,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "label": "Redondez del tab activo",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "color",
+      "id": "content_text_color",
+      "label": "Color del texto del contenido",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "content_font_size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de fuente del contenido",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Sección"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_divider",
+      "label": "Mostrar línea divisora superior",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color del divisor",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Fondo de la sección",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo (full width)",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "custom_tab",
+      "name": "Tab personalizado",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etiqueta del tab",
+          "default": "Más información"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Contenido del tab",
+          "default": "<p>Agrega aquí el contenido de este tab.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Product Tabs"
+    }
+  ]
+}
+{% endschema %}
