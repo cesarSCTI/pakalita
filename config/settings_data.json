@@ -1867,7 +1867,7 @@
         "settings": {
           "logo": "shopify://shop_images/Pakalita_logo_header_2a30c9a5-08b1-4d2d-8869-1393b2269b88.png",
           "logo_width": 120,
-          "menu": "menu-principal-propuesta",
+          "menu": "v2-menu",
           "header_bg": "#3d1a0c",
           "text_color": "#f5f0ea",
           "header_height": 64,
