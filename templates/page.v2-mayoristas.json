@@ -121,9 +121,9 @@
         ".tt-col-icon {background: #cd807a; padding: 15px; border-radius: 50%;}",
         ".tt-offset-normal_base {margin: 10px;}",
         ".subsectionbg {border-radius: 20px;}",
-        "h4.tt-title {font-family: \"Platypi\", serif; font-style: italic;}",
+        "h4.tt-title {font-family: \"Platypi\", serif; font-style: italic; font-weight: 400 !important;}",
         "p {font-family: \"Poppins\", sans-serif; color: #000 !important;}",
-        "h2.tt-title {font-family: \"Platypi\";}"
+        "h2.tt-title {font-family: 'Platypi'; font-style: italic; font-size: xx-large !important; margin-bottom: 40px !important;}"
       ],
       "name": "Icon Banners",
       "settings": {
