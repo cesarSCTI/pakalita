@@ -21,7 +21,7 @@
         "layout_width": "full",
         "image": "shopify://shop_images/db494dbfdc31aec61916625530947b75b193441f.jpg",
         "banner_height": 360,
-        "banner_height_mobile": 360,
+        "banner_height_mobile": 200,
         "banner_radius": 12,
         "overlay_color": "#ad6557",
         "overlay_opacity": 65,
