@@ -13,10 +13,10 @@
       "type": "V2-banner",
       "name": "V2 Hero Banner",
       "settings": {
-        "layout_width": "container",
+        "layout_width": "full",
         "image": "shopify://shop_images/db494dbfdc31aec61916625530947b75b193441f.jpg",
         "banner_height": 380,
-        "banner_height_mobile": 360,
+        "banner_height_mobile": 200,
         "banner_radius": 12,
         "overlay_color": "#ad6557",
         "overlay_opacity": 65,
@@ -51,7 +51,7 @@
       "type": "V2-collection-filters",
       "name": "V2 CollectionFilter",
       "settings": {
-        "layout_width": "full",
+        "layout_width": "container",
         "columns_desktop": 3,
         "columns_tablet": 2,
         "products_per_page": 16,
