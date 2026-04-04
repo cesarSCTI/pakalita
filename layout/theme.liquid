@@ -85,7 +85,7 @@
   {%- endif -%}
   
   <!-- Header hook for plugins ================================================== -->
-  {{ content_for_header }} 
+  {{ content_for_header }}  
   <!-- /Header hook for plugins ================================================== -->
 
   {%- unless settings.show_emptyreview -%}
@@ -315,6 +315,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <style>
   em{
     font-family: "Platypi", serif !important;
+  }
+  .tt-empty-cart {
+    font-family: 'Poppins' !important;
+
+    h1, a{
+      font-family: 'Poppins', sans-serif !important;
+    }
+  }
+  .line-items-box-js *{
+    font-family: 'Poppins', sans-serif !important;
+    a{
+      font-family: 'Poppins', sans-serif !important;
+    }
+    i.icon-e-09 {
+      display: none;
+    }
   }
 </style>
 </html>
