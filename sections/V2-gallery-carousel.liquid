@@ -152,7 +152,7 @@
 
 @media (max-width: 480px) {
   .gallery-carousel__item {
-    flex: 0 0 95%;
+    flex: 0 0 90%;
     min-width: 200px;
   }
 }
@@ -226,9 +226,11 @@
 .gallery-carousel__item-title {
   margin: 0 0 0.5rem;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   color: #111;
   line-height: 1.3;
+  font-family:"Platypi", serif !important;
+  font-style:italic;
 }
 
 .gallery-carousel__item-description {
@@ -257,6 +259,7 @@
   .gallery-carousel__viewport {
     --carousel-columns: 1;
     gap: 1rem;
+    justify-content: flex-start;
   }
 
   .gallery-carousel__item {
