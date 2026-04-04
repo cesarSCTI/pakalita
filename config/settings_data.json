@@ -1962,7 +1962,7 @@
       },
       "5136658840658853258": {
         "type": "shopify://apps/easyreviews/blocks/star_rating_embed_block/1341251b-09d7-46f3-ba6a-e732a50e97a5",
-        "disabled": true,
+        "disabled": false,
         "settings": {
           "placement": "below",
           "selector_type": "class",
@@ -1972,11 +1972,11 @@
       },
       "2855438465747202944": {
         "type": "shopify://apps/easyreviews/blocks/product_review_embed_block/1341251b-09d7-46f3-ba6a-e732a50e97a5",
-        "disabled": true,
+        "disabled": false,
         "settings": {
-          "placement": "below",
-          "selector_type": "class",
-          "position": "easyreviews-product-reviews",
+          "placement": "inside",
+          "selector_type": "id",
+          "position": "#shopify-product-reviews",
           "product": ""
         }
       }
