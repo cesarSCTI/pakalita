@@ -198,7 +198,7 @@
       ],
       "name": "V2 Gallery Carousel",
       "settings": {
-        "section_title": "Galería",
+        "section_title": "",
         "layout_width": "full",
         "columns_desktop": 3,
         "bg_color": "#ffffff",
