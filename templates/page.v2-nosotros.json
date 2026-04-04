@@ -47,16 +47,16 @@
         "btn2_url": ""
       }
     },
-    "v2_flex_text_image_CtnArG": {
+    "v2_flex_text_image_nYLgeU": {
       "type": "V2-flex-text-image",
       "name": "V2 Flex Text + Image",
       "settings": {
-        "title": "Hecho a mano con el corazón",
+        "title": "<p>Hecho a mano<br/><em>con el corazón</em></p>",
         "title_tag": "h2",
-        "title_weight": "700",
+        "title_weight": "400",
         "title_color": "#ad6557",
         "description_color": "#000000",
-        "description": "Hola, soy Melissa, creadora de Pakalita.\n<br><br>\nTe doy la bienvenida a este espacio y agradezco profundamente tu interés por mi proyecto. \n<br><br>\nEmprender este camino ha sido una forma de vida: una elección guiada por mi amor por lo artesanal y por el deseo de trabajar de la mano con comunidades indígenas.",
+        "description": "<p>Hola, soy Melissa, creadora de <strong>Pakalita</strong>.<br/><br/>Te doy la bienvenida a este espacio y agradezco profundamente tu interés por mi proyecto. <br/><br/>Emprender este camino ha sido una forma de vida: una elección guiada por mi amor por lo artesanal y por el deseo de trabajar de la mano con comunidades indígenas.</p>",
         "image": "shopify://shop_images/b299a11fe4591819731233bdec35e04610997c60.jpg",
         "image_side": "right",
         "align_vertical": "center",
@@ -74,12 +74,12 @@
       "type": "V2-flex-text-image",
       "name": "V2 Flex Text + Image",
       "settings": {
-        "title": "Crear va mucho más alla de diseñar objetos",
+        "title": "<p>Crear va mucho más <br/><em>alla de diseñar objetos</em></p>",
         "title_tag": "h2",
-        "title_weight": "700",
+        "title_weight": "400",
         "title_color": "#ffffff",
         "description_color": "#ffffff",
-        "description": "Más que productos, busco crear vínculos reales, preservar tradiciones y compartir la riqueza cultural de México a través de lo hecho a mano.",
+        "description": "<p>Más que productos, busco crear vínculos reales, preservar tradiciones y compartir la riqueza cultural de México a través de lo hecho a mano.</p>",
         "image": "shopify://shop_images/78ac19ad249ed481b4f4113b8ffe08a875a96035.jpg",
         "image_side": "left",
         "align_vertical": "center",
@@ -100,12 +100,12 @@
       ],
       "name": "V2 Flex Text + Image",
       "settings": {
-        "title": "Comunidades que dan vida a Pakalita",
+        "title": "<p>Comunidades que<br/><em>dan vida a Pakalita</em></p>",
         "title_tag": "h2",
-        "title_weight": "700",
+        "title_weight": "400",
         "title_color": "#ad6557",
         "description_color": "#000000",
-        "description": "Trabajamos de la mano con artesanos de distintas regiones de México. \n<br><br>\nCada comunidad aporta:\n<ul>\n\n<li>su identidad</li>\n<li>sus técnicas</li>\n<li>y su forma de ver el mundo, </li>\n</ul>\n<br>\nDando vida a piezas que conectan tradición y contemporaneidad.",
+        "description": "<p>Trabajamos de la mano con artesanos de distintas regiones de México. <br/><br/>Cada comunidad aporta:</p><ul><li>su identidad</li><li>sus técnicas</li><li>y su forma de ver el mundo, <br/></li></ul><p>Dando vida a piezas que conectan tradición y contemporaneidad.</p>",
         "image": "shopify://shop_images/70ffce4ffee2dff59e3f2cbee72e98461a42d232_1.jpg",
         "image_side": "right",
         "align_vertical": "center",
@@ -237,7 +237,7 @@
   "order": [
     "main",
     "v2_banner_qFqtzh",
-    "v2_flex_text_image_CtnArG",
+    "v2_flex_text_image_nYLgeU",
     "v2_flex_text_image_VqMB9e",
     "v2_flex_text_image_9RrYWx",
     "v2_image_cards_grid_pRRybe",
