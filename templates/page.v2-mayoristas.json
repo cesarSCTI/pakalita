@@ -283,7 +283,7 @@
         "cols_desktop": 4,
         "cols_tablet": 3,
         "cols_mobile": 2,
-        "logo_height": 56,
+        "logo_height": 40,
         "logo_opacity": 100,
         "logo_opacity_hover": 55,
         "grayscale": false,
