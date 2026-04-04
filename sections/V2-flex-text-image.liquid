@@ -34,14 +34,14 @@
       {% if section.settings.title != blank %}
         <{{ section.settings.title_tag }}
           class="flex-text-image__title"
-          style="color: {{ section.settings.title_color }}; font-weight: {{ section.settings.title_weight }};"
+          style="color: {{ section.settings.title_color }}; font-weight: {{ section.settings.title_weight }};font-family: 'Poppins';"
         >
           {{ section.settings.title }}
         </{{ section.settings.title_tag }}>
       {% endif %}
 
       {% if section.settings.description != blank %}
-        <p class="flex-text-image__description" style="color: {{ section.settings.description_color }};">{{ section.settings.description }}</p>
+        <div class="flex-text-image__description" style="color: {{ section.settings.description_color }};">{{ section.settings.description }}</div>
       {% endif %}
     </div>
 
@@ -64,6 +64,7 @@
   width: 100%;
   box-sizing: border-box;
   border-radius: var(--image-border-radius, 8px);
+  font-family: "Poppins", sans-serif !important; 
 }
 
 .flex-text-image__wrapper {
@@ -93,6 +94,10 @@
   min-width: 280px;
 }
 
+.flex-text-image__content{
+  padding:40px;
+}
+
 .flex-text-image__title {
   margin: 0 0 0.75rem;
 }
@@ -101,6 +106,7 @@
   margin: 0;
   line-height: 1.5;
   color: #333;
+  font-size:18px;
 }
 
 .flex-text-image__image-wrapper {
@@ -144,10 +150,9 @@
   "tag": "section",
   "settings": [
     {
-      "type": "text",
+      "type": "richtext",
       "id": "title",
-      "label": "Título",
-      "default": "Título de ejemplo"
+      "label": "Título"
     },
     {
       "type": "select",
@@ -190,10 +195,9 @@
       "default": "#333333"
     },
     {
-      "type": "textarea",
+      "type": "richtext",
       "id": "description",
-      "label": "Descripción",
-      "default": "Descripción de ejemplo para este bloque."
+      "label": "Descripción"
     },
     {
       "type": "image_picker",
