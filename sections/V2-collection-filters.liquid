@@ -444,7 +444,10 @@
         flex-direction: column;
     }
     .cp-card__title, .cp-card__price {
-        font-size: 14px;
+        font-size: 14px !important;
+    }
+    .collection-page__layout{
+      padding:10px;
     }
 }
 
@@ -553,7 +556,7 @@
 
 /* ---- View toggle ---- */
 .collection-page__view-toggle {
-  display: flex;
+  display: none;
   gap: 2px;
 }
 
@@ -1070,17 +1073,6 @@ display: flex;
     gap: 0.35rem;
   }
 
-  .collection-page__filter-options {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: auto;
-    max-height: 60vh;
-    border-radius: 16px 16px 0 0;
-    border: none;
-    box-shadow: 0 -4px 32px rgba(0,0,0,0.15);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
