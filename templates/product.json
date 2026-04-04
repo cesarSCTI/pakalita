@@ -227,7 +227,7 @@
         "tab_label_ship": "Política de Envío",
         "show_reviews": true,
         "tab_label_reviews": "Reseñas",
-        "reviews_app": "none",
+        "reviews_app": "shopify",
         "no_shipping_text": "No hay política de envío configurada aún.",
         "no_reviews_text": "Configura tu app de reseñas en los ajustes de la sección.",
         "tab_active_bg": "#c07070",
