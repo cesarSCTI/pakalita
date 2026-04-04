@@ -1976,7 +1976,7 @@
         "settings": {
           "placement": "inside",
           "selector_type": "id",
-          "position": "#shopify-product-reviews",
+          "position": "shopify-product-reviews",
           "product": ""
         }
       }
