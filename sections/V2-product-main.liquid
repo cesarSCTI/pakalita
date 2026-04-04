@@ -202,6 +202,9 @@
                 {%- if is_color -%}
                   {%- comment %} SWATCHES de color {%- endcomment %}
                   <div class="product-main__swatches" role="radiogroup" aria-label="{{ option.name }}">
+                    {% comment %}
+                      {{ shop.metaobjects.shopify--color-pattern.values | json }}
+                    {% endcomment %}
                     {%- for value in option.values -%}
                       {%- liquid
                         assign is_selected = false
@@ -219,6 +222,7 @@
                         endfor
 
                         assign color_val = value | downcase | replace: ' ', '-'
+                        assign colorHexa = shop.metaobjects['shopify--color-pattern'][color_val]
                       -%}
                       <label
                         class="product-main__swatch{% if is_selected %} is-selected{% endif %}{% unless variant_available %} is-unavailable{% endunless %}"
@@ -236,7 +240,8 @@
                           class="product-main__swatch-input"
                           aria-label="{{ value }}"
                         >
-                        <span class="product-main__swatch-inner" style="background-color: {{ value | downcase }};"></span>
+                        
+                        <span class="product-main__swatch-inner" style="background-color: {{colorHexa.color}};"></span>
                         {%- unless variant_available -%}
                           <span class="product-main__swatch-x" aria-hidden="true"></span>
                         {%- endunless -%}
