@@ -213,12 +213,12 @@
 /* ---- Label ---- */
 .collection-grid__label {
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   left: 0;
   right: 0;
   display: flex;
   justify-content: var(--item-label-align, flex-start);
-  padding: 1rem 1.1rem;
+  /*padding: 1rem 1.1rem;*/
   pointer-events: none;
 }
 
@@ -227,7 +227,6 @@
   align-items: center;
   gap: 0.4em;
   padding: 0.45em 0.9em;
-  border-radius: 6px;
   font-family: "Poppins", sans-serif !important;
 
   /* Color de fondo con opacidad personalizable */
@@ -239,7 +238,7 @@
 
   color: var(--label-text);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   line-height: 1;
@@ -251,6 +250,7 @@
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
+    width: 100%;;
 }
 
 /* Fallback para browsers sin color-mix (Safari <15.4) */
