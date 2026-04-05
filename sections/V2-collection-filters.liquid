@@ -1127,8 +1127,11 @@ display: flex;
           filterForm.appendChild(h);
         }
         if (priceMax && priceMax.value) {
+          priceMax.value = (priceMax.value == 0) ? priceMax.value = 99999 : priceMax.value; 
           const h = document.createElement('input');
           h.type = 'hidden'; h.name = priceMax.name; h.value = priceMax.value * 100;
+          h.value = (h.value == 0) ? h.value = 99999 : h.value; 
+          console.log(h);
           filterForm.appendChild(h);
         }
 
