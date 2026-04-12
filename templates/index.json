@@ -277,6 +277,33 @@
         "padding_bottom": 56
       }
     },
+    "17760064116c519651": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_RXw83B": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 15,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_RXw83B"
+      ],
+      "settings": {}
+    },
     "v2_featured_bar_fATr4P": {
       "type": "V2-featured-bar",
       "blocks": {
@@ -337,6 +364,7 @@
     "v2_featured_products_DJcLtk",
     "v2_banner_yxLaUg",
     "v2_testimonials_CVLWAb",
+    "17760064116c519651",
     "v2_featured_bar_fATr4P"
   ]
 }
