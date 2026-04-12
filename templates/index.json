@@ -298,12 +298,15 @@
             "link_color": "#000000",
             "background_color": "",
             "feed_id": "",
-            "html_area": ""
+            "html_area": "<style>\ndiv#insta-feed{\nborder-radius:16px;\n}\n</style>"
           }
         }
       },
       "block_order": [
         "instafeed_app_block_RXw83B"
+      ],
+      "custom_css": [
+        "div#insta-feed {}"
       ],
       "settings": {}
     },
