@@ -44,6 +44,9 @@
       "block_order": [
         "slide_HeFNaD"
       ],
+      "custom_css": [
+        ".hero-slider__cta-wrap {justify-content: flex-start !important; width: 100%;}"
+      ],
       "name": "V2 Hero Slider",
       "settings": {
         "slider_height": 800,
