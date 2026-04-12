@@ -313,7 +313,7 @@
       "name": "V2 Features Bar",
       "settings": {
         "bg_color": "#cd807a",
-        "section_radius": 0,
+        "section_radius": 16,
         "full_width": false,
         "padding_top": 100,
         "padding_bottom": 100,
