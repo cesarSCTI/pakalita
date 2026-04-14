@@ -31,7 +31,7 @@
             "subtitle_size": 16,
             "subtitle_color": "#f0ebe3",
             "btn_label": "Ver colección",
-            "btn_url": "shopify://collections/huipiles",
+            "btn_url": "shopify://collections/all",
             "btn_bg": "#ffffff",
             "btn_text_color": "#2a1108",
             "btn_border_color": "#ffffff",
@@ -92,7 +92,7 @@
         "collection_item_qBpJ3t": {
           "type": "collection_item",
           "settings": {
-            "collection": "huipiles",
+            "collection": "ropa",
             "custom_image": "shopify://shop_images/image_45.png",
             "custom_label": "Ropa",
             "custom_url": "",
@@ -118,7 +118,7 @@
           "settings": {
             "collection": "sandalias",
             "custom_image": "shopify://shop_images/image_47.png",
-            "custom_label": "",
+            "custom_label": "Sandalias",
             "custom_url": "",
             "label_position": "left",
             "show_arrow": true,
@@ -128,9 +128,9 @@
         "collection_item_AJV8rN": {
           "type": "collection_item",
           "settings": {
-            "collection": "accesorios",
+            "collection": "joyeria",
             "custom_image": "shopify://shop_images/image_48.png",
-            "custom_label": "",
+            "custom_label": "Joyería",
             "custom_url": "",
             "label_position": "left",
             "show_arrow": true,
