@@ -162,7 +162,7 @@
       "name": "V2 Featured Collection",
       "settings": {
         "title": "Productos",
-        "collection": "sandalias",
+        "collection": "todos-los-productos",
         "products_to_show": 8,
         "columns_desktop": 3,
         "gap": 16,
