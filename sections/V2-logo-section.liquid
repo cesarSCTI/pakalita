@@ -15,7 +15,6 @@
     --lc-cols-tablet: {{ section.settings.cols_tablet }};
     --lc-cols-mobile: {{ section.settings.cols_mobile }};
     --lc-gap: {{ section.settings.gap }}px;
-    --lc-logo-height: {{ section.settings.logo_height }}px;
     --lc-logo-opacity: {{ section.settings.logo_opacity | divided_by: 100.0 }};
     --lc-logo-opacity-hover: {{ section.settings.logo_opacity_hover | divided_by: 100.0 }};
     --lc-padding-top: {{ section.settings.padding_top }}px;
@@ -59,7 +58,7 @@
                 >
                   {{
                     block.settings.image
-                    | image_url: width: 600
+                    | image_url: height: block.settings.logo_height
                     | image_tag:
                       loading: 'lazy',
                       widths: '120, 200, 300, 400, 600',
@@ -71,7 +70,7 @@
               {%- else -%}
                 {{
                   block.settings.image
-                  | image_url: width: 600
+                  | image_url: height: block.settings.logo_height
                   | image_tag:
                     loading: 'lazy',
                     widths: '120, 200, 300, 400, 600',
@@ -101,7 +100,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+<style>
 
 /* =====================================================
    SECTION
@@ -124,11 +123,11 @@
    ===================================================== */
 .logo-carousel__title {
   text-align: center;
-  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-size: {{ section.settings.font_size_Desktop }}px;
   font-weight: 400;
   font-style: italic;
   color: var(--lc-title-color);
-  margin: 0 0 1.75rem;
+  margin: 0 0 40px;
   letter-spacing: -0.01em;
   font-family: "Platypi", serif !important;
 }
@@ -186,7 +185,6 @@
   display: block;
   width: 100%;
   max-width: 100%;
-  height: var(--lc-logo-height);
   object-fit: contain;
   object-position: center;
   filter: var(--lc-filter);
@@ -236,6 +234,9 @@
    MÓVIL — carrusel horizontal con scroll snap
    ===================================================== */
 @media screen and (max-width: 600px) {
+  .logo-carousel__title {
+  font-size: {{ section.settings.font_size_Mobile }}px;
+  }
   .logo-carousel__track {
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -266,7 +267,7 @@
   .logo-carousel__image { transition: none; }
 }
 
-{% endstylesheet %}
+</style>
 
 {% schema %}
 {
@@ -281,6 +282,26 @@
       "id": "title",
       "label": "Título de la sección",
       "default": "Nuestros clientes"
+    },
+    {
+      "type": "range",
+      "id": "font_size_Desktop",
+      "label": "Font size desktop",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "font_size_Mobile",
+      "label": "Font size mobile",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 35
     },
     {
       "type": "header",
@@ -327,16 +348,6 @@
     {
       "type": "header",
       "content": "Logos"
-    },
-    {
-      "type": "range",
-      "id": "logo_height",
-      "min": 24,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "label": "Altura de los logos",
-      "default": 56
     },
     {
       "type": "range",
@@ -459,7 +470,17 @@
           "id": "open_new_tab",
           "label": "Abrir en nueva pestaña",
           "default": true
-        }
+        },
+        {
+          "type": "range",
+          "id": "logo_height",
+          "min": 24,
+          "max": 120,
+          "step": 4,
+          "unit": "px",
+          "label": "Altura de los logos",
+          "default": 56
+        },
       ]
     }
   ],

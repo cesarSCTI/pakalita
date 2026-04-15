@@ -99,7 +99,9 @@
 }
 
 .flex-text-image__title {
-  margin: 0 0 0.75rem;
+  margin: 0 0 20px;
+  line-height: 1.1;
+  font-size:{{ section.settings.font_size_Desktop }}px;
 }
 
 .flex-text-image__description {
@@ -140,6 +142,11 @@
 @media (max-width: 768px) {
   .flex-text-image__inner {
     flex-direction: column;
+  }
+  .flex-text-image__title {
+    margin: 0 0 20px;
+    line-height: 1.1;
+    font-size:{{ section.settings.font_size_Mobile }}px;
   }
 }
 {% endstyle %}
@@ -193,6 +200,26 @@
       "id": "description_color",
       "label": "Color de la descripción",
       "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "font_size_Desktop",
+      "label": "Font size desktop",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "font_size_Mobile",
+      "label": "Font size mobile",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 35
     },
     {
       "type": "richtext",

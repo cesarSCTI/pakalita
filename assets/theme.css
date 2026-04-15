@@ -36961,13 +36961,6 @@ categories btn content
   line-height: 24px;
   font-size: 16px;
 }
-.v-tabs-img-box-text h2:not(.small):not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]){
-  padding: 0 15px;
-  margin: 0;
-  font-weight: 500;
-  line-height: 35px;
-  font-size: 28px;
-}
 .v-tabs-img-box-text ul {
   display: block;
   text-align: left;
@@ -39075,22 +39068,6 @@ body:not(.touch-device) .headertype3 .tt-mobile-header-inline .tt-menu-toggle:ho
   .headertype2 .tt-mobile-header.tt-mobile-header-inline .tt-header-row .tt-menu-toggle {
     margin-top: 1px;
     padding: 10px 11px 3px 7px;
-  }
-}
-@media (max-width: 1024px){
-  .tt-mobile-header-inline h2:not(.small):not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]) {
-    font-size: 20px;
-    line-height: 20px;
-    padding-top: 6px;
-    padding-bottom: 0;
-  }
-}
-@media (max-width: 575px){
-  .tt-mobile-header-inline h2:not(.small):not([class^="tt-title"]):not([class^="tt-collapse"]):not([class^="tt-aside"]) {
-    font-size: 20px;
-    line-height: 20px;
-    padding-top: 6px;
-    padding-bottom: 0;
   }
 }
 .tt-header-holder .allinlinelogocenter{
