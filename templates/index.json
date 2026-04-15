@@ -263,7 +263,7 @@
         "title": "Reseñas",
         "visible_count": 1,
         "gap": 24,
-        "show_stars": false,
+        "show_stars": true,
         "card_bg": "#ffffff",
         "card_radius": 0,
         "card_padding": 0,
