@@ -104,9 +104,9 @@
         "collection_item_jYtBRE": {
           "type": "collection_item",
           "settings": {
-            "collection": "accesorios",
+            "collection": "bolsas",
             "custom_image": "shopify://shop_images/image_46.png",
-            "custom_label": "",
+            "custom_label": "Bolsas",
             "custom_url": "",
             "label_position": "left",
             "show_arrow": true,
