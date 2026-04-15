@@ -157,8 +157,8 @@
         "section_title": "",
         "layout_width": "container",
         "bg_color": "#fbf2ec",
-        "padding_top": 70,
-        "padding_bottom": 70,
+        "padding_top": 100,
+        "padding_bottom": 100,
         "padding_left": 20,
         "padding_right": 20
       }
@@ -202,8 +202,8 @@
         "layout_width": "full",
         "columns_desktop": 3,
         "bg_color": "#ffffff",
-        "padding_top": 40,
-        "padding_bottom": 40,
+        "padding_top": 100,
+        "padding_bottom": 100,
         "padding_left": 20,
         "padding_right": 20
       }
