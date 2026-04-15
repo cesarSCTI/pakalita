@@ -305,12 +305,15 @@
 
 /* 2 columnas en móvil grande / 1 columna en móvil chico */
 @media screen and (max-width: 600px) {
+  .collection-grid-section{
+    margin:15px;
+  }
   .collection-grid__wrapper {
-    flex-direction: column;
+    flex-direction: row;
   }
   .collection-grid__item,
   .collection-grid__item--featured {
-    flex: 1 1 100%;
+    flex: 1 0 150px;
     min-width: 0;
   }
   .collection-grid__image-wrap {
