@@ -90,14 +90,14 @@
       {%- endif -%}
 
       {%- if section.settings.title_normal != blank or section.settings.title_italic != blank -%}
-        <h2 class="hero-banner__title" style=" font-family: 'Poppins', sans-serif;font-weight:400;">
+        <{{section.settings.title_tag}} class="hero-banner__title" style=" font-family: 'Poppins', sans-serif;font-weight:{{ section.settings.title_weight }};">
           {%- if section.settings.title_normal != blank -%}
             <span class="hero-banner__title--normal">{{ section.settings.title_normal }}</span>
           {%- endif -%}
           {%- if section.settings.title_italic != blank -%}
             <em class="hero-banner__title--italic">{{ section.settings.title_italic }}</em>
           {%- endif -%}
-        </h2>
+        </{{section.settings.title_tag}}>
       {%- endif -%}
 
       {%- if section.settings.subtitle != blank -%}
@@ -501,6 +501,31 @@
       "id": "title_normal",
       "label": "Título — línea normal",
       "default": "Cuando un proyecto busca identidad,"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Etiqueta de título",
+      "default": "h1",
+      "options": [
+        {"value": "h1", "label": "H1"},
+        {"value": "h2", "label": "H2"},
+        {"value": "h3", "label": "H3"},
+        {"value": "h4", "label": "H4"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Grosor del título",
+      "default": "500",
+      "options": [
+        {"value": "300", "label": "Ligero (300)"},
+        {"value": "400", "label": "Normal (400)"},
+        {"value": "500", "label": "Medio (500)"},
+        {"value": "600", "label": "Semi-bold (600)"},
+        {"value": "700", "label": "Bold (700)"}
+      ]
     },
     {
       "type": "text",
