@@ -40,7 +40,7 @@
         "subtitle_size": 15,
         "subtitle_color": "#f0ebe3",
         "btn_label": "Solicitar catálogo",
-        "btn_url": "",
+        "btn_url": "#formulario",
         "btn_bg": "#ffffff",
         "btn_text_color": "#ad6557",
         "btn_border_color": "#ffffff",
@@ -288,7 +288,7 @@
         "logo_i9CWCr"
       ],
       "custom_css": [
-        "img{object-fit: contain; height: 40px;}"
+        "img {object-fit: contain; height: 40px;}"
       ],
       "name": "V2 Logo Carousel",
       "settings": {
