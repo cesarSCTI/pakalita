@@ -31,6 +31,8 @@
         "content_max_width": 600,
         "pretitle": "",
         "title_normal": "Arte mexicano hecho a mano",
+        "title_tag": "h1",
+        "title_weight": "500",
         "title_italic": "para hoteles y empresas",
         "title_size": 38,
         "title_color": "#ffffff",
@@ -53,7 +55,7 @@
       "settings": {
         "pretitle": "",
         "title_normal": "¡Queremos ser parte",
-        "title_italic": "de tu proyecto.",
+        "title_italic": "de tu proyecto!",
         "title_size": 30,
         "show_cta": false,
         "cta_label": "Conoce más",
@@ -219,6 +221,8 @@
         "title_weight": "400",
         "title_color": "#000000",
         "description_color": "#000000",
+        "font_size_Desktop": 35,
+        "font_size_Mobile": 35,
         "description": "<p>Nuestros productos son ideales para:</p><p></p><ul><li>Amenidades para proyectos hoteleros</li><li>Detalles para habitaciones y áreas comunes</li><li>Regalos corporativos con identidad mexicana</li><li>Proyectos especiales y ediciones personalizadas</li></ul>",
         "image": "shopify://shop_images/f9d65bf08fb50e69a6319cf5c93e27e3cffe6fad.jpg",
         "image_side": "right",
@@ -242,7 +246,8 @@
             "image": "shopify://shop_images/Group.png",
             "alt_text": "",
             "link": "",
-            "open_new_tab": true
+            "open_new_tab": true,
+            "logo_height": 56
           }
         },
         "logo_c74ARL": {
@@ -251,7 +256,8 @@
             "image": "shopify://shop_images/Group_1.png",
             "alt_text": "",
             "link": "",
-            "open_new_tab": true
+            "open_new_tab": true,
+            "logo_height": 56
           }
         },
         "logo_xRGp9G": {
@@ -260,7 +266,8 @@
             "image": "shopify://shop_images/Group.png",
             "alt_text": "",
             "link": "",
-            "open_new_tab": true
+            "open_new_tab": true,
+            "logo_height": 56
           }
         },
         "logo_i9CWCr": {
@@ -269,7 +276,8 @@
             "image": "shopify://shop_images/zNyPDc.png",
             "alt_text": "",
             "link": "",
-            "open_new_tab": true
+            "open_new_tab": true,
+            "logo_height": 56
           }
         }
       },
@@ -279,14 +287,18 @@
         "logo_xRGp9G",
         "logo_i9CWCr"
       ],
+      "custom_css": [
+        "img{object-fit: contain; height: 40px;}"
+      ],
       "name": "V2 Logo Carousel",
       "settings": {
         "title": "Nuestros clientes",
+        "font_size_Desktop": 35,
+        "font_size_Mobile": 35,
         "full_width": false,
         "cols_desktop": 4,
         "cols_tablet": 3,
         "cols_mobile": 2,
-        "logo_height": 60,
         "logo_opacity": 100,
         "logo_opacity_hover": 55,
         "grayscale": false,
