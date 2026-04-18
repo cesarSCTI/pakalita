@@ -293,7 +293,7 @@
       "name": "V2 Logo Carousel",
       "settings": {
         "title": "Nuestros clientes",
-        "font_size_Desktop": 35,
+        "font_size_Desktop": 45,
         "font_size_Mobile": 35,
         "full_width": false,
         "cols_desktop": 4,
