@@ -56,7 +56,7 @@
         "pretitle": "",
         "title_normal": "¡Queremos ser parte",
         "title_italic": "de tu proyecto!",
-        "title_size": 30,
+        "title_size": 40,
         "show_cta": false,
         "cta_label": "Conoce más",
         "cta_url": "",
@@ -289,7 +289,7 @@
       ],
       "custom_css": [
         "img {object-fit: contain; height: 40px;}",
-        "h2{margin-bottom: 80px;}"
+        "h2 {margin-bottom: 80px;}"
       ],
       "name": "V2 Logo Carousel",
       "settings": {
