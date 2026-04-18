@@ -215,7 +215,7 @@
         "subtitle_size": 15,
         "subtitle_color": "#f0ebe3",
         "btn_label": "Explorar colaboraciones",
-        "btn_url": "",
+        "btn_url": "shopify://pages/mayoristas",
         "btn_bg": "#ffffff",
         "btn_text_color": "#2a1108",
         "btn_border_color": "#ffffff",
