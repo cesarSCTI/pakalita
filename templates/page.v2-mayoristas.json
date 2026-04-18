@@ -288,7 +288,8 @@
         "logo_i9CWCr"
       ],
       "custom_css": [
-        "img {object-fit: contain; height: 40px;}"
+        "img {object-fit: contain; height: 40px;}",
+        "h2{margin-bottom: 80px;}"
       ],
       "name": "V2 Logo Carousel",
       "settings": {
