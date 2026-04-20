@@ -234,7 +234,7 @@
         "description": "Cada pieza es una invitación a conectar con las manos que la crearon y con la riqueza cultural de México.",
         "description_color": "#ffffff",
         "btn_label": "Conocer productos",
-        "btn_url": "shopify://collections/all",
+        "btn_url": "shopify://collections/todos-los-productos",
         "btn_bg": "#ad6557",
         "btn_text_color": "#ffffff",
         "btn_border_color": "#8b6f62",
