@@ -78,8 +78,8 @@
         "show_divider": false,
         "divider_color": "#111111",
         "bg_color": "#ffffff",
-        "title_color": "#111111",
-        "title_italic_color": "#111111",
+        "title_color": "#ad6557",
+        "title_italic_color": "#ad6557",
         "body_color": "#333333",
         "col_gap": 80,
         "padding_top": 64,
@@ -184,7 +184,7 @@
         "btn_text_color": "#ffffff",
         "btn_radius": 24,
         "section_bg": "#ffffff",
-        "title_color": "#111111",
+        "title_color": "#ad6557",
         "padding_top": 20,
         "padding_bottom": 48
       }
@@ -277,7 +277,7 @@
         "arrow_color": "#7a4a3a",
         "arrow_radius": 50,
         "section_bg": "#ffffff",
-        "title_color": "#111111",
+        "title_color": "#ad6557",
         "padding_top": 56,
         "padding_bottom": 56
       }
