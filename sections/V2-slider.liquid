@@ -144,14 +144,14 @@
             {%- endif -%}
 
             {%- if block.settings.title_normal != blank or block.settings.title_italic != blank -%}
-              <h2 class="hero-slider__title">
+              <{{ block.settings.title_tag }} class="hero-slider__title">
                 {%- if block.settings.title_normal != blank -%}
                   <span class="hero-slider__title--normal">{{ block.settings.title_normal }}</span>
                 {%- endif -%}
                 {%- if block.settings.title_italic != blank -%}
                   <em class="hero-slider__title--italic">{{ block.settings.title_italic }}</em>
                 {%- endif -%}
-              </h2>
+              </{{ block.settings.title_tag }}>
             {%- endif -%}
 
             {%- if block.settings.subtitle != blank -%}
@@ -863,6 +863,18 @@
           "id": "title_normal",
           "label": "Título — línea normal",
           "default": "Descubre el arte mexicano"
+        },
+        {
+          "type": "select",
+          "id": "title_tag",
+          "label": "Etiqueta de título",
+          "default": "h2",
+          "options": [
+            {"value": "h1", "label": "H1"},
+            {"value": "h2", "label": "H2"},
+            {"value": "h3", "label": "H3"},
+            {"value": "h4", "label": "H4"}
+          ]
         },
         {
           "type": "text",

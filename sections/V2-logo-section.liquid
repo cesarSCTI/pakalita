@@ -3,12 +3,15 @@
   - Cada logo es un bloque con imagen + link opcional
   - Columnas configurables por dispositivo (desktop/tablet/móvil)
   - Full width o container width
-  - Carrusel en móvil si hay más logos que columnas
+  - Modos: grid | auto (cinta infinita) | manual (prev/next)
 {% endcomment %}
 
 <section
   class="logo-carousel"
   id="logo-carousel-{{ section.id }}"
+  data-mode="{{ section.settings.carousel_mode }}"
+  data-speed="{{ section.settings.auto_speed }}"
+  data-section-id="{{ section.id }}"
   style="
     --lc-bg: {{ section.settings.bg_color }};
     --lc-cols-desktop: {{ section.settings.cols_desktop }};
@@ -22,6 +25,7 @@
     --lc-title-color: {{ section.settings.title_color }};
     --lc-divider-color: {{ section.settings.divider_color }};
     --lc-filter: {% if section.settings.grayscale %}grayscale(1){% else %}grayscale(0){% endif %};
+    --lc-auto-speed: {{ section.settings.auto_speed }}s;
   "
 >
   <div class="logo-carousel__wrap{% if section.settings.full_width %} logo-carousel__wrap--full{% else %} page-width{% endif %}">
@@ -34,28 +38,55 @@
       <div class="logo-carousel__divider" aria-hidden="true"></div>
     {%- endif -%}
 
-    {%- comment %} VIEWPORT — recorta overflow del track en móvil {%- endcomment %}
-    <div class="logo-carousel__viewport" id="lc-viewport-{{ section.id }}">
-      <div
-        class="logo-carousel__track"
-        id="lc-track-{{ section.id }}"
-        role="list"
-        aria-label="Logos de clientes"
+    {%- comment %} Controles prev/next — solo visibles en modo manual {%- endcomment %}
+    <div class="logo-carousel__outer">
+
+      <button
+        class="logo-carousel__btn logo-carousel__btn--prev"
+        id="lc-prev-{{ section.id }}"
+        aria-label="Anterior"
+        type="button"
+        hidden
       >
-        {%- for block in section.blocks -%}
-          <div
-            class="logo-carousel__item"
-            role="listitem"
-            {{ block.shopify_attributes }}
-          >
-            {%- if block.settings.image != blank -%}
-              {%- if block.settings.link != blank -%}
-                <a
-                  href="{{ block.settings.link }}"
-                  class="logo-carousel__link"
-                  aria-label="{{ block.settings.alt_text | default: block.settings.image.alt | default: 'Logo cliente' }}"
-                  {% if block.settings.open_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
-                >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      {%- comment %} VIEWPORT {%- endcomment %}
+      <div class="logo-carousel__viewport" id="lc-viewport-{{ section.id }}">
+        <div
+          class="logo-carousel__track"
+          id="lc-track-{{ section.id }}"
+          role="list"
+          aria-label="Logos de clientes"
+        >
+          {%- for block in section.blocks -%}
+            <div
+              class="logo-carousel__item"
+              role="listitem"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.image != blank -%}
+                {%- if block.settings.link != blank -%}
+                  <a
+                    href="{{ block.settings.link }}"
+                    class="logo-carousel__link"
+                    aria-label="{{ block.settings.alt_text | default: block.settings.image.alt | default: 'Logo cliente' }}"
+                    {% if block.settings.open_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                  >
+                    {{
+                      block.settings.image
+                      | image_url: height: block.settings.logo_height
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '120, 200, 300, 400, 600',
+                        sizes: '200px',
+                        class: 'logo-carousel__image',
+                        alt: block.settings.alt_text | default: block.settings.image.alt | default: 'Logo'
+                    }}
+                  </a>
+                {%- else -%}
                   {{
                     block.settings.image
                     | image_url: height: block.settings.logo_height
@@ -66,31 +97,33 @@
                       class: 'logo-carousel__image',
                       alt: block.settings.alt_text | default: block.settings.image.alt | default: 'Logo'
                   }}
-                </a>
+                {%- endif -%}
               {%- else -%}
-                {{
-                  block.settings.image
-                  | image_url: height: block.settings.logo_height
-                  | image_tag:
-                    loading: 'lazy',
-                    widths: '120, 200, 300, 400, 600',
-                    sizes: '200px',
-                    class: 'logo-carousel__image',
-                    alt: block.settings.alt_text | default: block.settings.image.alt | default: 'Logo'
-                }}
+                <div class="logo-carousel__placeholder">Logo</div>
               {%- endif -%}
-            {%- else -%}
-              <div class="logo-carousel__placeholder">Logo</div>
-            {%- endif -%}
-          </div>
-        {%- else -%}
-          {%- for i in (1..4) -%}
-            <div class="logo-carousel__item">
-              <div class="logo-carousel__placeholder">BRAND {{ i }}</div>
             </div>
+          {%- else -%}
+            {%- for i in (1..4) -%}
+              <div class="logo-carousel__item">
+                <div class="logo-carousel__placeholder">BRAND {{ i }}</div>
+              </div>
+            {%- endfor -%}
           {%- endfor -%}
-        {%- endfor -%}
+        </div>
       </div>
+
+      <button
+        class="logo-carousel__btn logo-carousel__btn--next"
+        id="lc-next-{{ section.id }}"
+        aria-label="Siguiente"
+        type="button"
+        hidden
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
     </div>
 
     {%- if section.settings.show_divider_bottom -%}
@@ -144,17 +177,57 @@
 }
 
 /* =====================================================
+   OUTER — contiene botones + viewport
+   ===================================================== */
+.logo-carousel__outer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+/* =====================================================
+   BOTONES PREV / NEXT
+   ===================================================== */
+.logo-carousel__btn {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  background: transparent;
+  color: var(--lc-title-color);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, background 0.2s ease;
+  z-index: 2;
+  padding: 0;
+}
+
+.logo-carousel__btn:hover {
+  opacity: 1;
+  background: color-mix(in srgb, var(--lc-title-color) 8%, transparent);
+}
+
+.logo-carousel__btn:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+/* =====================================================
    VIEWPORT
    ===================================================== */
 .logo-carousel__viewport {
   overflow: hidden;
   width: 100%;
+  flex: 1 1 0%;
 }
 
 /* =====================================================
-   TRACK — flex siempre
-   En desktop: wrap, ancho automático por columnas
-   En móvil: sin wrap, scroll horizontal
+   TRACK — base: grid wrapping
    ===================================================== */
 .logo-carousel__track {
   display: flex;
@@ -167,9 +240,49 @@
 }
 
 /* =====================================================
-   ITEM
-   flex-basis calculado por columnas desktop
+   MODO AUTO — cinta infinita
    ===================================================== */
+.logo-carousel[data-mode="auto"] .logo-carousel__track {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: max-content;
+  animation: lc-scroll var(--lc-auto-speed) linear infinite;
+}
+
+.logo-carousel[data-mode="auto"] .logo-carousel__track:hover,
+.logo-carousel[data-mode="auto"] .logo-carousel__track:focus-within {
+  animation-play-state: paused;
+}
+
+@keyframes lc-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(var(--lc-clone-width, -50%)); }
+}
+
+.logo-carousel[data-mode="auto"] .logo-carousel__item {
+  flex: 0 0 auto;
+}
+
+/* =====================================================
+   MODO MANUAL — sin wrap, JS mueve el track
+   ===================================================== */
+.logo-carousel[data-mode="manual"] .logo-carousel__track {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.logo-carousel[data-mode="manual"] .logo-carousel__item {
+  flex: 0 0 calc(
+    (100% - (var(--lc-cols-desktop) - 1) * var(--lc-gap)) / var(--lc-cols-desktop)
+  );
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   ITEM — modo grid (default)
+   ===================================================== */
+.logo-carousel[data-mode="grid"] .logo-carousel__item,
 .logo-carousel__item {
   flex: 0 0 calc(
     (100% - (var(--lc-cols-desktop) - 1) * var(--lc-gap)) / var(--lc-cols-desktop)
@@ -210,7 +323,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--lc-logo-height);
+  height: 56px;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -224,7 +337,14 @@
    TABLET
    ===================================================== */
 @media screen and (max-width: 900px) {
+  .logo-carousel[data-mode="grid"] .logo-carousel__item,
   .logo-carousel__item {
+    flex: 0 0 calc(
+      (100% - (var(--lc-cols-tablet) - 1) * var(--lc-gap)) / var(--lc-cols-tablet)
+    );
+  }
+
+  .logo-carousel[data-mode="manual"] .logo-carousel__item {
     flex: 0 0 calc(
       (100% - (var(--lc-cols-tablet) - 1) * var(--lc-gap)) / var(--lc-cols-tablet)
     );
@@ -232,13 +352,15 @@
 }
 
 /* =====================================================
-   MÓVIL — carrusel horizontal con scroll snap
+   MÓVIL
    ===================================================== */
 @media screen and (max-width: 600px) {
   .logo-carousel__title {
-  font-size: {{ section.settings.font_size_Mobile }}px;
+    font-size: {{ section.settings.font_size_Mobile }}px;
   }
-  .logo-carousel__track {
+
+  /* Grid → scroll nativo en móvil */
+  .logo-carousel[data-mode="grid"] .logo-carousel__track {
     flex-wrap: nowrap;
     justify-content: flex-start;
     overflow-x: auto;
@@ -248,8 +370,9 @@
     padding-bottom: 4px;
   }
 
-  .logo-carousel__track::-webkit-scrollbar { display: none; }
+  .logo-carousel[data-mode="grid"] .logo-carousel__track::-webkit-scrollbar { display: none; }
 
+  .logo-carousel[data-mode="grid"] .logo-carousel__item,
   .logo-carousel__item {
     flex: 0 0 calc(
       (100% - (var(--lc-cols-mobile) - 1) * var(--lc-gap)) / var(--lc-cols-mobile)
@@ -258,17 +381,154 @@
     flex-shrink: 0;
   }
 
+  .logo-carousel[data-mode="manual"] .logo-carousel__item {
+    flex: 0 0 calc(
+      (100% - (var(--lc-cols-mobile) - 1) * var(--lc-gap)) / var(--lc-cols-mobile)
+    );
+  }
+
   .logo-carousel__wrap--full {
     padding-left: 1rem;
     padding-right: 1rem;
   }
 }
 
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
 @media (prefers-reduced-motion: reduce) {
   .logo-carousel__image { transition: none; }
+  .logo-carousel[data-mode="auto"] .logo-carousel__track {
+    animation: none !important;
+  }
+  .logo-carousel[data-mode="manual"] .logo-carousel__track {
+    transition: none;
+  }
 }
 
 </style>
+
+<script>
+(function () {
+  'use strict';
+
+  function initLogoCarousel(section) {
+    const mode    = section.dataset.mode;
+    const id      = section.dataset.sectionId;
+    const track   = document.getElementById('lc-track-' + id);
+    const vp      = document.getElementById('lc-viewport-' + id);
+    const btnPrev = document.getElementById('lc-prev-' + id);
+    const btnNext = document.getElementById('lc-next-' + id);
+
+    if (!track || !vp) return;
+
+    /* ------------------------------------------------
+       MODO AUTO — cinta infinita
+    ------------------------------------------------ */
+    if (mode === 'auto') {
+      /* Duplicamos los items para el loop continuo */
+      const origItems = Array.from(track.children);
+      origItems.forEach(function (item) {
+        const clone = item.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.removeAttribute('role');
+        track.appendChild(clone);
+      });
+
+      /* Calculamos el ancho del set original para la animación */
+      function setCloneWidth() {
+        const gap = parseFloat(getComputedStyle(track).gap) || 0;
+        let w = 0;
+        origItems.forEach(function (item) { w += item.offsetWidth + gap; });
+        /* Expresamos como px negativo para translateX */
+        section.style.setProperty('--lc-clone-width', '-' + w + 'px');
+      }
+
+      setCloneWidth();
+      window.addEventListener('resize', setCloneWidth);
+      return; /* no necesita botones */
+    }
+
+    /* ------------------------------------------------
+       MODO MANUAL — prev / next
+    ------------------------------------------------ */
+    if (mode === 'manual') {
+      btnPrev.hidden = false;
+      btnNext.hidden = false;
+
+      let currentIndex = 0;
+
+      function getVisibleCols() {
+        const vpWidth = vp.offsetWidth;
+        if (vpWidth <= 600) return parseInt(section.style.getPropertyValue('--lc-cols-mobile')) || 2;
+        if (vpWidth <= 900) return parseInt(section.style.getPropertyValue('--lc-cols-tablet')) || 3;
+        return parseInt(section.style.getPropertyValue('--lc-cols-desktop')) || 4;
+      }
+
+      function getItemWidth() {
+        const first = track.querySelector('.logo-carousel__item');
+        if (!first) return 0;
+        const gap = parseFloat(getComputedStyle(track).gap) || 0;
+        return first.offsetWidth + gap;
+      }
+
+      function totalItems() {
+        return track.querySelectorAll('.logo-carousel__item').length;
+      }
+
+      function maxIndex() {
+        return Math.max(0, totalItems() - getVisibleCols());
+      }
+
+      function goTo(index) {
+        currentIndex = Math.max(0, Math.min(index, maxIndex()));
+        const offset = currentIndex * getItemWidth();
+        track.style.transform = 'translateX(-' + offset + 'px)';
+        btnPrev.disabled = currentIndex === 0;
+        btnNext.disabled = currentIndex >= maxIndex();
+      }
+
+      btnPrev.addEventListener('click', function () { goTo(currentIndex - getVisibleCols()); });
+      btnNext.addEventListener('click', function () { goTo(currentIndex + getVisibleCols()); });
+
+      /* Recalcular al redimensionar */
+      let resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () { goTo(currentIndex); }, 100);
+      });
+
+      goTo(0);
+      return;
+    }
+
+    /* ------------------------------------------------
+       MODO GRID — nada que hacer en JS
+    ------------------------------------------------ */
+  }
+
+  /* Inicialización */
+  function init() {
+    document.querySelectorAll('.logo-carousel').forEach(function (section) {
+      initLogoCarousel(section);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  /* Soporte Shopify Theme Editor (re-init al cambiar settings) */
+  if (window.Shopify && window.Shopify.designMode) {
+    document.addEventListener('shopify:section:load', function (e) {
+      const section = e.target.querySelector('.logo-carousel');
+      if (section) initLogoCarousel(section);
+    });
+  }
+})();
+</script>
 
 {% schema %}
 {
@@ -303,6 +563,33 @@
       "step": 1,
       "unit": "px",
       "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Modo de visualización"
+    },
+    {
+      "type": "select",
+      "id": "carousel_mode",
+      "label": "Modo de carrusel",
+      "options": [
+        { "value": "grid",   "label": "Grid (filas y columnas)" },
+        { "value": "auto",   "label": "Auto-scroll (cinta infinita)" },
+        { "value": "manual", "label": "Manual (botones prev / next)" }
+      ],
+      "default": "grid",
+      "info": "En modo Grid, el móvil usa scroll horizontal automáticamente."
+    },
+    {
+      "type": "range",
+      "id": "auto_speed",
+      "label": "Velocidad del auto-scroll (segundos por ciclo)",
+      "min": 5,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "default": 20,
+      "info": "Solo aplica en modo Auto-scroll. Menor número = más rápido."
     },
     {
       "type": "header",
@@ -343,7 +630,7 @@
       "min": 1,
       "max": 4,
       "step": 1,
-      "label": "Logos visibles — Móvil (≤600px, carrusel)",
+      "label": "Logos visibles — Móvil (≤600px)",
       "default": 2
     },
     {
@@ -481,7 +768,7 @@
           "unit": "px",
           "label": "Altura de los logos",
           "default": 56
-        },
+        }
       ]
     }
   ],
