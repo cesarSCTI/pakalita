@@ -316,8 +316,8 @@
         "title_color": "#ad6557",
         "divider_color": "#111111",
         "gap": 32,
-        "padding_top": 80,
-        "padding_bottom": 80
+        "padding_top": 32,
+        "padding_bottom": 32
       }
     },
     "v2_contat_form_A6mVBR": {
