@@ -168,12 +168,28 @@
             "item_description": " (tequileros, tazas, termos, porta vasos, lufas)"
           }
         },
+        "gallery_item_PHCPGn": {
+          "type": "gallery_item",
+          "settings": {
+            "item_image": "shopify://shop_images/image_50.png",
+            "item_title": "Bienvenida y experiencia en habitación",
+            "item_description": "(tequileros, tazas, termos, porta vasos, lufas)"
+          }
+        },
         "gallery_item_TtC9Qb": {
           "type": "gallery_item",
           "settings": {
             "item_image": "shopify://shop_images/19bcb2ea19b10997fcffe5b4d9f6d79fde87d79b.jpg",
             "item_title": "Regalos y recuerdos",
             "item_description": " (llaveros, imanes, espejos, bases de fotos)"
+          }
+        },
+        "gallery_item_yRdpdw": {
+          "type": "gallery_item",
+          "settings": {
+            "item_image": "shopify://shop_images/image_51.png",
+            "item_title": "Arte y decoración",
+            "item_description": "(alebrijes, ojos de dios, colas de ballena)"
           }
         },
         "gallery_item_r34hVY": {
@@ -191,13 +207,24 @@
             "item_title": "Accesorios artesanales",
             "item_description": "(bolsas, sombreros, abanicos, carteras)"
           }
+        },
+        "gallery_item_McebFr": {
+          "type": "gallery_item",
+          "settings": {
+            "item_image": "shopify://shop_images/image_52.png",
+            "item_title": "Reconocimiento a colaboradores",
+            "item_description": "(placas de reconocimiento, regalos corporativos, premios personalizados)"
+          }
         }
       },
       "block_order": [
         "gallery_item_qyD6Uc",
+        "gallery_item_PHCPGn",
         "gallery_item_TtC9Qb",
+        "gallery_item_yRdpdw",
         "gallery_item_r34hVY",
-        "gallery_item_CmyEXm"
+        "gallery_item_CmyEXm",
+        "gallery_item_McebFr"
       ],
       "custom_css": [
         ".tt-col-icon {background: #cd807a; padding: 15px; border-radius: 50%;}",
