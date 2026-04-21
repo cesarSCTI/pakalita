@@ -239,6 +239,7 @@
         "section_title": "Proyectos Personalizados",
         "layout_width": "container",
         "columns_desktop": 4,
+        "gap": 24,
         "bg_color": "#ffffff",
         "padding_top": 20,
         "padding_bottom": 20,
@@ -281,7 +282,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_c74ARL": {
@@ -302,7 +303,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_i9CWCr": {
@@ -312,7 +313,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_QcdrVG": {
@@ -322,7 +323,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_FFbMdD": {
@@ -332,7 +333,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_Rxa4fD": {
@@ -342,7 +343,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_LMnmDR": {
@@ -352,7 +353,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_DVXqym": {
@@ -362,7 +363,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_A3zdWt": {
@@ -372,7 +373,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_b9HcNY": {
@@ -382,7 +383,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_gFaeGY": {
@@ -392,7 +393,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_7KnHLD": {
@@ -402,7 +403,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         },
         "logo_njKfF9": {
@@ -412,7 +413,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 120
           }
         }
       },
