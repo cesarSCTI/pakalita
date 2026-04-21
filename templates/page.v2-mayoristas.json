@@ -259,6 +259,7 @@
         },
         "logo_c74ARL": {
           "type": "logo",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Group_1.png",
             "alt_text": "",
@@ -405,7 +406,7 @@
         "logo_njKfF9"
       ],
       "custom_css": [
-        "img {object-fit: contain; height: 40px;}",
+        "img {object-fit: contain; height: 50px;}",
         "h2 {margin-bottom: 80px;}"
       ],
       "name": "V2 Logo Carousel",
@@ -413,6 +414,8 @@
         "title": "Nuestros clientes",
         "font_size_Desktop": 45,
         "font_size_Mobile": 35,
+        "carousel_mode": "manual",
+        "auto_speed": 20,
         "full_width": false,
         "cols_desktop": 4,
         "cols_tablet": 3,
