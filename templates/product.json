@@ -174,7 +174,7 @@
         "trust_badge_TiNAkN": {
           "type": "trust_badge",
           "settings": {
-            "icon": "support",
+            "icon": "shield",
             "title": "Pago seguro Garantizado",
             "subtitle": "Aceptamos pago con tarjetas Visa y Mastercard, Paypal y Mercado Pago."
           }
