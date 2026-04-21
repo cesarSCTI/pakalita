@@ -319,7 +319,7 @@
           "settings": {
             "icon": "diamond",
             "title": "Métodos de pago",
-            "text": "Available certificates of authenticity"
+            "text": "Aceptamos tarjetas Visa, Mastercard, Paypal y Mercado Pago"
           }
         },
         "feature_wtdM8j": {
@@ -327,7 +327,7 @@
           "settings": {
             "icon": "lock",
             "title": "Seguridad",
-            "text": "Certified marketplace since 2017"
+            "text": "Pago seguro garantizado"
           }
         },
         "feature_tKCFPi": {
@@ -335,7 +335,7 @@
           "settings": {
             "icon": "truck",
             "title": "Envíos",
-            "text": "Free, fast, and reliable worldwide"
+            "text": "por $149.00, envíos estándar"
           }
         }
       },
