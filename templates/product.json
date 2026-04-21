@@ -159,24 +159,24 @@
           "type": "trust_badge",
           "settings": {
             "icon": "truck",
-            "title": "Free Shipping",
-            "subtitle": "Free shipping on orders over $75."
+            "title": "Envíos a todo México",
+            "subtitle": "Envíos estándar dentro de México por $149."
           }
         },
         "trust_badge_bbdx4t": {
           "type": "trust_badge",
           "settings": {
             "icon": "return",
-            "title": "100 - Day Returns",
-            "subtitle": "Support from 8:30 AM to 10:00 PM everyday"
+            "title": "Productos 100% Mexicanos",
+            "subtitle": "Productos artesanales hechos por artesanos mexicanos."
           }
         },
         "trust_badge_TiNAkN": {
           "type": "trust_badge",
           "settings": {
             "icon": "support",
-            "title": "Soporte 24/7",
-            "subtitle": "Not impressed? Get a refund. You have 100 days."
+            "title": "Pago seguro Garantizado",
+            "subtitle": "Aceptamos pago con tarjetas Visa y Mastercard, Paypal y Mercado Pago."
           }
         }
       },
