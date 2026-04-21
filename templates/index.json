@@ -24,6 +24,7 @@
             "content_max_width": 620,
             "pretitle": "",
             "title_normal": "Descubre el arte mexicano",
+            "title_tag": "h1",
             "title_italic": "hecho a mano con Pakalita",
             "title_size": 44,
             "title_color": "#ffffff",
