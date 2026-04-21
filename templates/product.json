@@ -158,7 +158,7 @@
         "trust_badge_QqDHXy": {
           "type": "trust_badge",
           "settings": {
-            "icon": "truck",
+            "icon": "Shipping",
             "title": "Envíos a todo México",
             "subtitle": "Envíos estándar dentro de México por $149."
           }
@@ -166,7 +166,7 @@
         "trust_badge_bbdx4t": {
           "type": "trust_badge",
           "settings": {
-            "icon": "return",
+            "icon": "Quality",
             "title": "Productos 100% Mexicanos",
             "subtitle": "Productos artesanales hechos por artesanos mexicanos."
           }
@@ -174,7 +174,7 @@
         "trust_badge_TiNAkN": {
           "type": "trust_badge",
           "settings": {
-            "icon": "shield",
+            "icon": "Payment",
             "title": "Pago seguro Garantizado",
             "subtitle": "Aceptamos pago con tarjetas Visa y Mastercard, Paypal y Mercado Pago."
           }
