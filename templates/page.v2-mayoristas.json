@@ -275,6 +275,36 @@
     "v2_logo_section_wQ4QmU": {
       "type": "V2-logo-section",
       "blocks": {
+        "logo_gFaeGY": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/f5de0abe43701426df62bf9037b98a3bba44875a.png",
+            "alt_text": "",
+            "link": "",
+            "open_new_tab": true,
+            "logo_height": 72
+          }
+        },
+        "logo_xRGp9G": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Group.png",
+            "alt_text": "",
+            "link": "",
+            "open_new_tab": true,
+            "logo_height": 72
+          }
+        },
+        "logo_7KnHLD": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Capa_1.jpg",
+            "alt_text": "",
+            "link": "",
+            "open_new_tab": true,
+            "logo_height": 72
+          }
+        },
         "logo_mV6C8B": {
           "type": "logo",
           "settings": {
@@ -296,20 +326,10 @@
             "logo_height": 72
           }
         },
-        "logo_xRGp9G": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Group.png",
-            "alt_text": "",
-            "link": "",
-            "open_new_tab": true,
-            "logo_height": 72
-          }
-        },
         "logo_i9CWCr": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/zNyPDc.png",
+            "image": "shopify://shop_images/7b7db33b3df92e80a91eae798440964ef8711aa9.png",
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
@@ -319,7 +339,7 @@
         "logo_QcdrVG": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/6Syq0N.jpg",
+            "image": "shopify://shop_images/e99c8cdea497b8deaeab4b632ecc685c4bb6c73d_1.png",
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
@@ -386,26 +406,6 @@
             "logo_height": 72
           }
         },
-        "logo_gFaeGY": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Frame_2131330727.jpg",
-            "alt_text": "",
-            "link": "",
-            "open_new_tab": true,
-            "logo_height": 72
-          }
-        },
-        "logo_7KnHLD": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Capa_1.jpg",
-            "alt_text": "",
-            "link": "",
-            "open_new_tab": true,
-            "logo_height": 72
-          }
-        },
         "logo_njKfF9": {
           "type": "logo",
           "settings": {
@@ -418,9 +418,11 @@
         }
       },
       "block_order": [
+        "logo_gFaeGY",
+        "logo_xRGp9G",
+        "logo_7KnHLD",
         "logo_mV6C8B",
         "logo_c74ARL",
-        "logo_xRGp9G",
         "logo_i9CWCr",
         "logo_QcdrVG",
         "logo_FFbMdD",
@@ -429,8 +431,6 @@
         "logo_DVXqym",
         "logo_A3zdWt",
         "logo_b9HcNY",
-        "logo_gFaeGY",
-        "logo_7KnHLD",
         "logo_njKfF9"
       ],
       "custom_css": [
