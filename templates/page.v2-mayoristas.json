@@ -282,7 +282,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_c74ARL": {
@@ -293,7 +293,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 56
+            "logo_height": 72
           }
         },
         "logo_xRGp9G": {
@@ -303,7 +303,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_i9CWCr": {
@@ -313,7 +313,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_QcdrVG": {
@@ -323,7 +323,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_FFbMdD": {
@@ -333,7 +333,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_Rxa4fD": {
@@ -343,7 +343,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_LMnmDR": {
@@ -353,7 +353,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_DVXqym": {
@@ -363,7 +363,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_A3zdWt": {
@@ -373,7 +373,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_b9HcNY": {
@@ -383,7 +383,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_gFaeGY": {
@@ -393,7 +393,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_7KnHLD": {
@@ -403,7 +403,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         },
         "logo_njKfF9": {
@@ -413,7 +413,7 @@
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
-            "logo_height": 120
+            "logo_height": 72
           }
         }
       },
@@ -434,7 +434,7 @@
         "logo_njKfF9"
       ],
       "custom_css": [
-        "img {object-fit: contain; height: 50px;}",
+        "img {object-fit: contain; height: 70px;}",
         "h2 {margin-bottom: 80px;}"
       ],
       "name": "V2 Logo Carousel",
