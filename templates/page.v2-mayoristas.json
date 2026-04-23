@@ -444,7 +444,7 @@
         "font_size_Mobile": 35,
         "carousel_mode": "manual",
         "auto_speed": 20,
-        "full_width": false,
+        "full_width": true,
         "cols_desktop": 4,
         "cols_tablet": 3,
         "cols_mobile": 2,
