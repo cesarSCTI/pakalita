@@ -1,1 +1,56 @@
-{"sections":{"main":{"type":"search","settings":{}}},"order":["main"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "v2_banner_kwhfND": {
+      "type": "V2-banner",
+      "name": "V2 Hero Banner",
+      "settings": {
+        "layout_width": "full",
+        "image": "shopify://shop_images/IMG_9144.jpg",
+        "banner_height": 320,
+        "banner_height_mobile": 360,
+        "banner_radius": 12,
+        "overlay_color": "#ad6557",
+        "overlay_opacity": 60,
+        "content_x": "left",
+        "content_y": "middle",
+        "content_padding": 48,
+        "content_max_width": 480,
+        "pretitle": "",
+        "title_normal": "Buscando ...",
+        "title_tag": "h1",
+        "title_weight": "500",
+        "title_italic": "",
+        "title_size": 38,
+        "title_color": "#FFFFFF",
+        "subtitle": "",
+        "subtitle_size": 15,
+        "subtitle_color": "#F0EBE3",
+        "btn_label": "",
+        "btn_url": "",
+        "btn_bg": "#FFFFFF",
+        "btn_text_color": "#2A1108",
+        "btn_border_color": "#FFFFFF",
+        "btn_radius": 24,
+        "btn2_label": "",
+        "btn2_url": ""
+      }
+    },
+    "main": {
+      "type": "search",
+      "settings": {}
+    }
+  },
+  "order": [
+    "v2_banner_kwhfND",
+    "main"
+  ]
+}
