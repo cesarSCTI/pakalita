@@ -285,16 +285,6 @@
             "logo_height": 72
           }
         },
-        "logo_xRGp9G": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Group.png",
-            "alt_text": "",
-            "link": "",
-            "open_new_tab": true,
-            "logo_height": 72
-          }
-        },
         "logo_7KnHLD": {
           "type": "logo",
           "settings": {
@@ -309,17 +299,6 @@
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/Group.png",
-            "alt_text": "",
-            "link": "",
-            "open_new_tab": true,
-            "logo_height": 72
-          }
-        },
-        "logo_c74ARL": {
-          "type": "logo",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/Group_1.png",
             "alt_text": "",
             "link": "",
             "open_new_tab": true,
@@ -409,10 +388,8 @@
       },
       "block_order": [
         "logo_gFaeGY",
-        "logo_xRGp9G",
         "logo_7KnHLD",
         "logo_mV6C8B",
-        "logo_c74ARL",
         "logo_i9CWCr",
         "logo_QcdrVG",
         "logo_FFbMdD",
@@ -424,7 +401,7 @@
       ],
       "custom_css": [
         "img {object-fit: contain; height: 70px;}",
-        "h2 {margin-bottom: 80px;}"
+        "h2 {margin-bottom: 60px;}"
       ],
       "name": "V2 Logo Carousel",
       "settings": {
