@@ -153,16 +153,71 @@
             "card_image": "shopify://shop_images/98ff6ad8081670a65a8896ff1b2c35cd043244a0.jpg",
             "card_link": "/"
           }
+        },
+        "card_fCbCQh": {
+          "type": "card",
+          "settings": {
+            "card_label": "pakalita",
+            "card_image": "shopify://shop_images/image_23_1.png",
+            "card_link": "/"
+          }
+        },
+        "card_DYdLwc": {
+          "type": "card",
+          "settings": {
+            "card_label": "Pakalita",
+            "card_image": "shopify://shop_images/image_23_3.png",
+            "card_link": "/"
+          }
+        },
+        "card_DJH4c7": {
+          "type": "card",
+          "settings": {
+            "card_label": "Pakalita",
+            "card_image": "shopify://shop_images/image_23_5.png",
+            "card_link": "/"
+          }
+        },
+        "card_6tRHgn": {
+          "type": "card",
+          "settings": {
+            "card_label": "Pakalita",
+            "card_image": "shopify://shop_images/image_23_4.png",
+            "card_link": "/"
+          }
+        },
+        "card_NBrcxj": {
+          "type": "card",
+          "settings": {
+            "card_label": "Pakalita",
+            "card_image": "shopify://shop_images/image_23_d1072139-c3d5-4178-be04-a96c669e53a7.png",
+            "card_link": "/"
+          }
+        },
+        "card_RmGVXi": {
+          "type": "card",
+          "settings": {
+            "card_label": "Pakalita",
+            "card_image": "shopify://shop_images/image_23_2.png",
+            "card_link": "/"
+          }
         }
       },
       "block_order": [
         "card_eMbp67",
         "card_m3FKwQ",
-        "card_EhH4Ar"
+        "card_EhH4Ar",
+        "card_fCbCQh",
+        "card_DYdLwc",
+        "card_DJH4c7",
+        "card_6tRHgn",
+        "card_NBrcxj",
+        "card_RmGVXi"
       ],
       "name": "V2 Image Cards Grid",
       "settings": {
         "section_title": "",
+        "enable_carousel": true,
         "layout_width": "container",
         "bg_color": "#fbf2ec",
         "padding_top": 100,
@@ -209,6 +264,7 @@
         "section_title": "",
         "layout_width": "full",
         "columns_desktop": 3,
+        "gap": 24,
         "bg_color": "#ffffff",
         "padding_top": 100,
         "padding_bottom": 100,
