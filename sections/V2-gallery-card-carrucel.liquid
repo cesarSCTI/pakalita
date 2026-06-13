@@ -1,0 +1,381 @@
+{% comment %}
+  Sección: Galería de Productos con Carrusel por Bloque
+  Diseñado con Flexbox, soporte para Full Width / Contenedor y hasta 5 imágenes por tarjeta.
+{% endcomment %}
+
+<div class="product-gallery-wrapper {% if section.settings.full_width %}gallery-full-width{% else %}gallery-container-width{% endif %}" style="--desktop-columns: {{ section.settings.columns_desktop }};">
+  
+  {%- if section.settings.title != blank -%}
+    <h2 class="gallery-main-title">{{ section.settings.title }}</h2>
+  {%- endif -%}
+
+  <div class="gallery-grid">
+    {%- for block in section.blocks -%}
+      <div class="gallery-card" {{ block.shopify_attributes }}>
+        
+        <div class="gallery-card-header">
+          {%- if block.settings.title != blank -%}
+            <h3 class="gallery-card-title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.subtitle != blank -%}
+            <p class="gallery-card-subtitle">{{ block.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+
+        <div class="gallery-carousel-container">
+          <div class="gallery-carousel-track" data-current-index="0">
+            
+            {%- assign image_count = 0 -%}
+            {%- for i in (1..5) -%}
+              {%- assign img_key = 'image_' | append: i -%}
+              {%- assign current_image = block.settings[img_key] -%}
+              
+              {%- if current_image != blank -%}
+                {%- assign image_count = image_count | plus: 1 -%}
+                <div class="gallery-carousel-slide">
+                  <img 
+                    src="{{ current_image | image_url: width: 600 }}" 
+                    alt="{{ current_image.alt | default: block.settings.title }}"
+                    loading="lazy"
+                    width="100%"
+                    height="auto"
+                  >
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if image_count == 0 -%}
+              <div class="gallery-carousel-slide placeholder-slide">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+
+          </div>
+
+          {%- if image_count > 1 -%}
+            <button type="button" class="carousel-nav prev" aria-label="Anterior">&#10094;</button>
+            <button type="button" class="carousel-nav next" aria-label="Siguiente">&#10095;</button>
+            
+            <div class="carousel-dots">
+              {%- for i in (1..image_count) -%}
+                <span class="dot {% if forloop.first %}active{% endif %}" data-slide-to="{{ forloop.index0 }}"></span>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% style %}
+/* --- ESTILOS ESTRUCTURA (FLEXBOX) --- */
+.product-gallery-wrapper {
+  padding: 40px 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.gallery-container-width {
+  max-width: 1200px;
+}
+
+.gallery-full-width {
+  max-width: 100%;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+.gallery-main-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-style: italic;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: flex-start;
+}
+
+/* Tarjetas dinámicas basadas en la configuración */
+.gallery-card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  flex: 1 1 calc((100% / var(--desktop-columns)) - 30px);
+  min-width: calc(33.333% - 30px);
+}
+
+@media (max-width: 990px) {
+  .gallery-card {
+    min-width: calc(50% - 30px);
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-card {
+    min-width: 100%;
+  }
+}
+
+/* --- TEXTOS --- */
+.gallery-card-header {
+  margin-bottom: 15px;
+  min-height: 65px; /* Evita desalineación si un texto es más largo */
+}
+
+.gallery-card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0 5px 0;
+  color: #222;
+}
+
+.gallery-card-subtitle {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* --- CAROUSEL (FLEXBOX) --- */
+.gallery-carousel-container {
+  position: relative;
+  width: 100%;
+  border-radius: 16px; /* Bordes suaves idénticos a la imagen */
+  overflow: hidden;
+  background-color: #f9f9f9;
+}
+
+.gallery-carousel-track {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  width: 100%;
+}
+
+.gallery-carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  aspect-ratio: 4 / 3; /* Mantiene proporción limpia */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.placeholder-slide {
+  background: #ececec;
+  padding: 40px;
+}
+
+/* --- BOTONES NAVEGACIÓN --- */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #333;
+  transition: background 0.3s, opacity 0.3s;
+  opacity: 0; /* Ocultas por defecto, aparecen al hacer hover */
+  z-index: 2;
+}
+
+.gallery-carousel-container:hover .carousel-nav {
+  opacity: 1;
+}
+
+.carousel-nav:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.carousel-nav.prev { left: 15px; }
+.carousel-nav.next { right: 15px; }
+
+/* Indicadores inferiores */
+.carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.carousel-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.carousel-dots .dot.active {
+  background: #fff;
+  width: 18px; /* Efecto expandido para el activo */
+  border-radius: 4px;
+}
+{% endstyle %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const initCarousels = () => {
+    document.querySelectorAll('.gallery-carousel-container').forEach(container => {
+      const track = container.querySelector('.gallery-carousel-track');
+      const slides = container.querySelectorAll('.gallery-carousel-slide');
+      const prevBtn = container.querySelector('.carousel-nav.prev');
+      const nextBtn = container.querySelector('.carousel-nav.next');
+      const dots = container.querySelectorAll('.dot');
+      
+      if (!track || slides.length <= 1) return;
+
+      let currentIndex = 0;
+      const maxIndex = slides.length - 1;
+
+      const updateCarousel = (index) => {
+        currentIndex = index;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Actualizar dots
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === currentIndex);
+        });
+      };
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          let index = currentIndex === maxIndex ? 0 : currentIndex + 1;
+          updateCarousel(index);
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          let index = currentIndex === 0 ? maxIndex : currentIndex - 1;
+          updateCarousel(index);
+        });
+      }
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+          const targetIndex = parseInt(e.target.getAttribute('data-slide-to'));
+          updateCarousel(targetIndex);
+        });
+      });
+    });
+  };
+
+  initCarousels();
+
+  // Reiniciar script si se interactúa en el editor de diseño de Shopify
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', initCarousels);
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "V2 Galería Cards",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título Principal de la Sección",
+      "default": "Galería de productos"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo (Full Width)",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columnas en Escritorio",
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Tarjeta de Producto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título de la Tarjeta",
+          "default": "Nombre del Producto"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo / Descripción corta",
+          "default": "(características principales, variantes)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Imagen 1 (Principal)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Imagen 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Imagen 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Imagen 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_5",
+          "label": "Imagen 5"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 Galería Cards",
+      "blocks": [
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
