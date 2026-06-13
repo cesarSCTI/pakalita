@@ -226,6 +226,7 @@
         "gallery_item_CmyEXm",
         "gallery_item_McebFr"
       ],
+      "disabled": true,
       "custom_css": [
         ".tt-col-icon {background: #cd807a; padding: 15px; border-radius: 50%;}",
         ".tt-offset-normal_base {margin: 10px;}",
@@ -253,77 +254,59 @@
         "product_card_Pme8XR": {
           "type": "product_card",
           "settings": {
-            "title": "Nombre del Producto",
-            "subtitle": "(características principales, variantes)",
-            "image_1": "shopify://shop_images/0Q3A8334.jpg",
-            "image_2": "shopify://shop_images/0Q3A8332.jpg",
-            "image_3": "shopify://shop_images/0Q3A8331.jpg",
-            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+            "title": "Pulseras para hoteles personalizadas",
+            "subtitle": "(pulseras tejidas, control de acceso)",
+            "image_1": "shopify://shop_images/image_1_6.png"
           }
         },
-        "product_card_CN3MaK": {
+        "product_card_yMdYBt": {
           "type": "product_card",
           "settings": {
-            "title": "Nombre del Producto",
-            "subtitle": "(características principales, variantes)",
-            "image_1": "shopify://shop_images/0Q3A8334.jpg",
-            "image_2": "shopify://shop_images/0Q3A8332.jpg",
-            "image_3": "shopify://shop_images/0Q3A8331.jpg",
-            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+            "title": "Reconocimiento a colaboradores",
+            "subtitle": "(placas de reconocimiento, regalos corporativos, etc)",
+            "image_1": "shopify://shop_images/Mask_group_1510a59a-a845-4a28-b781-ef12535de2e3.png"
           }
         },
-        "product_card_Gf43Ae": {
+        "product_card_QJppk3": {
           "type": "product_card",
           "settings": {
-            "title": "Nombre del Producto",
-            "subtitle": "(características principales, variantes)",
-            "image_1": "shopify://shop_images/0Q3A8334.jpg",
-            "image_2": "shopify://shop_images/0Q3A8332.jpg",
-            "image_3": "shopify://shop_images/0Q3A8331.jpg",
-            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+            "title": "Accesorios artesanales",
+            "subtitle": "(bolsas, sombreros, abanicos, carteras)",
+            "image_1": "shopify://shop_images/Mask_group_1.png"
           }
         },
-        "product_card_JMfbNL": {
+        "product_card_WKhRMM": {
           "type": "product_card",
           "settings": {
-            "title": "Nombre del Producto",
-            "subtitle": "(características principales, variantes)",
-            "image_1": "shopify://shop_images/0Q3A8334.jpg",
-            "image_2": "shopify://shop_images/0Q3A8332.jpg",
-            "image_3": "shopify://shop_images/0Q3A8331.jpg",
-            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+            "title": "Bienvenida y experiencia en habitación",
+            "subtitle": "(tequileros, tazas, termos, porta vasos, lufas)",
+            "image_1": "shopify://shop_images/Mask_group_2.png"
           }
         },
-        "product_card_tpYqTW": {
+        "product_card_4Tjbk9": {
           "type": "product_card",
           "settings": {
-            "title": "Nombre del Producto",
-            "subtitle": "(características principales, variantes)",
-            "image_1": "shopify://shop_images/0Q3A8334.jpg",
-            "image_2": "shopify://shop_images/0Q3A8332.jpg",
-            "image_3": "shopify://shop_images/0Q3A8331.jpg",
-            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+            "title": "Trofeos deportivos artesanales",
+            "subtitle": "(medallas artesanales, trofeos personalizados,reconocimientos deportivos, placas conmemorativas)",
+            "image_1": "shopify://shop_images/Mask_group_3.png"
           }
         },
-        "product_card_JDKyPj": {
+        "product_card_AzRhnP": {
           "type": "product_card",
           "settings": {
-            "title": "Nombre del Producto",
-            "subtitle": "(características principales, variantes)",
-            "image_1": "shopify://shop_images/0Q3A8334.jpg",
-            "image_2": "shopify://shop_images/0Q3A8332.jpg",
-            "image_3": "shopify://shop_images/0Q3A8331.jpg",
-            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+            "title": "Regalos y recuerdos",
+            "subtitle": "(llaveros, imanes, espejos, bases de fotos)",
+            "image_1": "shopify://shop_images/Mask_group_4.png"
           }
         }
       },
       "block_order": [
         "product_card_Pme8XR",
-        "product_card_CN3MaK",
-        "product_card_Gf43Ae",
-        "product_card_JMfbNL",
-        "product_card_tpYqTW",
-        "product_card_JDKyPj"
+        "product_card_yMdYBt",
+        "product_card_QJppk3",
+        "product_card_WKhRMM",
+        "product_card_4Tjbk9",
+        "product_card_AzRhnP"
       ],
       "name": "V2 Galería Cards",
       "settings": {
