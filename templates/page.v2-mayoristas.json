@@ -247,6 +247,91 @@
         "padding_right": 20
       }
     },
+    "v2_gallery_card_carrucel_jf4bPC": {
+      "type": "V2-gallery-card-carrucel",
+      "blocks": {
+        "product_card_Pme8XR": {
+          "type": "product_card",
+          "settings": {
+            "title": "Nombre del Producto",
+            "subtitle": "(características principales, variantes)",
+            "image_1": "shopify://shop_images/0Q3A8334.jpg",
+            "image_2": "shopify://shop_images/0Q3A8332.jpg",
+            "image_3": "shopify://shop_images/0Q3A8331.jpg",
+            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+          }
+        },
+        "product_card_CN3MaK": {
+          "type": "product_card",
+          "settings": {
+            "title": "Nombre del Producto",
+            "subtitle": "(características principales, variantes)",
+            "image_1": "shopify://shop_images/0Q3A8334.jpg",
+            "image_2": "shopify://shop_images/0Q3A8332.jpg",
+            "image_3": "shopify://shop_images/0Q3A8331.jpg",
+            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+          }
+        },
+        "product_card_Gf43Ae": {
+          "type": "product_card",
+          "settings": {
+            "title": "Nombre del Producto",
+            "subtitle": "(características principales, variantes)",
+            "image_1": "shopify://shop_images/0Q3A8334.jpg",
+            "image_2": "shopify://shop_images/0Q3A8332.jpg",
+            "image_3": "shopify://shop_images/0Q3A8331.jpg",
+            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+          }
+        },
+        "product_card_JMfbNL": {
+          "type": "product_card",
+          "settings": {
+            "title": "Nombre del Producto",
+            "subtitle": "(características principales, variantes)",
+            "image_1": "shopify://shop_images/0Q3A8334.jpg",
+            "image_2": "shopify://shop_images/0Q3A8332.jpg",
+            "image_3": "shopify://shop_images/0Q3A8331.jpg",
+            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+          }
+        },
+        "product_card_tpYqTW": {
+          "type": "product_card",
+          "settings": {
+            "title": "Nombre del Producto",
+            "subtitle": "(características principales, variantes)",
+            "image_1": "shopify://shop_images/0Q3A8334.jpg",
+            "image_2": "shopify://shop_images/0Q3A8332.jpg",
+            "image_3": "shopify://shop_images/0Q3A8331.jpg",
+            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+          }
+        },
+        "product_card_JDKyPj": {
+          "type": "product_card",
+          "settings": {
+            "title": "Nombre del Producto",
+            "subtitle": "(características principales, variantes)",
+            "image_1": "shopify://shop_images/0Q3A8334.jpg",
+            "image_2": "shopify://shop_images/0Q3A8332.jpg",
+            "image_3": "shopify://shop_images/0Q3A8331.jpg",
+            "image_4": "shopify://shop_images/0Q3A83522.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "product_card_Pme8XR",
+        "product_card_CN3MaK",
+        "product_card_Gf43Ae",
+        "product_card_JMfbNL",
+        "product_card_tpYqTW",
+        "product_card_JDKyPj"
+      ],
+      "name": "V2 Galería Cards",
+      "settings": {
+        "title": "Galería de productos",
+        "full_width": false,
+        "columns_desktop": 3
+      }
+    },
     "v2_flex_text_image_WEmxH8": {
       "type": "V2-flex-text-image",
       "name": "V2 Flex Text + Image",
@@ -478,6 +563,7 @@
     "v2_rich_text_hwxynF",
     "footer_section_iconbanners_EAh6TV",
     "v2_gallery_carousel_P3bdHk",
+    "v2_gallery_card_carrucel_jf4bPC",
     "v2_flex_text_image_WEmxH8",
     "v2_logo_section_wQ4QmU",
     "v2_contat_form_A6mVBR"
